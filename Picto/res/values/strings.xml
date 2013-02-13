@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">TOUCH to start the game!</string>
+    <string name="app_name">TileTest</string>
+    <string name="add">add</string>
+    <string name="change">Change</string>
+    <string name="newgame">New Game</string>
+  </resources>
