@@ -41,7 +41,7 @@ public class GameView extends TileView {
 	public static final int ROCK = 3;
 	public static final int CELL = 4;
 	
-	private GameObject [][] gameBoard ;
+	private int [][] gameBoard ;
 
 	/**
 	 * @param context
@@ -59,17 +59,18 @@ public class GameView extends TileView {
 		tv = myTV;
 	}
 
-	private void initGameView() {
-		setFocusable(true);
-		initNewGame();
-	}
+	//Blijkt niet gebruikt te worden
+//	private void initGameView() {
+//		setFocusable(true);
+//		initNewGame();
+//	}
 
 	public void initNewGame() {
 		Log.d(TAG,"Loading tiles");
-		gameBoard = new GameObject [mXTileCount][mYTileCount];
+		gameBoard = new int [mXTileCount][mYTileCount];
 		for (int i = 0 ; i< mXTileCount; i++)
 			for (int j = 0; j < mYTileCount; j++)
-				gameBoard[i][j] = null;
+				gameBoard[i][j] = 0;
 		
 		
 		toAdd = WOMBAT;
@@ -83,7 +84,7 @@ public class GameView extends TileView {
 		loadTile(ROCK, r.getDrawable(R.drawable.rock));
 		loadTile(CELL, r.getDrawable(R.drawable.cell));
 
-		gameBoard[0][0] = new GameObject(WOMBAT); /* just a start */
+		gameBoard[0][0] = GameView.WOMBAT; /* just a start */
 
 		update(); 
 		invalidate(); 
@@ -96,10 +97,10 @@ public class GameView extends TileView {
 	public void update() {
 		for (int i=0; i< mXTileCount; i++)
 			for (int j = 0; j<mYTileCount; j++){
-				if (gameBoard[i][j] == null) {
+				if (gameBoard[i][j] == 0) {
 					setTile(CELL, i,j); /* background tile */
 				} else {
-					setTile(gameBoard[i][j].getTileId(),i,j);
+					setTile(gameBoard[i][j],i,j);
 				}
 			}
 	}
@@ -125,10 +126,10 @@ public class GameView extends TileView {
 
 	public void touched(int x, int y){
 		switch (toAdd){
-		case WOMBAT: gameBoard[x][y] = new Wombat(); break;
-		case LEAF  : gameBoard[x][y] = new Leaf(); break;
-		case ROCK  : gameBoard[x][y] = new Rock(); break;
-		case CELL  : gameBoard[x][y] = null;break;
+		case WOMBAT: gameBoard[x][y] = GameView.WOMBAT; break;
+		case LEAF  : gameBoard[x][y] = GameView.LEAF; break;
+		case ROCK  : gameBoard[x][y] = GameView.ROCK; break;
+		case CELL  : gameBoard[x][y] = 0;break;
 		default    : tv.setText("error");
 		}
 		update(); /* update the view */
