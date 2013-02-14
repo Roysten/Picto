@@ -20,7 +20,7 @@ public class GameObject {
 		tileId = itsTile;
 	}
 	
-// test
+
 	
 	/**
 	 * 
