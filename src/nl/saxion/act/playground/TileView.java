@@ -2,7 +2,6 @@ package nl.saxion.act.playground;
 
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,7 +10,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 /**
  * @author Jan Stroet
@@ -22,10 +20,6 @@ import android.widget.Toast;
 public abstract class TileView extends View {
 	private static final String TAG = "TileView";
 
-	private static final int FIXED_GRID = 0;
-	private static final int VARIABLE_GRID = 1;
-	
-	private static final int GAMEMODE = FIXED_GRID;
 	private static final int TILESIZE = 20;
 	
     /**
@@ -34,8 +28,8 @@ public abstract class TileView extends View {
      * Their initial values are predefined in FIXED_GRID mode (here below)
      * Their initial values are computed in VARIABLE_GRID mode on the basis of mTileSize
      */
-    protected int mXTileCount = 10; /* the number of tiles in X-dimension in FIXED_GRID - mode; will be overridden in VARIABLE_GRID mode */
-    protected int mYTileCount = 10;
+    protected int mXTileCount = 5; /* the number of tiles in X-dimension in FIXED_GRID - mode; will be overridden in VARIABLE_GRID mode */
+    protected int mYTileCount = 5;
 
     /**
      * mTileSize size of the tile
@@ -165,21 +159,16 @@ public abstract class TileView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
     	
-    	if ( w==0 || h ==0) return;
+    	if ( w!=0 || h != 0){
     	
-    	if (GAMEMODE == VARIABLE_GRID) {	/* size of grid depends on tile and screen size */
-    		mXTileCount = (int) Math.floor(w / mTileSize);
-    		mYTileCount = (int) Math.floor(h / mTileSize);
-
-    	} else if (GAMEMODE == FIXED_GRID) { /* size of grid is fixed and tileSize is computed*/
-    		mTileSize = Math.min((int) Math.floor(w / mXTileCount), (int) Math.floor(h / mYTileCount));
-    		 Log.d( TAG, "onSizeChanged( " + mTileSize + " )" );
-    	}
+    	mTileSize = Math.min((int) Math.floor(w / mXTileCount), (int) Math.floor(h / mYTileCount));
+    	Log.d( TAG, "onSizeChanged( " + mTileSize + " )" );
 		mXOffset = ((w - (mTileSize * mXTileCount)) / 2);
 		mYOffset = ((h - (mTileSize * mYTileCount)) / 2);
 
 		mTileGrid = new int[mXTileCount][mYTileCount];
 		clearTiles();
+    	}
     }
 
     @Override
