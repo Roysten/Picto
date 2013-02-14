@@ -11,6 +11,7 @@ public class GameView extends TileView {
 	//giteditetst tim2
 	//tegelijk pushen
 	//aanpassing Roy
+	//aanpassinnnnnn
 	/**
 	 *  @author Jan Stroet
 	 *   A game view based on a tile representation of a game board
