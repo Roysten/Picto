@@ -11,6 +11,7 @@ public class GameObject {
 	/* tileId: id of the bitmap, the object is associated with */
 	
 	private int tileId;
+	private int lol;
 	
 	/**
 	 * Initializes GameObject the bitmap, the object is associated with
