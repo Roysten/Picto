@@ -31,7 +31,6 @@ public class MyGameActivity extends Activity {
          
          registerButton1();
          registerButton2();
-         registerSlider();
     }
     
 
@@ -69,22 +68,5 @@ public class MyGameActivity extends Activity {
         });
 	}
 
-
-	private void registerSlider() {
-       	Log.d(TAG, "registerSlider()");
-
-		final SeekBar seekBar = (SeekBar) findViewById( R.id.seekBar1 );
-
-        seekBar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
-            public void onProgressChanged( SeekBar me, int progress, boolean x ) {
-            	Log.d( TAG, "seekBarSliderChanged( " + progress + " )" );
-            	/* TODO: add action to slider */
-             }
-     
-            public void onStartTrackingTouch( SeekBar seekBar ) {}
-
-            public void onStopTrackingTouch ( SeekBar seekBar ) {}
-        } );
-	}
 
 }
