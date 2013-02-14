@@ -8,14 +8,6 @@ import android.util.Log;
 import android.widget.TextView;
 
 public class GameView extends TileView {
-	//giteditetst tim2
-
-	//tijd voor errors
-
-	//ik wil het nog eens kapot maken
-
-
-	//tegelijk pushen nummer 2
 	/**
 	 *  @author Jan Stroet
 	 *   A game view based on a tile representation of a game board
@@ -47,7 +39,7 @@ public class GameView extends TileView {
 	public static final int HINT = 2;
 	public static final int CELL = 3;
 	
-	private int [][] gameBoard ;
+	private int [][] gameBoard;
 
 	/**
 	 * @param context
@@ -127,6 +119,12 @@ public class GameView extends TileView {
     public void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w,h,oldw, oldh);
         initNewGame();
+        
+        if (getLayoutParams() != null && w != h) {
+            getLayoutParams().height = w;
+            setLayoutParams(getLayoutParams());
+        }
+        
    }
 
 	public void touched(int x, int y){
