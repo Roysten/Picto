@@ -20,6 +20,8 @@ public class GameObject {
 		tileId = itsTile;
 	}
 	
+// test
+	
 	/**
 	 * 
 	 * @return id of the bitmap, the object is associated wit 
