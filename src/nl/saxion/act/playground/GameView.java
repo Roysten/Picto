@@ -95,7 +95,7 @@ public class GameView extends TileView {
 	 * From the game objects the visualization is copied to the tile array
 	 */
 	public void update() {
-		for (int i=0; i< mXTileCount; i++)
+		for (int i=0; i< mXTileCount; i++){
 			for (int j = 0; j<mYTileCount; j++){
 				if (gameBoard[i][j] == 0) {
 					setTile(CELL, i,j); /* background tile */
@@ -103,6 +103,7 @@ public class GameView extends TileView {
 					setTile(gameBoard[i][j],i,j);
 				}
 			}
+		}
 	}
 	
 	public void switchObject(){
