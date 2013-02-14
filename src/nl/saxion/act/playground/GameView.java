@@ -28,7 +28,7 @@ public class GameView extends TileView {
 	/*
 	 * What tile to add to the game board
 	 */
-	private int toAdd = WOMBAT;
+	private int toAdd = FILLED;
 	
 	/*
 	 * Textview to show in user interface which object to add
@@ -43,10 +43,9 @@ public class GameView extends TileView {
 	
 	private static final int NROFDRAWABLES = 4;
 	
-	public static final int WOMBAT = 1;
-	public static final int LEAF = 2;
-	public static final int ROCK = 3;
-	public static final int CELL = 4;
+	public static final int FILLED = 1;
+	public static final int HINT = 2;
+	public static final int CELL = 3;
 	
 	private int [][] gameBoard ;
 
@@ -80,18 +79,18 @@ public class GameView extends TileView {
 				gameBoard[i][j] = 0;
 		
 		
-		toAdd = WOMBAT;
+		toAdd = FILLED;
 		tv.setText("Wombat");
 			
 		Resources r = this.getContext().getResources();
 
 		resetTiles(NROFDRAWABLES + 1); /* zero (0) is used for empty */
-		loadTile(WOMBAT, r.getDrawable(R.drawable.wombat));
-		loadTile(LEAF, r.getDrawable(R.drawable.leaf));
-		loadTile(ROCK, r.getDrawable(R.drawable.rock));
+		loadTile(FILLED, r.getDrawable(R.drawable.wombat));
+		loadTile(HINT, r.getDrawable(R.drawable.leaf));
+		loadTile(HINT, r.getDrawable(R.drawable.rock));
 		loadTile(CELL, r.getDrawable(R.drawable.cell));
 
-		gameBoard[0][0] = GameView.WOMBAT; /* just a start */
+		gameBoard[0][0] = GameView.FILLED; /* just a start */
 
 		update(); 
 		invalidate(); 
@@ -116,9 +115,8 @@ public class GameView extends TileView {
 	public void switchObject(){
 		toAdd = (toAdd % NROFDRAWABLES) +1;
 		switch (toAdd){
-		case WOMBAT : tv.setText("Wombat"); break;
-		case LEAF   : tv.setText("Leaf"); break;
-		case ROCK   : tv.setText("Rock"); break;
+		case FILLED : tv.setText("Wombat"); break;
+		case HINT   : tv.setText("Leaf"); break;
 		case CELL   : tv.setText("delete objects"); break;
 		default     : tv.setText("error");
 		}		
@@ -134,9 +132,8 @@ public class GameView extends TileView {
 
 	public void touched(int x, int y){
 		switch (toAdd){
-		case WOMBAT: gameBoard[x][y] = GameView.WOMBAT; break;
-		case LEAF  : gameBoard[x][y] = GameView.LEAF; break;
-		case ROCK  : gameBoard[x][y] = GameView.ROCK; break;
+		case FILLED: gameBoard[x][y] = GameView.FILLED; break;
+		case HINT  : gameBoard[x][y] = GameView.HINT; break;
 		case CELL  : gameBoard[x][y] = 0;break;
 		default    : tv.setText("error");
 		}
