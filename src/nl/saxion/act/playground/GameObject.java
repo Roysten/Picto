@@ -7,7 +7,6 @@ public class GameObject {
 	 *   Every game object should inherit from this class
 	 *   
 	 */
-	
 	/* tileId: id of the bitmap, the object is associated with */
 	
 	private int tileId;
