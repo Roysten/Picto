@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class GameView extends TileView {
 	//giteditetst tim2
-	//tegelijk pushen
+	//tegelijk pushen nummer 2
 	/**
 	 *  @author Jan Stroet
 	 *   A game view based on a tile representation of a game board
