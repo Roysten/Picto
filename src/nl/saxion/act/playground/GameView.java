@@ -87,7 +87,6 @@ public class GameView extends TileView {
 		resetTiles(NROFDRAWABLES + 1); /* zero (0) is used for empty */
 		loadTile(FILLED, r.getDrawable(R.drawable.wombat));
 		loadTile(HINT, r.getDrawable(R.drawable.leaf));
-		loadTile(HINT, r.getDrawable(R.drawable.rock));
 		loadTile(CELL, r.getDrawable(R.drawable.cell));
 
 		gameBoard[0][0] = GameView.FILLED; /* just a start */
