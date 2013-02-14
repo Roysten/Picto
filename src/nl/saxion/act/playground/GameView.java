@@ -9,7 +9,12 @@ import android.widget.TextView;
 
 public class GameView extends TileView {
 	//giteditetst tim2
+
 	//tijd voor errors
+
+	//ik wil het nog eens kapot maken
+
+
 	//tegelijk pushen nummer 2
 	/**
 	 *  @author Jan Stroet
