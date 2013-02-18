@@ -1,11 +1,8 @@
 package nl.saxion.act.playground;
 
 import android.content.Context;
-import android.content.res.Resources;
-
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.TextView;
 
 public class GameView extends TileView {
 	/**
@@ -25,15 +22,11 @@ public class GameView extends TileView {
 	/*
 	 * Textview to show in user interface which object to add
 	 */
-	private TextView tv;
-
 	private static final String TAG = "GameView";
 
 	/**
 	 * Labels for the drawables that will be loaded into the TileView class
 	 */
-	
-	private static final int NROFDRAWABLES = 3;
 	
 	public static final int FILLED = 1;
 	public static final int HINT = 2;
@@ -53,10 +46,6 @@ public class GameView extends TileView {
 		super(context, attrs, defStyle);
 	}
 	
-	public void setText(TextView myTV) {
-		tv = myTV;
-	}
-
 	public void initNewGame() {
 		Log.d(TAG,"Loading tiles");
 		gameBoard = new int [mXTileCount][mYTileCount];
@@ -64,16 +53,7 @@ public class GameView extends TileView {
 			for (int j = 0; j < mYTileCount; j++)
 				gameBoard[i][j] = 0;
 		
-		
 		toAdd = FILLED;
-		tv.setText("Wombat");
-			
-		Resources r = this.getContext().getResources();
-
-		resetTiles(NROFDRAWABLES + 1); /* zero (0) is used for empty */
-		loadTile(FILLED, r.getDrawable(R.drawable.wombat));
-		loadTile(HINT, r.getDrawable(R.drawable.leaf));
-		loadTile(CELL, r.getDrawable(R.drawable.cell));
 
 		gameBoard[0][0] = GameView.FILLED; /* just a start */
 
@@ -97,15 +77,6 @@ public class GameView extends TileView {
 		}
 	}
 	
-	public void switchObject(){
-		toAdd = (toAdd % NROFDRAWABLES) +1;
-		switch (toAdd){
-		case FILLED : tv.setText("Wombat"); break;
-		case HINT   : tv.setText("Leaf"); break;
-		case CELL   : tv.setText("delete objects"); break;
-		default     : tv.setText("error");
-		}		
-	}
     /*
      * (non-Javadoc)
      * @see nl.saxion.act.playground.TileView#onSizeChanged(int, int, int, int)
@@ -125,7 +96,6 @@ public class GameView extends TileView {
 		case FILLED: gameBoard[x][y] = GameView.FILLED; break;
 		case HINT  : gameBoard[x][y] = GameView.HINT; break;
 		case CELL  : gameBoard[x][y] = 0;break;
-		default    : tv.setText("error");
 		}
 		update(); /* update the view */
 		invalidate(); /* tell Android the view has to be redrawn */
