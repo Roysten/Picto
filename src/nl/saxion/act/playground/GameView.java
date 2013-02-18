@@ -8,14 +8,6 @@ import android.util.Log;
 import android.widget.TextView;
 
 public class GameView extends TileView {
-	//giteditetst tim2
-
-	//tijd voor errors
-
-	//ik wil het nog eens kapot maken
-
-
-	//tegelijk pushen nummer 2
 	/**
 	 *  @author Jan Stroet
 	 *   A game view based on a tile representation of a game board
