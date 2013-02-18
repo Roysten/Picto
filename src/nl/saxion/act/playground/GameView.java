@@ -57,12 +57,6 @@ public class GameView extends TileView {
 		tv = myTV;
 	}
 
-	//Blijkt niet gebruikt te worden
-//	private void initGameView() {
-//		setFocusable(true);
-//		initNewGame();
-//	}
-
 	public void initNewGame() {
 		Log.d(TAG,"Loading tiles");
 		gameBoard = new int [mXTileCount][mYTileCount];
@@ -119,13 +113,12 @@ public class GameView extends TileView {
     public void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w,h,oldw, oldh);
         initNewGame();
-        
-        if (getLayoutParams() != null && w != h) {
-            getLayoutParams().height = w;
-            setLayoutParams(getLayoutParams());
-        }
-        
    }
+    
+    @Override
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+    }
 
 	public void touched(int x, int y){
 		switch (toAdd){

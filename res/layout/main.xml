@@ -1,58 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tableLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/tekst"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:text="@string/add" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/TextView1"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:text="1\n1-2-1\n\3\n1"
-            android:textColor="#FFFFFF"
-            android:gravity="right"
-            android:layout_weight="1"/>
 
 	    <nl.saxion.act.playground.GameView
             android:id="@+id/game"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="3" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:text="@string/change" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:text="@string/newgame" />
-    </TableRow>
-
-</TableLayout>
+	    
+</LinearLayout>
