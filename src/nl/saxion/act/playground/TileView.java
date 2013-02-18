@@ -26,12 +26,12 @@ public abstract class TileView extends View {
 	 * below) Their initial values are computed in VARIABLE_GRID mode on the
 	 * basis of mTileSize
 	 */
-	protected int mXTileCount = 5; /*
+	protected int mXTileCount = 10; /*
 									 * the number of tiles in X-dimension in
 									 * FIXED_GRID - mode; will be overridden in
 									 * VARIABLE_GRID mode
 									 */
-	protected int mYTileCount = 5;
+	protected int mYTileCount = 10;
 
 	/**
 	 * mTileSize size of the tile The initial value is fixed VARIABLE_GRID mode
@@ -39,13 +39,14 @@ public abstract class TileView extends View {
 	 * as possible
 	 */
 
-	protected int mTileSize = 1;
+	protected float mTileSize = 1;
 
 	/**
 	 * A two-dimensional array of integers in which the number represents the
 	 * index of the tile in the mTileArray that should be drawn at that location
 	 */
 	private int[][] mTileGrid;
+	public static final int SPACING = 2;
 
 	private final Paint linePaint = new Paint();
 	private final Paint rectPaint = new Paint();
@@ -103,10 +104,9 @@ public abstract class TileView extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		int x = (int) (event.getX() / mTileSize);
-		int y = (int) (event.getY() / mTileSize);
-		if (x < mXTileCount && y < mYTileCount && event.getX() >= 0
-				&& event.getY() >= 0) { /* Game Board touched */
+		int x = (int) ((event.getX() - mTileSize * SPACING) / mTileSize);
+		int y = (int) ((event.getY() - mTileSize * SPACING) / mTileSize);
+		if (x < mXTileCount && x >=0 && y >= 0 && y < mYTileCount) { /* Game Board touched */
 			Log.d(TAG, "Touched (" + x + ", " + y + ")\n");
 			touched(x, y);
 		}
@@ -125,7 +125,7 @@ public abstract class TileView extends View {
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		mTileSize = Math.min((int) (w / mXTileCount), (int) (h / mYTileCount));
+		mTileSize = Math.min((float)w / (mXTileCount + SPACING), (float)h / (mYTileCount + SPACING));
 		Log.d(TAG, "onSizeChanged( " + mTileSize + " )");
 		mTileGrid = new int[mXTileCount][mYTileCount];
 		clearTiles();
@@ -136,12 +136,25 @@ public abstract class TileView extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+		
+		for(int i = 0; i < mXTileCount; i++){
+			for(int j = 0; j < mYTileCount; j++){
+				if(mTileGrid[i][j] > 0){
+					rectVakje.offsetTo((i + SPACING) * mTileSize, (j + SPACING) * mTileSize);
+					canvas.drawRect(rectVakje, rectPaint);
+					if(mTileGrid[i][j] == 2){
+						canvas.drawLine((i + SPACING) * mTileSize, (j + SPACING) * mTileSize, (i + SPACING + 1) * mTileSize, (j + SPACING + 1) * mTileSize, linePaint);
+						canvas.drawLine((i + SPACING + 1) * mTileSize, (j + SPACING) * mTileSize, (i + SPACING) * mTileSize, (j + SPACING + 1) * mTileSize, linePaint);
+					}
+				}
+			}
+		}
 
-		for (int i = 0; i < mXTileCount; i++) {
+		for (int i = SPACING; i < mXTileCount + SPACING; i++) {
 			canvas.drawLine(i * mTileSize, 0, i * mTileSize, canvas.getHeight(), linePaint);
 		}
 		
-		for (int j = 0; j < mYTileCount; j++) {
+		for (int j = SPACING; j < mYTileCount + SPACING; j++) {
 			canvas.drawLine(0, j * mTileSize, canvas.getWidth(), j * mTileSize, linePaint);
 		}
 

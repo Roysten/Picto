@@ -17,7 +17,7 @@ public class GameView extends TileView {
 	/*
 	 * What tile to add to the game board
 	 */
-	private int toAdd = FILLED;
+	private int toAdd = FILL;
 	
 	/*
 	 * Textview to show in user interface which object to add
@@ -28,9 +28,9 @@ public class GameView extends TileView {
 	 * Labels for the drawables that will be loaded into the TileView class
 	 */
 	
-	public static final int FILLED = 1;
+	public static final int FILL = 1;
 	public static final int HINT = 2;
-	public static final int CELL = 3;
+	public static final int BLANK = 0;
 	
 	private int [][] gameBoard;
 
@@ -53,14 +53,18 @@ public class GameView extends TileView {
 			for (int j = 0; j < mYTileCount; j++)
 				gameBoard[i][j] = 0;
 		
-		toAdd = FILLED;
+		toAdd = FILL;
 
-		gameBoard[0][0] = GameView.FILLED; /* just a start */
+		gameBoard[0][0] = GameView.FILL; /* just a start */
 
 		update(); 
 		invalidate(); 
 	}
 
+	public void setToAdd(int toAdd){
+		this.toAdd = toAdd;
+	}
+	
 	/**
 	 * Handles the basic update: the visualization is updated according to objects on the game board
 	 * From the game objects the visualization is copied to the tile array
@@ -69,7 +73,7 @@ public class GameView extends TileView {
 		for (int i=0; i< mXTileCount; i++){
 			for (int j = 0; j<mYTileCount; j++){
 				if (gameBoard[i][j] == 0) {
-					setTile(CELL, i,j); /* background tile */
+					setTile(BLANK, i,j); /* background tile */
 				} else {
 					setTile(gameBoard[i][j],i,j);
 				}
@@ -93,9 +97,9 @@ public class GameView extends TileView {
 
 	public void touched(int x, int y){
 		switch (toAdd){
-		case FILLED: gameBoard[x][y] = GameView.FILLED; break;
+		case FILL: gameBoard[x][y] = GameView.FILL; break;
 		case HINT  : gameBoard[x][y] = GameView.HINT; break;
-		case CELL  : gameBoard[x][y] = 0;break;
+		case BLANK  : gameBoard[x][y] = GameView.BLANK;break;
 		}
 		update(); /* update the view */
 		invalidate(); /* tell Android the view has to be redrawn */
