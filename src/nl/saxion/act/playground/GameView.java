@@ -27,7 +27,6 @@ public class GameView extends TileView {
 	/**
 	 * Labels for the drawables that will be loaded into the TileView class
 	 */
-	
 	public static final int FILL = 1;
 	public static final int HINT = 2;
 	public static final int BLANK = 0;

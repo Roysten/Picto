@@ -1,7 +1,6 @@
 package nl.saxion.act.playground;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -46,10 +45,14 @@ public abstract class TileView extends View {
 	 * index of the tile in the mTileArray that should be drawn at that location
 	 */
 	private int[][] mTileGrid;
-	public static final int SPACING = 2;
+	public static final int SPACING = 3;
 
 	private final Paint linePaint = new Paint();
 	private final Paint rectPaint = new Paint();
+	private final Paint crossPaint = new Paint();
+	private final int lineColor = Color.BLACK;
+	private final int rectVakjeColor = Color.LTGRAY;
+	private final int crossColor = Color.DKGRAY;
 	
 	private RectF rectVakje = new RectF();
 
@@ -72,8 +75,10 @@ public abstract class TileView extends View {
 	}
 	
 	public void initPaint(){
-		linePaint.setColor(Color.BLACK);
-		rectPaint.setColor(Color.LTGRAY);
+		linePaint.setColor(lineColor);
+		rectPaint.setColor(rectVakjeColor);
+		crossPaint.setColor(crossColor);
+		crossPaint.setAntiAlias(true);
 	}
 
 
@@ -136,15 +141,14 @@ public abstract class TileView extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		
 		for(int i = 0; i < mXTileCount; i++){
 			for(int j = 0; j < mYTileCount; j++){
 				if(mTileGrid[i][j] > 0){
 					rectVakje.offsetTo((i + SPACING) * mTileSize, (j + SPACING) * mTileSize);
 					canvas.drawRect(rectVakje, rectPaint);
 					if(mTileGrid[i][j] == 2){
-						canvas.drawLine((i + SPACING) * mTileSize, (j + SPACING) * mTileSize, (i + SPACING + 1) * mTileSize, (j + SPACING + 1) * mTileSize, linePaint);
-						canvas.drawLine((i + SPACING + 1) * mTileSize, (j + SPACING) * mTileSize, (i + SPACING) * mTileSize, (j + SPACING + 1) * mTileSize, linePaint);
+						canvas.drawLine((i + SPACING) * mTileSize, (j + SPACING) * mTileSize, (i + SPACING + 1) * mTileSize, (j + SPACING + 1) * mTileSize, crossPaint);
+						canvas.drawLine((i + SPACING + 1) * mTileSize, (j + SPACING) * mTileSize, (i + SPACING) * mTileSize, (j + SPACING + 1) * mTileSize, crossPaint);
 					}
 				}
 			}
