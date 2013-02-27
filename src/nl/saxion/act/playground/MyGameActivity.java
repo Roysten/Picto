@@ -10,6 +10,8 @@ public class MyGameActivity extends Activity {
 	private final String TAG = "GameView";
 	private Button buttonFill, buttonCross, buttonBlank;
 	
+	//hoi rick
+    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
