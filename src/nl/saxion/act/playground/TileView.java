@@ -50,8 +50,9 @@ public abstract class TileView extends View {
 	private final Paint linePaint = new Paint();
 	private final Paint rectPaint = new Paint();
 	private final Paint crossPaint = new Paint();
+	
 	private final int lineColor = Color.BLACK;
-	private final int rectVakjeColor = Color.LTGRAY;
+	private final int rectVakjeColor = Color.CYAN;
 	private final int crossColor = Color.DKGRAY;
 	
 	private RectF rectVakje = new RectF();

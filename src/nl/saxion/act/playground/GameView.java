@@ -89,6 +89,9 @@ public class GameView extends TileView {
         initNewGame();
    }
     
+    /**
+     * Zorgt ervoor dat de view altijd vierkant is
+     */
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
