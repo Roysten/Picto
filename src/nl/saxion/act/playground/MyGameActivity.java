@@ -15,7 +15,7 @@ public class MyGameActivity extends Activity {
 	private GameView mGameView;
 	private TextView tv;
 	
-	//hoi
+	//hoi rick
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
