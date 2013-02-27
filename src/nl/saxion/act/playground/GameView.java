@@ -1,11 +1,8 @@
 package nl.saxion.act.playground;
 
 import android.content.Context;
-import android.content.res.Resources;
-
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.TextView;
 
 public class GameView extends TileView {
 	/**
@@ -20,24 +17,19 @@ public class GameView extends TileView {
 	/*
 	 * What tile to add to the game board
 	 */
-	private int toAdd = FILLED;
+	private int toAdd = FILL;
 	
 	/*
 	 * Textview to show in user interface which object to add
 	 */
-	private TextView tv;
-
 	private static final String TAG = "GameView";
 
 	/**
 	 * Labels for the drawables that will be loaded into the TileView class
 	 */
-	
-	private static final int NROFDRAWABLES = 3;
-	
-	public static final int FILLED = 1;
+	public static final int FILL = 1;
 	public static final int HINT = 2;
-	public static final int CELL = 3;
+	public static final int BLANK = 0;
 	
 	private int [][] gameBoard;
 
@@ -53,16 +45,6 @@ public class GameView extends TileView {
 		super(context, attrs, defStyle);
 	}
 	
-	public void setText(TextView myTV) {
-		tv = myTV;
-	}
-
-	//Blijkt niet gebruikt te worden
-//	private void initGameView() {
-//		setFocusable(true);
-//		initNewGame();
-//	}
-
 	public void initNewGame() {
 		Log.d(TAG,"Loading tiles");
 		gameBoard = new int [mXTileCount][mYTileCount];
@@ -70,23 +52,18 @@ public class GameView extends TileView {
 			for (int j = 0; j < mYTileCount; j++)
 				gameBoard[i][j] = 0;
 		
-		
-		toAdd = FILLED;
-		tv.setText("Wombat");
-			
-		Resources r = this.getContext().getResources();
+		toAdd = FILL;
 
-		resetTiles(NROFDRAWABLES + 1); /* zero (0) is used for empty */
-		loadTile(FILLED, r.getDrawable(R.drawable.wombat));
-		loadTile(HINT, r.getDrawable(R.drawable.leaf));
-		loadTile(CELL, r.getDrawable(R.drawable.cell));
-
-		gameBoard[0][0] = GameView.FILLED; /* just a start */
+		gameBoard[0][0] = GameView.FILL; /* just a start */
 
 		update(); 
 		invalidate(); 
 	}
 
+	public void setToAdd(int toAdd){
+		this.toAdd = toAdd;
+	}
+	
 	/**
 	 * Handles the basic update: the visualization is updated according to objects on the game board
 	 * From the game objects the visualization is copied to the tile array
@@ -95,7 +72,7 @@ public class GameView extends TileView {
 		for (int i=0; i< mXTileCount; i++){
 			for (int j = 0; j<mYTileCount; j++){
 				if (gameBoard[i][j] == 0) {
-					setTile(CELL, i,j); /* background tile */
+					setTile(BLANK, i,j); /* background tile */
 				} else {
 					setTile(gameBoard[i][j],i,j);
 				}
@@ -103,15 +80,6 @@ public class GameView extends TileView {
 		}
 	}
 	
-	public void switchObject(){
-		toAdd = (toAdd % NROFDRAWABLES) +1;
-		switch (toAdd){
-		case FILLED : tv.setText("Wombat"); break;
-		case HINT   : tv.setText("Leaf"); break;
-		case CELL   : tv.setText("delete objects"); break;
-		default     : tv.setText("error");
-		}		
-	}
     /*
      * (non-Javadoc)
      * @see nl.saxion.act.playground.TileView#onSizeChanged(int, int, int, int)
@@ -119,20 +87,18 @@ public class GameView extends TileView {
     public void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w,h,oldw, oldh);
         initNewGame();
-        
-        if (getLayoutParams() != null && w != h) {
-            getLayoutParams().height = w;
-            setLayoutParams(getLayoutParams());
-        }
-        
    }
+    
+    @Override
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+    }
 
 	public void touched(int x, int y){
 		switch (toAdd){
-		case FILLED: gameBoard[x][y] = GameView.FILLED; break;
+		case FILL: gameBoard[x][y] = GameView.FILL; break;
 		case HINT  : gameBoard[x][y] = GameView.HINT; break;
-		case CELL  : gameBoard[x][y] = 0;break;
-		default    : tv.setText("error");
+		case BLANK  : gameBoard[x][y] = GameView.BLANK;break;
 		}
 		update(); /* update the view */
 		invalidate(); /* tell Android the view has to be redrawn */
