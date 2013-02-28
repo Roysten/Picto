@@ -18,8 +18,6 @@ public class Puzzel {
 		initPuzzel(puzzel);
 	}
 	
-	
-	
 	private void initPuzzel(File puzzel) {
 		try {
 			Scanner lineScanner = new Scanner(puzzel);
@@ -67,6 +65,14 @@ public class Puzzel {
 	}
 
 
+	public String[] getVerticalHints(){
+		return verticalHints;
+	}
+	
+	public String[] getHorizontalHints(){
+		return horizontalHints;
+	}
+	
 
 	/**
 	 * @return the naam
