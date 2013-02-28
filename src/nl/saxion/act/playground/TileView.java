@@ -177,6 +177,9 @@ public abstract class TileView extends View {
 				canvas.drawLine(0, j * mTileSize, canvas.getWidth(), j * mTileSize, linePaint);
 			}
 		}
+	}
+	
+	public void drawText(Canvas canvas, String[] verticalHints, String[] horizontalHints){
 		
 	}
 	
@@ -186,5 +189,4 @@ public abstract class TileView extends View {
 		drawRects(canvas);
 		drawGrid(canvas);
 	}
-
 }

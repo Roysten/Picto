@@ -55,7 +55,10 @@ public class Puzzel {
 			for(int i=0;i<sizeX;i++){
 				horizontalHints[i]=lineScanner.next();
 			}
-			
+			String[][] tijdelijkevh = new String[verticalHints.length][1];
+			for(int i = 0; i < verticalHints.length; i++){
+				tijdelijkevh[i] = verticalHints[i].split(",");
+			}
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
