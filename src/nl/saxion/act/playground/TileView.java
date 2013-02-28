@@ -52,7 +52,7 @@ public abstract class TileView extends View {
 	private final Paint crossPaint = new Paint();
 	
 	private final int lineColor = Color.BLACK;
-	private final int rectVakjeColor = Color.CYAN;
+	private final int rectVakjeColor = Color.LTGRAY;
 	private final int crossColor = Color.DKGRAY;
 	
 	private RectF rectVakje = new RectF();
@@ -139,9 +139,7 @@ public abstract class TileView extends View {
 		rectVakje.set(0, 0, mTileSize, mTileSize);
 	}
 
-	@Override
-	public void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
+	public void drawRects(Canvas canvas){
 		for(int i = 0; i < mXTileCount; i++){
 			for(int j = 0; j < mYTileCount; j++){
 				if(mTileGrid[i][j] > 0){
@@ -154,6 +152,9 @@ public abstract class TileView extends View {
 				}
 			}
 		}
+	}
+	
+	public void drawGrid(Canvas canvas){
 
 		for (int i = SPACING; i < mXTileCount + SPACING; i++) {
 			if((i - SPACING) % 5 == 0){
@@ -176,7 +177,14 @@ public abstract class TileView extends View {
 				canvas.drawLine(0, j * mTileSize, canvas.getWidth(), j * mTileSize, linePaint);
 			}
 		}
-
+		
+	}
+	
+	@Override
+	public void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		drawRects(canvas);
+		drawGrid(canvas);
 	}
 
 }
