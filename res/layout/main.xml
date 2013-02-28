@@ -2,14 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gamebackground" >
+    android:background="@drawable/gamebackground"
+    android:padding="10dp" >
 
     <nl.saxion.act.playground.GameView
         android:id="@+id/game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#FFF" />
+        android:background="#40000000"
+        android:padding="10dp" />
 
     <RadioGroup
         android:id="@+id/radioGroup1"
