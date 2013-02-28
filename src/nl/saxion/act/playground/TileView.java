@@ -156,11 +156,25 @@ public abstract class TileView extends View {
 		}
 
 		for (int i = SPACING; i < mXTileCount + SPACING; i++) {
-			canvas.drawLine(i * mTileSize, 0, i * mTileSize, canvas.getHeight(), linePaint);
+			if((i - SPACING) % 5 == 0){
+				linePaint.setStrokeWidth(2f);
+				canvas.drawLine(i * mTileSize, 0, i * mTileSize, canvas.getHeight(), linePaint);
+				linePaint.setStrokeWidth(0f);
+			}
+			else{
+				canvas.drawLine(i * mTileSize, 0, i * mTileSize, canvas.getHeight(), linePaint);
+			}
 		}
 		
 		for (int j = SPACING; j < mYTileCount + SPACING; j++) {
-			canvas.drawLine(0, j * mTileSize, canvas.getWidth(), j * mTileSize, linePaint);
+			if((j - SPACING) % 5 == 0){
+				linePaint.setStrokeWidth(2f);
+				canvas.drawLine(0, j * mTileSize, canvas.getWidth(), j * mTileSize, linePaint);
+				linePaint.setStrokeWidth(0f);
+			}
+			else{
+				canvas.drawLine(0, j * mTileSize, canvas.getWidth(), j * mTileSize, linePaint);
+			}
 		}
 
 	}
