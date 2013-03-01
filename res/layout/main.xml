@@ -48,5 +48,14 @@
             android:text="@string/buttonBlankText" />
 
     </RadioGroup>
+    
+    	 <Chronometer android:id="@+id/chronometer"
+      	  	android:format="@string/chronometer_initial_format"
+      	  	android:layout_alignParentBottom="true"
+       	 	android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:layout_weight="0"
+       	 	android:paddingBottom="30dip"
+        	android:paddingTop="30dip" />
 
 </RelativeLayout>
