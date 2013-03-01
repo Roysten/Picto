@@ -85,7 +85,7 @@ public class GameView extends TileView {
      * @see nl.saxion.act.playground.TileView#onSizeChanged(int, int, int, int)
      */
     public void onSizeChanged(int w, int h, int oldw, int oldh){
-        super.onSizeChanged(w,h,oldw, oldh);
+        super.onSizeChanged(w, h, oldw, oldh);
         initNewGame();
    }
     

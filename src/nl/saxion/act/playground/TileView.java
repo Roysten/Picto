@@ -1,12 +1,14 @@
 package nl.saxion.act.playground;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -17,7 +19,10 @@ import android.view.View;
  * 
  */
 public abstract class TileView extends View {
+	
 	private static final String TAG = "TileView";
+	private String[][] testHorizontaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
+	private String[][] testVerticaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
 
 	/**
 	 * mXTileCount number of tiles in x-dimension mYTileCount number of tiles in
@@ -155,10 +160,11 @@ public abstract class TileView extends View {
 	}
 	
 	public void drawGrid(Canvas canvas){
-
+		Resources r = getResources();
 		for (int i = SPACING; i < mXTileCount + SPACING; i++) {
 			if((i - SPACING) % 5 == 0){
-				linePaint.setStrokeWidth(2f);
+				float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, r.getDisplayMetrics());
+				linePaint.setStrokeWidth(px);
 				canvas.drawLine(i * mTileSize, 0, i * mTileSize, canvas.getHeight(), linePaint);
 				linePaint.setStrokeWidth(0f);
 			}
@@ -169,7 +175,8 @@ public abstract class TileView extends View {
 		
 		for (int j = SPACING; j < mYTileCount + SPACING; j++) {
 			if((j - SPACING) % 5 == 0){
-				linePaint.setStrokeWidth(2f);
+				float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, r.getDisplayMetrics());
+				linePaint.setStrokeWidth(px);
 				canvas.drawLine(0, j * mTileSize, canvas.getWidth(), j * mTileSize, linePaint);
 				linePaint.setStrokeWidth(0f);
 			}
@@ -179,7 +186,7 @@ public abstract class TileView extends View {
 		}
 	}
 	
-	public void drawText(Canvas canvas, String[] verticalHints, String[] horizontalHints){
+	public void drawText(Canvas canvas, String[][] verticalHints, String[][] horizontalHints){
 		
 	}
 	
@@ -188,5 +195,6 @@ public abstract class TileView extends View {
 		super.onDraw(canvas);
 		drawRects(canvas);
 		drawGrid(canvas);
+		drawText(canvas, testVerticaal, testHorizontaal);
 	}
 }
