@@ -48,15 +48,8 @@ public class GameView extends TileView {
 	public void initNewGame() {
 		Log.d(TAG,"Loading tiles");
 		gameBoard = new int [mXTileCount][mYTileCount];
-		for (int i = 0 ; i< mXTileCount; i++)
-			for (int j = 0; j < mYTileCount; j++)
-				gameBoard[i][j] = 0;
 		
 		toAdd = FILL;
-
-		gameBoard[0][0] = GameView.FILL; /* just a start */
-
-		update(); 
 		invalidate(); 
 	}
 
@@ -68,16 +61,8 @@ public class GameView extends TileView {
 	 * Handles the basic update: the visualization is updated according to objects on the game board
 	 * From the game objects the visualization is copied to the tile array
 	 */
-	public void update() {
-		for (int i=0; i< mXTileCount; i++){
-			for (int j = 0; j<mYTileCount; j++){
-				if (gameBoard[i][j] == 0) {
-					setTile(BLANK, i,j); /* background tile */
-				} else {
-					setTile(gameBoard[i][j],i,j);
-				}
-			}
-		}
+	public void update(int x, int y) {
+		setTile(gameBoard[x][y],x,y);
 	}
 	
     /*
@@ -86,7 +71,6 @@ public class GameView extends TileView {
      */
     public void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w, h, oldw, oldh);
-        initNewGame();
    }
     
     /**
@@ -98,13 +82,11 @@ public class GameView extends TileView {
     }
 
 	public void touched(int x, int y){
-		switch (toAdd){
-		case FILL: gameBoard[x][y] = GameView.FILL; break;
-		case HINT  : gameBoard[x][y] = GameView.HINT; break;
-		case BLANK  : gameBoard[x][y] = GameView.BLANK;break;
+		if(gameBoard[x][y] != toAdd){
+			gameBoard[x][y] = toAdd;
+			update(x, y); /* update the view */
+			invalidate(); /* tell Android the view has to be redrawn */
 		}
-		update(); /* update the view */
-		invalidate(); /* tell Android the view has to be redrawn */
 	}
 
 }

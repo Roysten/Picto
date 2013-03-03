@@ -26,7 +26,6 @@
             android:id="@+id/buttonFill"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:checked="true"
             android:onClick="onButtonClicked"
             android:text="@string/buttonFillText" />
@@ -35,7 +34,6 @@
             android:id="@+id/buttonCross"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:onClick="onButtonClicked"
             android:text="@string/buttonCrossText" />
 
@@ -43,7 +41,6 @@
             android:id="@+id/buttonBlank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:onClick="onButtonClicked"
             android:text="@string/buttonBlankText" />
 
@@ -54,7 +51,6 @@
       	  	android:layout_alignParentBottom="true"
        	 	android:layout_width="wrap_content"
        		android:layout_height="wrap_content"
-       		android:layout_weight="0"
        	 	android:paddingBottom="30dip"
         	android:paddingTop="30dip" />
 
