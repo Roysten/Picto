@@ -2,10 +2,10 @@ package nl.saxion.act.playground;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -22,8 +22,8 @@ import android.view.View;
 public abstract class TileView extends View {
 	
 	private static final String TAG = "TileView";
-	private String[][] testHorizontaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
-	private String[][] testVerticaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
+	private String[][] testHorizontaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
+	private String[][] testVerticaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
 
 	/**
 	 * mXTileCount number of tiles in x-dimension mYTileCount number of tiles in
@@ -60,10 +60,12 @@ public abstract class TileView extends View {
 	private final Paint linePaint = new Paint();
 	private final Paint rectPaint = new Paint();
 	private final Paint crossPaint = new Paint();
+	private final Paint textPaint = new Paint();
 	
 	private final int lineColor = Color.BLACK;
 	private final int rectVakjeColor = Color.LTGRAY;
 	private final int crossColor = Color.RED;
+	private final int textColor = Color.BLACK;
 	
 	private final float thickLineWidth;
 	private float textSize;
@@ -91,6 +93,7 @@ public abstract class TileView extends View {
 		linePaint.setColor(lineColor);
 		rectPaint.setColor(rectVakjeColor);
 		crossPaint.setColor(crossColor);
+		textPaint.setColor(textColor);
 		crossPaint.setAntiAlias(true);
 	}
 
@@ -148,8 +151,19 @@ public abstract class TileView extends View {
 		mTileGrid = new int[mXTileCount][mYTileCount];
 		
 		//Bereken gewenste tekstgrootte
-		float density = this.getContext().getResources().getDisplayMetrics().density;
-		textSize = 12 / density;
+		textPaint.setTextSize(100);
+		Rect bounds = new Rect();
+		
+		textPaint.getTextBounds("2", 0, 1, bounds);
+		
+		//Waarom hoogte? Die is voor bijna elke letter gelijk
+		int textHeight = bounds.bottom - bounds.top;
+		
+		float target = mTileSize / 3f;
+		
+		textSize = (target / textHeight) * 100f;
+		System.out.println(textSize);
+		textPaint.setTextSize(textSize);
 		
 		//Zet de vakjes naar de correcte grootte
 		rectVakje.set(0, 0, mTileSize, mTileSize);
@@ -195,13 +209,23 @@ public abstract class TileView extends View {
 		}
 	}
 	
-	public void drawText(Canvas canvas, String[][] verticalHints, String[][] horizontalHints){
-		Paint p = new Paint();
-		p.setColor(Color.BLACK);
-		p.setTextSize(textSize);
-		canvas.drawText("BLa",100, 100, p);
+	public void drawText(Canvas canvas, String[][] verticalHints,
+			String[][] horizontalHints) {
+		for (int i = 0; i < mYTileCount; i++) {
+			String rowText = "";
+			for (int j = 0; j < testHorizontaal[i].length; j++) {
+				rowText += "  " + testHorizontaal[i][j];
+			}
+			canvas.drawText(rowText, 0, (i + SPACING + .5f) * mTileSize, textPaint);
+		}
+		for (int i = 0; i < mXTileCount; i++) {
+			for (int j = 0; j < testVerticaal[i].length; j++) {
+				canvas.drawText(testVerticaal[i][j], (i + SPACING + 0.5f) * mTileSize, (j + .5f) * mTileSize, textPaint);
+			}
+		}
+
 	}
-	
+
 	@Override
 	public void onDraw(Canvas canvas) {
 		long start = System.currentTimeMillis();
