@@ -6,15 +6,28 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.os.SystemClock;  // Deze wordt pas gebruikt op het moment dat het mogelijk is om de timer te resetten aan het eind van het level
-import android.widget.Chronometer;
+import java.util.Timer;
+import java.util.TimerTask;
+
+//import com.example.timertest.MyGameActivity;
+//import com.example.timertest.Main.updateTimer;
+
+import android.os.Handler;
+import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
+
 
 public class MyGameActivity extends Activity {
 	private GameView mGameView;
 	private final String TAG = "GameView";
 	private Button buttonFill, buttonCross, buttonBlank;
-	Chronometer mChronometer;
-	
+	private int tijdGebruikt;
+	TextView mTime;
+	Button buttonVerhoging;
+	Button buttonstop;
+	Timer timer = new Timer();
+		
 	//hoi
     /** Called when the activity is first created. */
     @Override
@@ -29,9 +42,36 @@ public class MyGameActivity extends Activity {
         buttonCross = (Button) findViewById(R.id.buttonCross);
         buttonBlank = (Button) findViewById(R.id.buttonBlank);
         
-        mChronometer = (Chronometer) findViewById(R.id.chronometer);
-        mChronometer.start();
-    }
+        buttonVerhoging = (Button) findViewById(R.id.button1);
+        buttonstop = (Button) findViewById(R.id.button2);
+        mTime = (TextView) findViewById(R.id.textView1);
+        buttonVerhoging.setText("Fout ");
+        buttonstop.setText("stop tijd");
+       
+        mTime.setText("Tijd: ");
+        
+      //        De timer moet starten bij onCreate
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new updateTimer(), 0, 1000);
+
+//      Als de button wordt gedrukt, dit is ipv fout maken
+        buttonVerhoging.setOnClickListener(new View.OnClickListener(){
+        	public void onClick(View v){
+        		Button buttonVerhoging = (Button)v;
+        		tijdGebruikt = tijdGebruikt + 5;
+        		System.out.println(tijdGebruikt);
+        			}
+        	});
+      
+        buttonstop.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				Button buttonstop =(Button)v;
+				timer.cancel();
+				System.out.println("Final Time: " + tijdGebruikt);
+					}
+			});
+       }
     
     public void onButtonClicked(View v){
     	if(v == buttonFill){
@@ -45,15 +85,23 @@ public class MyGameActivity extends Activity {
     	}
     }
     
-//   Met mChronometer.stop(); wordt de timer stop gezet en dan kunnen we iets doen met die tijd. 
-//    Deze kan dus worden gecalled als het level over is.
+    public void setTextView(){
+    	mTime.setText("Tijd" + tijdGebruikt);
+    }
     
-//          
-//            mChronometer.stop();
-//       
-//  	
-//   Met de setBase wordt de timer weer op 00.00 gezet, deze kan worden gebruikt vlak voor het level begint.
-//            mChronometer.setBase(SystemClock.elapsedRealtime());
-//        
-//   
+// Update timer zorgt ervoor dat deze elke seconde wordt bijgewerkt op het scherm, deze is niet nodig als we de tijd onzichtbaar laten tijdens spelen.    
+  class updateTimer extends TimerTask{
+	  public void run(){
+		  MyGameActivity.this.runOnUiThread(new Runnable(){
+	  
+			  public void run(){
+				  tijdGebruikt++;
+				  System.out.println(tijdGebruikt);
+				  mTime.setText("Tijd: " + tijdGebruikt);
+	  				}
+		  	});
+	  	}
+  }
+    
+
 }
