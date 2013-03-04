@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -22,8 +23,8 @@ import android.view.View;
 public abstract class TileView extends View {
 	
 	private static final String TAG = "TileView";
-	private String[][] testHorizontaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
-	private String[][] testVerticaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
+	private String[][] testHorizontaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
+	private String[][] testVerticaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
 
 	/**
 	 * mXTileCount number of tiles in x-dimension mYTileCount number of tiles in
@@ -31,12 +32,12 @@ public abstract class TileView extends View {
 	 * below) Their initial values are computed in VARIABLE_GRID mode on the
 	 * basis of mTileSize
 	 */
-	protected int mXTileCount = 10; /*
+	protected int mXTileCount = 15; /*
 									 * the number of tiles in X-dimension in
 									 * FIXED_GRID - mode; will be overridden in
 									 * VARIABLE_GRID mode
 									 */
-	protected int mYTileCount = 10;
+	protected int mYTileCount = 15;
 
 	/**
 	 * mTileSize size of the tile The initial value is fixed VARIABLE_GRID mode
@@ -68,7 +69,7 @@ public abstract class TileView extends View {
 	private final int textColor = Color.BLACK;
 	
 	private final float thickLineWidth;
-	private float textSize;
+	private float textHeight;
 	
 	private RectF rectVakje = new RectF();
 
@@ -94,6 +95,7 @@ public abstract class TileView extends View {
 		rectPaint.setColor(rectVakjeColor);
 		crossPaint.setColor(crossColor);
 		textPaint.setColor(textColor);
+		textPaint.setTextAlign(Align.CENTER);
 		crossPaint.setAntiAlias(true);
 	}
 
@@ -157,13 +159,17 @@ public abstract class TileView extends View {
 		textPaint.getTextBounds("2", 0, 1, bounds);
 		
 		//Waarom hoogte? Die is voor bijna elke letter gelijk
-		int textHeight = bounds.bottom - bounds.top;
+		textHeight = bounds.bottom - bounds.top;
 		
 		float target = mTileSize / 3f;
 		
-		textSize = (target / textHeight) * 100f;
+		float textSize = (target / textHeight) * 100f;
 		System.out.println(textSize);
 		textPaint.setTextSize(textSize);
+
+		//Voor precieze plaatsing tekst hoogte bepalen noodzakelijk
+		textPaint.getTextBounds("2", 0, 1, bounds);
+		textHeight = bounds.bottom - bounds.top;
 		
 		//Zet de vakjes naar de correcte grootte
 		rectVakje.set(0, 0, mTileSize, mTileSize);
@@ -209,18 +215,18 @@ public abstract class TileView extends View {
 		}
 	}
 	
-	public void drawText(Canvas canvas, String[][] verticalHints,
-			String[][] horizontalHints) {
+	public void drawText(Canvas canvas, String[][] verticalHints, String[][] horizontalHints) {
 		for (int i = 0; i < mYTileCount; i++) {
 			String rowText = "";
 			for (int j = 0; j < testHorizontaal[i].length; j++) {
 				rowText += "  " + testHorizontaal[i][j];
 			}
-			canvas.drawText(rowText, 0, (i + SPACING + .5f) * mTileSize, textPaint);
+			canvas.drawText(rowText, .5f * mTileSize, (i + SPACING + 0.5f) * mTileSize + textHeight / 2, textPaint);
 		}
+		
 		for (int i = 0; i < mXTileCount; i++) {
 			for (int j = 0; j < testVerticaal[i].length; j++) {
-				canvas.drawText(testVerticaal[i][j], (i + SPACING + 0.5f) * mTileSize, (j + .5f) * mTileSize, textPaint);
+				canvas.drawText(testVerticaal[i][j], (i + SPACING + 0.5f) * mTileSize, (j + 1) * (textHeight * 1.5f), textPaint);
 			}
 		}
 
