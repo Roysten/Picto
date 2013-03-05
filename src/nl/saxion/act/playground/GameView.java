@@ -47,7 +47,7 @@ public class GameView extends TileView {
 	
 	public void initNewGame() {
 		Log.d(TAG,"Loading tiles");
-		gameBoard = new int [mXTileCount][mYTileCount];
+		gameBoard = new int [mDimension][mDimension];
 		
 		toAdd = FILL;
 		invalidate(); 

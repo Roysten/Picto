@@ -23,33 +23,23 @@ import android.view.View;
 public abstract class TileView extends View {
 	
 	private static final String TAG = "TileView";
-	private String[][] testHorizontaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
-	private String[][] testVerticaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
+	private String[][] testHorizontaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
+	private String[][] testVerticaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
 
 	/**
-	 * mXTileCount number of tiles in x-dimension mYTileCount number of tiles in
-	 * y-dimension Their initial values are predefined in FIXED_GRID mode (here
-	 * below) Their initial values are computed in VARIABLE_GRID mode on the
-	 * basis of mTileSize
+	 * Dimensie van het spelbord
 	 */
-	protected int mXTileCount = 15; /*
-									 * the number of tiles in X-dimension in
-									 * FIXED_GRID - mode; will be overridden in
-									 * VARIABLE_GRID mode
-									 */
-	protected int mYTileCount = 15;
+	protected int mDimension = 10;
 
 	/**
-	 * mTileSize size of the tile The initial value is fixed VARIABLE_GRID mode
-	 * The value is computed in FIXED_GRID mode, the fill up the screen as much
-	 * as possible
+	 * Grootte van een vakje wordt hierin opgeslagen. Wordt geïnitialiseerd op nul,
+	 * daarna gelijk aangepast door onSizeChanged()
 	 */
 
 	protected float mTileSize = 0;
 
 	/**
-	 * A two-dimensional array of integers in which the number represents the
-	 * index of the tile in the mTileArray that should be drawn at that location
+	 * De array waarin alle vakjes en hun invulling zijn opgeslagen.
 	 */
 	private int[][] mTileGrid;
 	
@@ -58,25 +48,43 @@ public abstract class TileView extends View {
 	 */
 	public static final int SPACING = 3;
 	
+	/**
+	 * Initialiseren van de verschillende soorten paint
+	 */
 	private final Paint linePaint = new Paint();
 	private final Paint rectPaint = new Paint();
 	private final Paint crossPaint = new Paint();
 	private final Paint textPaint = new Paint();
 	
+	/**
+	 * De kleuren van de paints
+	 */
 	private final int lineColor = Color.BLACK;
 	private final int rectVakjeColor = Color.LTGRAY;
 	private final int crossColor = Color.RED;
 	private final int textColor = Color.BLACK;
 	
+	/**
+	 * De dikte van de dikkere lijn in px die om een x aantal vakjes getekend wordt
+	 * Wordt berekent uit een een dp waarde van 2 
+	 */
 	private final float thickLineWidth;
+	
+	/**
+	 * De hoogte van de tekst die wordt gebruikt als ijkpunt om de tekst te schalen
+	 * op verschillende resolutie's. 
+	 */
 	private float textHeight;
 	
+	/**
+	 * Het vakje dat wordt gebruikt als "stempel" om alle vakjes te kleuren.
+	 */
 	private RectF rectVakje = new RectF();
 
 	public TileView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 
-		mTileGrid = new int[mXTileCount][mYTileCount];
+		mTileGrid = new int[mDimension][mDimension];
 		clearTiles();
 		Log.d(TAG, "initTileView( " + mTileSize + " )");
 		initPaint();
@@ -105,8 +113,8 @@ public abstract class TileView extends View {
 	 * 
 	 */
 	public void clearTiles() {
-		for (int x = 0; x < mXTileCount; x++) {
-			for (int y = 0; y < mYTileCount; y++) {
+		for (int x = 0; x < mDimension; x++) {
+			for (int y = 0; y < mDimension; y++) {
 				setTile(0, x, y);
 			}
 		}
@@ -125,12 +133,15 @@ public abstract class TileView extends View {
 		mTileGrid[x][y] = tileindex;
 	}
 
+	/**
+	 * Berekent x en y van het vakje dat is aangeraakt uit de event x en y
+	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		int x = (int) ((event.getX() - mTileSize * SPACING) / mTileSize);
-		int y = (int) ((event.getY() - mTileSize * SPACING) / mTileSize);
-		if (x < mXTileCount && x >=0 && y >= 0 && y < mYTileCount) { /* Game Board touched */
-			Log.d(TAG, "Touched (" + x + ", " + y + ")\n");
+		int x = (int)((event.getX() - mTileSize * SPACING) / mTileSize);
+		int y = (int)((event.getY() - mTileSize * SPACING) / mTileSize);
+		Log.d(TAG, "Touched (" + x + ", " + y + ")");
+		if (x >=0 && x < mDimension && y >= 0 && y < mDimension) { /* Game Board touched */
 			touched(x, y);
 		}
 		return super.onTouchEvent(event);
@@ -146,11 +157,14 @@ public abstract class TileView extends View {
 	 */
 	public abstract void touched(int x, int y);
 
+	/**
+	 * Wanneer de grootte van het veld veranderd berekenen we de tekstgrootte
+	 * opnieuw, we schalen ook de grootte van de vakjes
+	 */
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		mTileSize = Math.min((float)w / (mXTileCount + SPACING), (float)h / (mYTileCount + SPACING));
+		mTileSize = Math.min((float)w / (mDimension + SPACING), (float)h / (mDimension + SPACING));
 		Log.d(TAG, "onSizeChanged( " + mTileSize + " )");
-		mTileGrid = new int[mXTileCount][mYTileCount];
 		
 		//Bereken gewenste tekstgrootte
 		textPaint.setTextSize(100);
@@ -175,9 +189,13 @@ public abstract class TileView extends View {
 		rectVakje.set(0, 0, mTileSize, mTileSize);
 	}
 
+	/**
+	 * Tekent de vakjes op de goede plaats
+	 * @param canvas
+	 */
 	public void drawRects(Canvas canvas){
-		for(int i = 0; i < mXTileCount; i++){
-			for(int j = 0; j < mYTileCount; j++){
+		for(int i = 0; i < mDimension; i++){
+			for(int j = 0; j < mDimension; j++){
 				if(mTileGrid[i][j]  == 1){
 					rectVakje.offsetTo((i + SPACING) * mTileSize, (j + SPACING) * mTileSize);
 					canvas.drawRect(rectVakje, rectPaint);
@@ -190,27 +208,21 @@ public abstract class TileView extends View {
 		}
 	}
 	
+	/**
+	 * Teken het grid. Om de 5 vakjes komt een dikkere lijn
+	 * @param canvas
+	 */
 	public void drawGrid(Canvas canvas){
-		for (int i = SPACING; i < mXTileCount + SPACING; i++) {
+		for (int i = SPACING; i < mDimension + SPACING; i++) {
 			if((i - SPACING) % 5 == 0){
 				linePaint.setStrokeWidth(thickLineWidth);
 				canvas.drawLine(i * mTileSize, 0, i * mTileSize, canvas.getHeight(), linePaint);
+				canvas.drawLine(0, i * mTileSize, canvas.getWidth(), i * mTileSize, linePaint);
 				linePaint.setStrokeWidth(0f);
 			}
 			else{
 				canvas.drawLine(i * mTileSize, 0, i * mTileSize, canvas.getHeight(), linePaint);
-			}
-		}
-		
-		for (int j = SPACING; j < mYTileCount + SPACING; j++) {
-			if((j - SPACING) % 5 == 0){
-				linePaint.setStrokeWidth(thickLineWidth);
-				Log.d(TAG, ""+ thickLineWidth);
-				canvas.drawLine(0, j * mTileSize, canvas.getWidth(), j * mTileSize, linePaint);
-				linePaint.setStrokeWidth(0f);
-			}
-			else{
-				canvas.drawLine(0, j * mTileSize, canvas.getWidth(), j * mTileSize, linePaint);
+				canvas.drawLine(0, i * mTileSize, canvas.getWidth(), i * mTileSize, linePaint);
 			}
 		}
 	}
@@ -227,7 +239,7 @@ public abstract class TileView extends View {
 		 * x = de helft van een vakje (zodat het niet te dicht op de rand staat)
 		 * y = i + spacing(om eerste rijen over te slaan) + halve teksthoogte (voor netjes uitlijnen) 
 		 */
-		for (int i = 0; i < mYTileCount; i++) {
+		for (int i = 0; i < mDimension; i++) {
 			String rowText = "";
 			for (int j = 0; j < testHorizontaal[i].length; j++) {
 				rowText += "  " + testHorizontaal[i][j];
@@ -240,7 +252,7 @@ public abstract class TileView extends View {
 		 * x = i + spacing(om eerste kolommen over te slaan) + helft van vakje (om te centreren)
 		 * y = (j + 1) (om binnen het canvas te tekenen) * anderhalve teksthoogte (om niet over elkaar te tekenen en halve teksthoogte ruimte ertussen te houden) 
 		 */
-		for (int i = 0; i < mXTileCount; i++) {
+		for (int i = 0; i < mDimension; i++) {
 			for (int j = 0; j < testVerticaal[i].length; j++) {
 				canvas.drawText(testVerticaal[i][j], (i + SPACING + 0.5f) * mTileSize, (j + 1) * (textHeight * 1.5f), textPaint);
 			}
