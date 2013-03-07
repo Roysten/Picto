@@ -75,6 +75,7 @@ public abstract class TileView extends View {
 	 * op verschillende resolutie's. 
 	 */
 	private float textHeight;
+	private float textWidth;
 	
 	/**
 	 * Het vakje dat wordt gebruikt als "stempel" om alle vakjes te kleuren.
@@ -112,7 +113,7 @@ public abstract class TileView extends View {
 		rectPaint.setColor(rectVakjeColor);
 		crossPaint.setColor(crossColor);
 		textPaint.setColor(textColor);
-		textPaint.setTextAlign(Align.CENTER);
+		//textPaint.setTextAlign(Align.CENTER);
 		crossPaint.setAntiAlias(true);
 	}
 
@@ -193,6 +194,7 @@ public abstract class TileView extends View {
 		//Voor precieze plaatsing tekst hoogte bepalen noodzakelijk
 		textPaint.getTextBounds("2", 0, 1, bounds);
 		textHeight = bounds.bottom - bounds.top;
+		textWidth = bounds.right - bounds.left;
 		
 		//Zet de vakjes naar de correcte grootte
 		rectVakje.set(0, 0, mTileSize, mTileSize);
@@ -251,7 +253,7 @@ public abstract class TileView extends View {
 		for (int i = 0; i < mDimension; i++) {
 			String rowText = "";
 			for (int j = 0; j < horizontalHints[i].length; j++) {
-				rowText += "  " + horizontalHints[i][j];
+				rowText += horizontalHints[i][j] + "  ";
 			}
 			canvas.drawText(rowText, .5f * mTileSize, (i + SPACING + 0.5f) * mTileSize + textHeight / 2, textPaint);
 		}
@@ -263,7 +265,7 @@ public abstract class TileView extends View {
 		 */
 		for (int i = 0; i < mDimension; i++) {
 			for (int j = 0; j < verticalHints[i].length; j++) {
-				canvas.drawText(verticalHints[i][j], (i + SPACING + 0.5f) * mTileSize, (j + 1) * (textHeight * 1.5f), textPaint);
+				canvas.drawText(verticalHints[i][j], (i + SPACING + 0.5f) * mTileSize - (textWidth / 2), (j + 1) * (textHeight * 1.5f), textPaint);
 			}
 		}
 
