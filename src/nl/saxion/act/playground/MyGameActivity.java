@@ -22,6 +22,7 @@ public class MyGameActivity extends Activity {
 	private final String TAG = "GameView";
 	private Button buttonFill, buttonCross, buttonBlank;
 	private int tijdGebruikt;
+	private boolean pauze = false;
 	
 	private Puzzel puzzel;
 	
@@ -111,23 +112,25 @@ public class MyGameActivity extends Activity {
 		  MyGameActivity.this.runOnUiThread(new Runnable(){
 	  
 			  public void run(){
-				  tijdGebruikt++;
-				  mTime.setText("Tijd: " + tijdGebruikt);
-				  System.out.println(tijdGebruikt);
+				  if(!pauze){
+					  tijdGebruikt++;
+					  mTime.setText("Tijd: " + tijdGebruikt);
+					  System.out.println(tijdGebruikt);
 	  				}
+			  }
 		  	});
 	  	}
   }
   
   	protected void onPause(){
   		super.onPause();
-  		timer.cancel();
+  		pauze = true;
   		System.out.println("Timer gestopt via onPause");
 
   	}
   	protected void onStop(){
   		super.onStop();
-  		timer.cancel();
+  		timer.purge();
   		System.out.println("Timer gestopt via onStop: " + tijdGebruikt);
   		
   	}
@@ -135,7 +138,6 @@ public class MyGameActivity extends Activity {
   	protected void onResume(){
   		super.onResume();
   		System.out.println("Timer restart weer");
-  		
-	
-		}
+  		pauze = false;
+	}
 }
