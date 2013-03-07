@@ -2,17 +2,19 @@ package nl.saxion.act.playground;
 
 
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.Activity;
+import android.content.res.AssetManager;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 //import com.example.timertest.MyGameActivity;
 //import com.example.timertest.Main.updateTimer;
-
-import android.widget.TextView;
 
 
 public class MyGameActivity extends Activity {
@@ -20,6 +22,9 @@ public class MyGameActivity extends Activity {
 	private final String TAG = "GameView";
 	private Button buttonFill, buttonCross, buttonBlank;
 	private int tijdGebruikt;
+	
+	private Puzzel puzzel;
+	
 	TextView mTime;
 	Button buttonVerhoging;
 	Button buttonstop;
@@ -31,6 +36,15 @@ public class MyGameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         mGameView = (GameView) findViewById(R.id.game);
+        AssetManager assetManager = getAssets();
+        Puzzel puzzel;
+		try {
+			puzzel = new Puzzel(assetManager.open("puzzels/Banana.txt"));
+			mGameView.setPuzzel(puzzel);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         mGameView.initNewGame();
         
         buttonFill = (Button) findViewById(R.id.buttonFill);
@@ -81,6 +95,10 @@ public class MyGameActivity extends Activity {
     	if(v == buttonCross){
     		mGameView.setToAdd(GameView.HINT);
     	}
+    }
+    
+    public void setPuzzel(Puzzel puzzel){
+    	this.puzzel = puzzel;
     }
     
     public void setTextView(){

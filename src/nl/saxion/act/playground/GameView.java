@@ -1,5 +1,7 @@
 package nl.saxion.act.playground;
 
+import java.io.InputStream;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -23,6 +25,7 @@ public class GameView extends TileView {
 	 * Textview to show in user interface which object to add
 	 */
 	private static final String TAG = "GameView";
+	private Puzzel puzzel;
 
 	/**
 	 * Labels for the drawables that will be loaded into the TileView class
@@ -38,7 +41,7 @@ public class GameView extends TileView {
 	 * @param attrs
 	 */
 	public GameView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+		this(context, attrs, 0);
 	}
 
 	public GameView(Context context, AttributeSet attrs, int defStyle) {
@@ -57,6 +60,13 @@ public class GameView extends TileView {
 		this.toAdd = toAdd;
 	}
 	
+	public void setPuzzel(Puzzel puzzel){
+		this.puzzel = puzzel;
+		Log.d(TAG, puzzel.toString());
+		setDimension(puzzel.getSizeX());
+		setHints(puzzel.getVerticalHints(), puzzel.getHorizontalHints());
+	}
+	
 	/**
 	 * Handles the basic update: the visualization is updated according to objects on the game board
 	 * From the game objects the visualization is copied to the tile array
@@ -71,7 +81,7 @@ public class GameView extends TileView {
      */
     public void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w, h, oldw, oldh);
-   }
+    }
     
     /**
      * Zorgt ervoor dat de view altijd vierkant is
@@ -88,5 +98,4 @@ public class GameView extends TileView {
 			invalidate(); /* tell Android the view has to be redrawn */
 		}
 	}
-
 }

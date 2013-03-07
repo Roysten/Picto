@@ -23,9 +23,9 @@ import android.view.View;
 public abstract class TileView extends View {
 	
 	private static final String TAG = "TileView";
-	private String[][] testHorizontaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
-	private String[][] testVerticaal = {{"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}, {"1", "2"}};
-
+	private String[][] verticalHints;
+	private String[][] horizontalHints;
+	
 	/**
 	 * Dimensie van het spelbord
 	 */
@@ -75,6 +75,7 @@ public abstract class TileView extends View {
 	 * op verschillende resolutie's. 
 	 */
 	private float textHeight;
+	private float textWidth;
 	
 	/**
 	 * Het vakje dat wordt gebruikt als "stempel" om alle vakjes te kleuren.
@@ -98,12 +99,21 @@ public abstract class TileView extends View {
 		this(context, attrs, 0);
 	}
 	
+	public void setHints(String[][] verticalHints, String[][] horizontalHints){
+		this.verticalHints = verticalHints;
+		this.horizontalHints = horizontalHints;
+	}
+	
+	public void setDimension(int dimension){
+		mDimension = dimension;
+	}
+	
 	public void initPaint(){
 		linePaint.setColor(lineColor);
 		rectPaint.setColor(rectVakjeColor);
 		crossPaint.setColor(crossColor);
 		textPaint.setColor(textColor);
-		textPaint.setTextAlign(Align.CENTER);
+		//textPaint.setTextAlign(Align.CENTER);
 		crossPaint.setAntiAlias(true);
 	}
 
@@ -184,6 +194,7 @@ public abstract class TileView extends View {
 		//Voor precieze plaatsing tekst hoogte bepalen noodzakelijk
 		textPaint.getTextBounds("2", 0, 1, bounds);
 		textHeight = bounds.bottom - bounds.top;
+		textWidth = bounds.right - bounds.left;
 		
 		//Zet de vakjes naar de correcte grootte
 		rectVakje.set(0, 0, mTileSize, mTileSize);
@@ -241,8 +252,8 @@ public abstract class TileView extends View {
 		 */
 		for (int i = 0; i < mDimension; i++) {
 			String rowText = "";
-			for (int j = 0; j < testHorizontaal[i].length; j++) {
-				rowText += "  " + testHorizontaal[i][j];
+			for (int j = 0; j < horizontalHints[i].length; j++) {
+				rowText += horizontalHints[i][j] + "  ";
 			}
 			canvas.drawText(rowText, .5f * mTileSize, (i + SPACING + 0.5f) * mTileSize + textHeight / 2, textPaint);
 		}
@@ -253,8 +264,8 @@ public abstract class TileView extends View {
 		 * y = (j + 1) (om binnen het canvas te tekenen) * anderhalve teksthoogte (om niet over elkaar te tekenen en halve teksthoogte ruimte ertussen te houden) 
 		 */
 		for (int i = 0; i < mDimension; i++) {
-			for (int j = 0; j < testVerticaal[i].length; j++) {
-				canvas.drawText(testVerticaal[i][j], (i + SPACING + 0.5f) * mTileSize, (j + 1) * (textHeight * 1.5f), textPaint);
+			for (int j = 0; j < verticalHints[i].length; j++) {
+				canvas.drawText(verticalHints[i][j], (i + SPACING + 0.5f) * mTileSize - (textWidth / 2), (j + 1) * (textHeight * 1.5f), textPaint);
 			}
 		}
 
@@ -266,7 +277,7 @@ public abstract class TileView extends View {
 		super.onDraw(canvas);
 		drawRects(canvas);
 		drawGrid(canvas);
-		drawText(canvas, testVerticaal, testHorizontaal);
+		drawText(canvas, verticalHints, horizontalHints);
 		long end = System.currentTimeMillis();
 		Log.d(TAG, "drawing took: " + (end - start));
 	}
