@@ -12,9 +12,6 @@ import java.util.TimerTask;
 //import com.example.timertest.MyGameActivity;
 //import com.example.timertest.Main.updateTimer;
 
-import android.os.Handler;
-import android.view.Menu;
-import android.view.View;
 import android.widget.TextView;
 
 
@@ -28,7 +25,6 @@ public class MyGameActivity extends Activity {
 	Button buttonstop;
 	Timer timer = new Timer();
 		
-	//hoi
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,8 +57,8 @@ public class MyGameActivity extends Activity {
         		Button buttonVerhoging = (Button)v;
         		tijdGebruikt = tijdGebruikt + 5;
         		System.out.println(tijdGebruikt);
-        			}
-        	});
+        	}
+        });
       
         buttonstop.setOnClickListener(new View.OnClickListener() {
 			
@@ -70,9 +66,9 @@ public class MyGameActivity extends Activity {
 				Button buttonstop =(Button)v;
 				timer.cancel();
 				System.out.println("Final Time: " + tijdGebruikt);
-					}
+				}
 			});
-       }
+        }
     
     public void onButtonClicked(View v){
     	if(v == buttonFill){
@@ -97,12 +93,10 @@ public class MyGameActivity extends Activity {
 	  
 			  public void run(){
 				  tijdGebruikt++;
-				  System.out.println(tijdGebruikt);
+				  //System.out.println(tijdGebruikt);
 				  mTime.setText("Tijd: " + tijdGebruikt);
 	  				}
 		  	});
 	  	}
   }
-    
-
 }
