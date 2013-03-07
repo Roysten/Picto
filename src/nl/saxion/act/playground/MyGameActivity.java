@@ -29,7 +29,6 @@ public class MyGameActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
         setContentView(R.layout.main);
         mGameView = (GameView) findViewById(R.id.game);
         mGameView.initNewGame();
@@ -46,6 +45,8 @@ public class MyGameActivity extends Activity {
        
         mTime.setText("Tijd: ");
         
+  		System.out.println("Timer restart weer oncreate");
+
       //        De timer moet starten bij onCreate
         timer = new Timer();
         timer.scheduleAtFixedRate(new updateTimer(), 0, 1000);
@@ -93,10 +94,30 @@ public class MyGameActivity extends Activity {
 	  
 			  public void run(){
 				  tijdGebruikt++;
-				  //System.out.println(tijdGebruikt);
 				  mTime.setText("Tijd: " + tijdGebruikt);
+				  System.out.println(tijdGebruikt);
 	  				}
 		  	});
 	  	}
   }
+  
+  	protected void onPause(){
+  		super.onPause();
+  		timer.cancel();
+  		System.out.println("Timer gestopt via onPause");
+
+  	}
+  	protected void onStop(){
+  		super.onStop();
+  		timer.cancel();
+  		System.out.println("Timer gestopt via onStop: " + tijdGebruikt);
+  		
+  	}
+  
+  	protected void onResume(){
+  		super.onResume();
+  		System.out.println("Timer restart weer");
+  		
+	
+		}
 }
