@@ -54,7 +54,8 @@ public class MyGameActivity extends Activity {
         timer = new Timer();
         timer.scheduleAtFixedRate(new updateTimer(), 0, 1000);
 
-//      Als de button wordt gedrukt, dit is ipv fout maken
+//      Buttons zitten er nu in om te testen.
+//        Als de button wordt gedrukt, dit is ipv fout maken
         buttonVerhoging.setOnClickListener(new View.OnClickListener(){
         	public void onClick(View v){
         		Button buttonVerhoging = (Button)v;
