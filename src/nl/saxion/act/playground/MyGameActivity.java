@@ -128,12 +128,6 @@ public class MyGameActivity extends Activity {
   		System.out.println("Timer gestopt via onPause");
 
   	}
-  	protected void onStop(){
-  		super.onStop();
-  		timer.purge();
-  		System.out.println("Timer gestopt via onStop: " + tijdGebruikt);
-  		
-  	}
   
   	protected void onResume(){
   		super.onResume();
