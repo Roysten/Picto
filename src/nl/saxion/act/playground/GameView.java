@@ -5,6 +5,7 @@ import java.io.InputStream;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.Toast;
 
 public class GameView extends TileView {
 	/**
@@ -26,6 +27,9 @@ public class GameView extends TileView {
 	 */
 	private static final String TAG = "GameView";
 	private Puzzel puzzel;
+	private int[][] puzzelSolution;
+	private Context context;
+	
 
 	/**
 	 * Labels for the drawables that will be loaded into the TileView class
@@ -46,6 +50,7 @@ public class GameView extends TileView {
 
 	public GameView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		this.context=context;
 	}
 	
 	public void initNewGame() {
@@ -62,6 +67,7 @@ public class GameView extends TileView {
 	
 	public void setPuzzel(Puzzel puzzel){
 		this.puzzel = puzzel;
+		this.puzzelSolution =puzzel.getOplossing();
 		Log.d(TAG, puzzel.toString());
 		setDimension(puzzel.getSizeX());
 		setHints(puzzel.getVerticalHints(), puzzel.getHorizontalHints());
@@ -93,7 +99,15 @@ public class GameView extends TileView {
 
 	public void touched(int x, int y){
 		if(gameBoard[x][y] != toAdd){
-			gameBoard[x][y] = toAdd;
+			if(toAdd==FILL&&puzzelSolution[x][y]==1){
+				gameBoard[x][y] = toAdd;
+			}else if(toAdd==FILL&&puzzelSolution[x][y]!=1){
+				CharSequence text = "Fout!";
+				int duration = Toast.LENGTH_SHORT;
+				Toast.makeText(context, text, duration).show();
+			}else if(toAdd!=FILL){
+				gameBoard[x][y] = toAdd;
+			}
 			update(x, y); /* update the view */
 			invalidate(); /* tell Android the view has to be redrawn */
 		}
