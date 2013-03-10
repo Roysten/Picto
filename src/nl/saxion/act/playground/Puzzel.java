@@ -116,10 +116,7 @@ public class Puzzel {
 		result=result+"\n";
 		
 		for(int i = 0; i < sizeX; i++){
-			for(int j = 0; j < sizeY; j++){
-				result += oplossing[i][j];
-			}
-			result += "\n";
+			result += Arrays.toString(oplossing[i]) + "\n";
 		}
 		result += "\n";
 		for(int i = 0; i < sizeY; i++){

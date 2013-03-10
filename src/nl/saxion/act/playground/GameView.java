@@ -62,7 +62,7 @@ public class GameView extends TileView {
 	
 	public void setPuzzel(Puzzel puzzel){
 		this.puzzelSolution =puzzel.getOplossing();
-		//Log.d(TAG, puzzel.toString());
+		Log.d(TAG, puzzel.toString());
 		setDimension(puzzel.getSizeX());
 		setHints(puzzel.getVerticalHints(), puzzel.getHorizontalHints());
 	}
@@ -93,11 +93,11 @@ public class GameView extends TileView {
 
 	public void touched(int x, int y){
 		if(gameBoard[x][y] != toAdd){
-			if(toAdd == FILL && puzzelSolution[x][y] == 1){
+			if(toAdd == FILL && puzzelSolution[y][x] == 1){
 				gameBoard[x][y] = toAdd;
-			}else if(toAdd == FILL && puzzelSolution[x][y] != 1){
-				CharSequence text = "Fout!";
-				Toast.makeText(this.getContext(), text, Toast.LENGTH_SHORT).show();
+			}else if(toAdd == FILL && puzzelSolution[y][x] != 1){
+				Log.d(TAG, puzzelSolution[y][x] + "");
+				Toast.makeText(this.getContext(), "Fout!", Toast.LENGTH_SHORT).show();
 			}else if(toAdd != FILL){
 				gameBoard[x][y] = toAdd;
 			}
