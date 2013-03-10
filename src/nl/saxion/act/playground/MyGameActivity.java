@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,7 +98,10 @@ public class MyGameActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
       if(item.getItemId()==(R.id.menu_pause)){
     	  pauze = true;
-    	Log.d(TAG, "Timer gepauzeert via actionbarpuze knop");
+    	  Log.d(TAG, "Timer gepauzeert via actionbarpauze knop");
+    	  PauseDialog pauseDialog = new PauseDialog();
+    	  FragmentManager fm = getFragmentManager();
+    	  pauseDialog.show(fm, TAG);
       }
 
       return true;
