@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MyGameActivity extends Activity {
+public class MyGameActivity extends Activity implements PauseDialog.NoticeDialogListener {
 	private GameView mGameView;
 	private final String TAG = "MyGameActivity";
 	private Button buttonFill, buttonCross, buttonBlank;
@@ -150,5 +151,16 @@ public class MyGameActivity extends Activity {
   		super.onResume();
   		System.out.println("Timer restart weer");
   		pauze = false;
+	}
+
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		pauze = false;
+  	  	Log.d(TAG, "Timer weer gestart na weggaan uit pauze menu");
+		
+	}
+
+	public void onDialogNegativeClick(DialogFragment dialog) {
+		// TODO nog in te vullen actie, mogelijk terug naar hoofdmenu in sprint 2
+		
 	}
 }
