@@ -7,6 +7,8 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,7 +24,8 @@ public class MyGameActivity extends Activity {
 	Button buttonVerhoging;
 	Button buttonstop;
 	Timer timer = new Timer();
-		
+	
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,8 @@ public class MyGameActivity extends Activity {
       
         buttonstop.setOnClickListener(new View.OnClickListener() {
 			
+        	
+        	
 			public void onClick(View v) {
 				Button buttonstop =(Button)v;
 				timer.cancel();
@@ -75,6 +80,16 @@ public class MyGameActivity extends Activity {
 				}
 			});
         }
+    
+    /**
+     * Het creeren van een actionbar op basis van menu.xml
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+      MenuInflater inflater = getMenuInflater();
+      inflater.inflate(R.menu.menu, menu);
+      return true;
+    } 
     
     public void onButtonClicked(View v){
     	if(v == buttonFill){

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources >
     <string name="app_name">Picross</string>
+    <string name="menu_pause">Pauze</string>
     <string name="buttonFillText">Fill</string>
     <string name="buttonCrossText">Cross</string>
     <string name="buttonBlankText">Blank</string>
