@@ -1,6 +1,9 @@
 package nl.saxion.act.playground;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
+
+import android.util.Log;
 
 
 public class Puzzel {
@@ -10,69 +13,62 @@ public class Puzzel {
 	private int sizeY;
 	private int difficulty;
 	private int [][] oplossing;
-	private String [] verticalHints;
-	private String [] horizontalHints;
-	private String[][] tijdelijkevh;
-	private String[][] tijdelijkehh;
+	private String [][] verticalHints;
+	private String [][] horizontalHints;
 	
 	public Puzzel(InputStream puzzel){
 		initPuzzel(puzzel);
 	}
 	
 	private void initPuzzel(InputStream puzzel) {
+		long start = System.currentTimeMillis();
 		Scanner lineScanner = new Scanner(puzzel);
-		Scanner scanner;
 		if(lineScanner.hasNextLine()){
 			this.naam=lineScanner.nextLine();
 		}
 		if(lineScanner.hasNextLine()){
-			this.sizeX=Integer.parseInt(lineScanner.nextLine());
+			this.sizeX = lineScanner.nextInt();
 		}
 		if(lineScanner.hasNextLine()){
-			this.sizeY=Integer.parseInt(lineScanner.nextLine());
+			this.sizeY = lineScanner.nextInt();
 		}
 		if(lineScanner.hasNextLine()){
-			this.difficulty=Integer.parseInt(lineScanner.nextLine());
+			this.difficulty = lineScanner.nextInt();
 		}
+		lineScanner.nextLine();
 		lineScanner.nextLine();
 		if(lineScanner.hasNextLine()){
 			oplossing=new int[sizeX][sizeY];
-			for(int i=0;i<sizeX;i++){
-				scanner= new Scanner(lineScanner.nextLine());
-				scanner.useDelimiter(",");
-				for(int j=0;j<sizeY;j++){
-					oplossing[i][j]=scanner.nextInt();
+			for(int i = 0; i < sizeX; i++){
+				String[] strArray = lineScanner.nextLine().split(",");
+				int[] intArray = new int[strArray.length];
+				for(int j = 0; j < strArray.length; j++){
+					intArray[j] = Integer.parseInt(strArray[j]);
+					oplossing[i] = intArray;
 				}
 			}
 		}
 		lineScanner.nextLine();
-		verticalHints= new String[sizeY];
-		for(int i=0;i<sizeY;i++){
-			verticalHints[i]=lineScanner.next();
+		verticalHints = new String[sizeY][1];
+		for(int i = 0; i < sizeY; i++){
+			verticalHints[i] = lineScanner.nextLine().split(",");
 		}
 		lineScanner.nextLine();
-		horizontalHints= new String[sizeX];
-		for(int i=0;i<sizeX;i++){
-			horizontalHints[i]=lineScanner.next();
+		horizontalHints = new String[sizeX][1];
+		for(int i = 0; i < sizeX; i++){
+			horizontalHints[i] = lineScanner.nextLine().split(",");
 		}
-		tijdelijkevh = new String[verticalHints.length][1];
-		for(int i = 0; i < verticalHints.length; i++){
-			tijdelijkevh[i] = verticalHints[i].split(",");
-		}
-		
-		tijdelijkehh = new String[horizontalHints.length][1];
-		for(int i = 0; i < horizontalHints.length; i++){
-			tijdelijkehh[i] = horizontalHints[i].split(",");
-		}
+		long end = System.currentTimeMillis();
+		Log.d("Puzzel", "Parse time puzzle: " + (end - start) + "ms");
 	}
 
 
 	public String[][] getVerticalHints(){
-		return tijdelijkevh;
+		return verticalHints;
 	}
 	
 	public String[][] getHorizontalHints(){
-		return tijdelijkehh;
+		return horizontalHints;
 	}
 	
 
@@ -118,26 +114,23 @@ public class Puzzel {
 		result=result+"sizeY: "+sizeY+"\n";
 		result=result+"difficulty: "+difficulty+"\n";
 		result=result+"\n";
-		for(int i=0;i<sizeX;i++){
-			for(int j=0;j<sizeY;j++){
-				result=result+oplossing[i][j];
+		
+		for(int i = 0; i < sizeX; i++){
+			for(int j = 0; j < sizeY; j++){
+				result += oplossing[i][j];
 			}
-			result=result+"\n";
+			result += "\n";
 		}
-		result=result+"\n";
-		for(int i=0;i<sizeY;i++){
-			result=result+verticalHints[i];
-			result=result+"\n";
+		result += "\n";
+		for(int i = 0; i < sizeY; i++){
+			result += Arrays.toString(verticalHints[i]);
+			result += "\n";
 		}
-		result=result+"\n";
-		for(int i=0;i<sizeX;i++){
-			result=result+horizontalHints[i];
-			result=result+"\n";
+		result += "\n";
+		for(int i = 0; i < sizeX; i++){
+			result += Arrays.toString(horizontalHints[i]);
+			result += "\n";
 		}
-		
-		
-		
 		return result;
-		
 	}
 }
