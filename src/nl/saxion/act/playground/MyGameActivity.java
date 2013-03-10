@@ -1,8 +1,5 @@
 package nl.saxion.act.playground;
 
-
-
-import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,9 +10,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-//import com.example.timertest.MyGameActivity;
-//import com.example.timertest.Main.updateTimer;
-
 
 public class MyGameActivity extends Activity {
 	private GameView mGameView;
@@ -23,8 +17,6 @@ public class MyGameActivity extends Activity {
 	private Button buttonFill, buttonCross, buttonBlank;
 	private int tijdGebruikt;
 	private boolean pauze = false;
-	
-	private Puzzel puzzel;
 	
 	TextView mTime;
 	Button buttonVerhoging;
@@ -38,12 +30,10 @@ public class MyGameActivity extends Activity {
         setContentView(R.layout.main);
         mGameView = (GameView) findViewById(R.id.game);
         AssetManager assetManager = getAssets();
-        Puzzel puzzel;
 		try {
-			puzzel = new Puzzel(assetManager.open("puzzels/Banana.txt"));
-			mGameView.setPuzzel(puzzel);
+			mGameView.setPuzzel(new Puzzel(assetManager.open("puzzels/Banana.txt")));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.err.println("Er ging iets mis bij het openen van de puzzel.");
 			e.printStackTrace();
 		}
         mGameView.initNewGame();
@@ -96,10 +86,6 @@ public class MyGameActivity extends Activity {
     	if(v == buttonCross){
     		mGameView.setToAdd(GameView.HINT);
     	}
-    }
-    
-    public void setPuzzel(Puzzel puzzel){
-    	this.puzzel = puzzel;
     }
     
     public void setTextView(){
