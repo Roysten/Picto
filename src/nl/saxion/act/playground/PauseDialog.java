@@ -1,3 +1,4 @@
+
 package nl.saxion.act.playground;
 
 import android.app.Activity;
@@ -61,5 +62,3 @@ public class PauseDialog extends DialogFragment {
     
     
 }
-
-
