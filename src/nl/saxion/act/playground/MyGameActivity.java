@@ -7,15 +7,17 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class MyGameActivity extends Activity {
 	private GameView mGameView;
-	private final String TAG = "GameView";
+	private final String TAG = "MyGameActivity";
 	private Button buttonFill, buttonCross, buttonBlank;
 	private int tijdGebruikt;
 	private boolean pauze = false;
@@ -88,6 +90,16 @@ public class MyGameActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
       MenuInflater inflater = getMenuInflater();
       inflater.inflate(R.menu.menu, menu);
+      return true;
+    } 
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+      if(item.getItemId()==(R.id.menu_pause)){
+    	  pauze = true;
+    	Log.d(TAG, "Timer gepauzeert via actionbarpuze knop");
+      }
+
       return true;
     } 
     
