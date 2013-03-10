@@ -101,8 +101,24 @@ public class GameView extends TileView {
 			}else if(toAdd != FILL){
 				gameBoard[x][y] = toAdd;
 			}
+			if(heeftWinnaar()){
+				Toast.makeText(this.getContext(), "Klaar!", Toast.LENGTH_SHORT).show();
+				Log.d(TAG, "De puzzel is klaar!");
+			}
 			update(x, y); /* update the view */
 			invalidate(); /* tell Android the view has to be redrawn */
 		}
+	}
+	
+	public boolean heeftWinnaar(){
+		boolean heeftWinnaar=true;
+		for(int i=0;i<mDimension;i++){
+			for(int j=0;j<mDimension;j++){
+				if(gameBoard[i][j]!=puzzelSolution[j][i]){
+					heeftWinnaar=false;
+				}
+			}
+		}
+		return heeftWinnaar;
 	}
 }
