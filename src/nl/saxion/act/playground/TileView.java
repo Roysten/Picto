@@ -249,22 +249,29 @@ public abstract class TileView extends View {
 		 * x = de helft van een vakje (zodat het niet te dicht op de rand staat)
 		 * y = i + spacing(om eerste rijen over te slaan) + halve teksthoogte (voor netjes uitlijnen) 
 		 */
-		for (int i = 0; i < mDimension; i++) {
-			String rowText = "";
-			for (int j = 0; j < horizontalHints[i].length; j++) {
-				rowText += horizontalHints[i][j] + "  ";
+		if (!isInEditMode()) {
+			for (int i = 0; i < mDimension; i++) {
+				String rowText = "";
+				for (int j = 0; j < horizontalHints[i].length; j++) {
+					rowText += horizontalHints[i][j] + "  ";
+				}
+				canvas.drawText(rowText, .5f * mTileSize, (i + SPACING + 0.5f)
+						* mTileSize + textHeight / 2, textPaint);
 			}
-			canvas.drawText(rowText, .5f * mTileSize, (i + SPACING + 0.5f) * mTileSize + textHeight / 2, textPaint);
-		}
-		
-		/*
-		 * Tekst wordt als volgt getekend:
-		 * x = i + spacing(om eerste kolommen over te slaan) + helft van vakje (om te centreren)
-		 * y = (j + 1) (om binnen het canvas te tekenen) * anderhalve teksthoogte (om niet over elkaar te tekenen en halve teksthoogte ruimte ertussen te houden) 
-		 */
-		for (int i = 0; i < mDimension; i++) {
-			for (int j = 0; j < verticalHints[i].length; j++) {
-				canvas.drawText(verticalHints[i][j], (i + SPACING + 0.5f) * mTileSize - (textWidth / 2), (j + 1) * (textHeight * 1.5f), textPaint);
+
+			/*
+			 * Tekst wordt als volgt getekend: x = i + spacing(om eerste
+			 * kolommen over te slaan) + helft van vakje (om te centreren) y =
+			 * (j + 1) (om binnen het canvas te tekenen) * anderhalve
+			 * teksthoogte (om niet over elkaar te tekenen en halve teksthoogte
+			 * ruimte ertussen te houden)
+			 */
+			for (int i = 0; i < mDimension; i++) {
+				for (int j = 0; j < verticalHints[i].length; j++) {
+					canvas.drawText(verticalHints[i][j], (i + SPACING + 0.5f)
+							* mTileSize - (textWidth / 2), (j + 1)
+							* (textHeight * 1.5f), textPaint);
+				}
 			}
 		}
 
