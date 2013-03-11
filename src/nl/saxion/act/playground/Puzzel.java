@@ -2,6 +2,8 @@ package nl.saxion.act.playground;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.util.Log;
 
@@ -15,6 +17,7 @@ public class Puzzel {
 	private int [][] oplossing;
 	private String [][] verticalHints;
 	private String [][] horizontalHints;
+	private Pattern splitPattern = Pattern.compile(",");
 	
 	public Puzzel(InputStream puzzel){
 		initPuzzel(puzzel);
@@ -40,7 +43,7 @@ public class Puzzel {
 		if(lineScanner.hasNextLine()){
 			oplossing=new int[sizeX][sizeY];
 			for(int i = 0; i < sizeX; i++){
-				String[] strArray = lineScanner.nextLine().split(",");
+				String[] strArray = splitPattern.split(lineScanner.nextLine());
 				int[] intArray = new int[strArray.length];
 				for(int j = 0; j < strArray.length; j++){
 					intArray[j] = Integer.parseInt(strArray[j]);
@@ -51,12 +54,12 @@ public class Puzzel {
 		lineScanner.nextLine();
 		verticalHints = new String[sizeY][1];
 		for(int i = 0; i < sizeY; i++){
-			verticalHints[i] = lineScanner.nextLine().split(",");
+			verticalHints[i] = splitPattern.split(lineScanner.nextLine());
 		}
 		lineScanner.nextLine();
 		horizontalHints = new String[sizeX][1];
 		for(int i = 0; i < sizeX; i++){
-			horizontalHints[i] = lineScanner.nextLine().split(",");
+			horizontalHints[i] = splitPattern.split(lineScanner.nextLine());
 		}
 		long end = System.currentTimeMillis();
 		Log.d("Puzzel", "Parse time puzzle: " + (end - start) + "ms");
