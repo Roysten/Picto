@@ -2,10 +2,7 @@ package nl.saxion.act.playground;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import android.util.Log;
 
 
 public class Puzzel {
@@ -15,6 +12,7 @@ public class Puzzel {
 	private int sizeY;
 	private int difficulty;
 	private int [][] oplossing;
+	private int total = 0;
 	private String [][] verticalHints;
 	private String [][] horizontalHints;
 	private Pattern splitPattern = Pattern.compile(",");
@@ -24,7 +22,6 @@ public class Puzzel {
 	}
 	
 	private void initPuzzel(InputStream puzzel) {
-		long start = System.currentTimeMillis();
 		Scanner lineScanner = new Scanner(puzzel);
 		if(lineScanner.hasNextLine()){
 			this.naam=lineScanner.nextLine();
@@ -47,6 +44,7 @@ public class Puzzel {
 				int[] intArray = new int[strArray.length];
 				for(int j = 0; j < strArray.length; j++){
 					intArray[j] = Integer.parseInt(strArray[j]);
+					total+= intArray[j];
 					oplossing[i] = intArray;
 				}
 			}
@@ -61,10 +59,7 @@ public class Puzzel {
 		for(int i = 0; i < sizeX; i++){
 			horizontalHints[i] = splitPattern.split(lineScanner.nextLine());
 		}
-		long end = System.currentTimeMillis();
-		Log.d("Puzzel", "Parse time puzzle: " + (end - start) + "ms");
 	}
-
 
 	public String[][] getVerticalHints(){
 		return verticalHints;
@@ -101,6 +96,13 @@ public class Puzzel {
 	 */
 	public int getDifficulty() {
 		return difficulty;
+	}
+	
+	/**
+	 * @return het totaal van zwarte vakjes
+	 */
+	public int getTotal(){
+		return total;
 	}
 
 	/**

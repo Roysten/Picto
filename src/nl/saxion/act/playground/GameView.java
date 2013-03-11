@@ -25,6 +25,7 @@ public class GameView extends TileView {
 	 */
 	private static final String TAG = "GameView";
 	private int[][] puzzelSolution;
+	private int puzzelTotal, gameTotal;
 	
 
 	/**
@@ -61,7 +62,8 @@ public class GameView extends TileView {
 	}
 	
 	public void setPuzzel(Puzzel puzzel){
-		this.puzzelSolution =puzzel.getOplossing();
+		puzzelSolution = puzzel.getOplossing();
+		puzzelTotal = puzzel.getTotal();
 		setDimension(puzzel.getSizeX());
 		setHints(puzzel.getVerticalHints(), puzzel.getHorizontalHints());
 	}
@@ -94,11 +96,14 @@ public class GameView extends TileView {
 		if(gameBoard[x][y] != toAdd){
 			if(toAdd == FILL && puzzelSolution[y][x] == 1){
 				gameBoard[x][y] = toAdd;
+				gameTotal++;
 			}else if(toAdd == FILL && puzzelSolution[y][x] != 1){
 				Log.d(TAG, puzzelSolution[y][x] + "");
 				Toast.makeText(this.getContext(), "Fout!", Toast.LENGTH_SHORT).show();
-			}else if(toAdd != FILL){
+				
+			}else if(toAdd != FILL && puzzelSolution[y][x] == 1){
 				gameBoard[x][y] = toAdd;
+				gameTotal--;
 			}
 			if(heeftWinnaar()){
 				Toast.makeText(this.getContext(), "Klaar!", Toast.LENGTH_SHORT).show();
@@ -110,13 +115,9 @@ public class GameView extends TileView {
 	}
 	
 	public boolean heeftWinnaar(){
-		boolean heeftWinnaar=true;
-		for(int i=0;i<mDimension;i++){
-			for(int j=0;j<mDimension;j++){
-				if(gameBoard[i][j]!=puzzelSolution[j][i]){
-					heeftWinnaar=false;
-				}
-			}
+		boolean heeftWinnaar = false;
+		if(puzzelTotal == gameTotal){
+			heeftWinnaar = true;
 		}
 		return heeftWinnaar;
 	}
