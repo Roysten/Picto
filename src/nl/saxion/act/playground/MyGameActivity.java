@@ -25,10 +25,7 @@ public class MyGameActivity extends Activity implements PauseDialog.NoticeDialog
 	private boolean pauze = false;
 	
 	TextView mTime;
-	Button buttonVerhoging;
-	Button buttonstop;
-	Timer timer = new Timer();
-	
+	Timer timer = new Timer();	
 	
     /** Called when the activity is first created. */
     @Override
@@ -49,11 +46,9 @@ public class MyGameActivity extends Activity implements PauseDialog.NoticeDialog
         buttonCross = (Button) findViewById(R.id.buttonCross);
         buttonBlank = (Button) findViewById(R.id.buttonBlank);
         
-        buttonVerhoging = (Button) findViewById(R.id.button1);
-        buttonstop = (Button) findViewById(R.id.button2);
+
         mTime = (TextView) findViewById(R.id.textView1);
-        buttonVerhoging.setText("Fout ");
-        buttonstop.setText("stop tijd");
+
        
         mTime.setText("Tijd: ");
         
@@ -62,27 +57,7 @@ public class MyGameActivity extends Activity implements PauseDialog.NoticeDialog
       //        De timer moet starten bij onCreate
         timer = new Timer();
         timer.scheduleAtFixedRate(new updateTimer(), 0, 1000);
-
-//      Buttons zitten er nu in om te testen.
-//        Als de button wordt gedrukt, dit is ipv fout maken
-        buttonVerhoging.setOnClickListener(new View.OnClickListener(){
-        	public void onClick(View v){
-        		Button buttonVerhoging = (Button)v;
-        		tijdGebruikt = tijdGebruikt + 5;
-        		System.out.println(tijdGebruikt);
-        	}
-        });
-      
-        buttonstop.setOnClickListener(new View.OnClickListener() {
-			
-        	
-        	
-			public void onClick(View v) {
-				Button buttonstop =(Button)v;
-				timer.cancel();
-				System.out.println("Final Time: " + tijdGebruikt);
-				}
-			});
+    
         }
     
     /**
