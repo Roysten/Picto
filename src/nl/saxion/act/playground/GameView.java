@@ -105,6 +105,9 @@ public class GameView extends TileView {
 				gameBoard[x][y] = toAdd;
 				gameTotal--;
 			}
+			else if(toAdd != FILL && puzzelSolution[y][x] != 1){
+				gameBoard[x][y] = toAdd;
+			}
 			if(heeftWinnaar()){
 				Toast.makeText(this.getContext(), "Klaar!", Toast.LENGTH_SHORT).show();
 				Log.d(TAG, "De puzzel is klaar!");
