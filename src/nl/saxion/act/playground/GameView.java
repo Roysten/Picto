@@ -93,27 +93,30 @@ public class GameView extends TileView {
     }
 
 	public void touched(int x, int y){
-		if(gameBoard[x][y] != toAdd){
-			if(toAdd == FILL && puzzelSolution[y][x] == 1){
-				gameBoard[x][y] = toAdd;
-				gameTotal++;
-			}else if(toAdd == FILL && puzzelSolution[y][x] != 1){
-				Log.d(TAG, puzzelSolution[y][x] + "");
-				Toast.makeText(this.getContext(), "Fout!", Toast.LENGTH_SHORT).show();
-				
-			}else if(toAdd != FILL && puzzelSolution[y][x] == 1){
-				gameBoard[x][y] = toAdd;
-				gameTotal--;
+		if(!heeftWinnaar()){
+			if (gameBoard[x][y] != toAdd) {
+				if (toAdd == FILL && puzzelSolution[y][x] == 1) {
+					gameBoard[x][y] = toAdd;
+					gameTotal++;
+				} 
+				else if (toAdd == FILL && puzzelSolution[y][x] != 1) {
+					Log.d(TAG, puzzelSolution[y][x] + "");
+					Toast.makeText(this.getContext(), "Fout!",Toast.LENGTH_SHORT).show();
+				} 
+				else if (toAdd != FILL && puzzelSolution[y][x] == 1) {
+					gameBoard[x][y] = toAdd;
+					gameTotal--;
+				} 
+				else if (toAdd != FILL && puzzelSolution[y][x] != 1) {
+					gameBoard[x][y] = toAdd;
+				}
+				update(x, y); /* update the view */
+				invalidate(); /* tell Android the view has to be redrawn */
 			}
-			else if(toAdd != FILL && puzzelSolution[y][x] != 1){
-				gameBoard[x][y] = toAdd;
-			}
-			if(heeftWinnaar()){
-				Toast.makeText(this.getContext(), "Klaar!", Toast.LENGTH_SHORT).show();
-				Log.d(TAG, "De puzzel is klaar!");
-			}
-			update(x, y); /* update the view */
-			invalidate(); /* tell Android the view has to be redrawn */
+		}
+		if(heeftWinnaar()) {
+			Toast.makeText(this.getContext(), "Klaar!", Toast.LENGTH_SHORT).show();
+			Log.d(TAG, "De puzzel is klaar!");
 		}
 	}
 	
