@@ -100,20 +100,21 @@ public class GameView extends TileView {
 					gameTotal++;
 				} 
 				else if (toAdd == FILL && puzzelSolution[y][x] != 1) {
-					Log.d(TAG, puzzelSolution[y][x] + "");
 					Toast.makeText(this.getContext(), "Fout!",Toast.LENGTH_SHORT).show();
+					gameBoard[x][y] = HINT;
 				} 
-				else if (toAdd != FILL && puzzelSolution[y][x] == 1) {
+				else if (toAdd != FILL && gameBoard[x][y] == FILL) {
 					gameBoard[x][y] = toAdd;
 					gameTotal--;
 				} 
-				else if (toAdd != FILL && puzzelSolution[y][x] != 1) {
+				else{
 					gameBoard[x][y] = toAdd;
 				}
 				update(x, y); /* update the view */
 				invalidate(); /* tell Android the view has to be redrawn */
 			}
 		}
+		Log.d(TAG, "Game: " + gameTotal + " Puzzel: " + puzzelTotal);
 		if(heeftWinnaar()) {
 			Toast.makeText(this.getContext(), "Klaar!", Toast.LENGTH_SHORT).show();
 			Log.d(TAG, "De puzzel is klaar!");
