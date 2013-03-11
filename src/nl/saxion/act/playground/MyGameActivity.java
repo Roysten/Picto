@@ -23,43 +23,49 @@ public class MyGameActivity extends Activity implements PauseDialog.NoticeDialog
 	private Button buttonFill, buttonCross, buttonBlank;
 	private int tijdGebruikt;
 	private boolean pauze = false;
-	
+
 	TextView mTime;
-	Timer timer = new Timer();	
-	
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        mGameView = (GameView) findViewById(R.id.game);
+	Timer timer = new Timer();
+
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		String puzzelName = null;
+		Bundle extras = getIntent().getExtras();
+		if(extras != null){
+			puzzelName = extras.getString("puzzel");
+			Log.d(TAG, puzzelName);
+		}
+		
+		setContentView(R.layout.main);
+		
+		mGameView = (GameView) findViewById(R.id.game);
         AssetManager assetManager = getAssets();
 		try {
-			mGameView.setPuzzel(new Puzzel(assetManager.open("puzzels/Banana.txt")));
+			mGameView.setPuzzel(new Puzzel(assetManager.open("puzzels/" + puzzelName + ".txt")));
+			mGameView.initNewGame();
 		} catch (IOException e) {
-			System.err.println("Er ging iets mis bij het openen van de puzzel.");
-			e.printStackTrace();
+			Log.e(TAG, "Er ging iets mis bij het openen van de puzzel.");
 		}
-        mGameView.initNewGame();
-        
-        buttonFill = (Button) findViewById(R.id.buttonFill);
-        buttonCross = (Button) findViewById(R.id.buttonCross);
-        buttonBlank = (Button) findViewById(R.id.buttonBlank);
-        
 
-        mTime = (TextView) findViewById(R.id.textView1);
+		buttonFill = (Button) findViewById(R.id.buttonFill);
+		buttonCross = (Button) findViewById(R.id.buttonCross);
+		buttonBlank = (Button) findViewById(R.id.buttonBlank);
 
-       
-        mTime.setText("Tijd: ");
-        
-  		System.out.println("Timer restart weer oncreate");
+		mTime = (TextView) findViewById(R.id.textView1);
 
-      //        De timer moet starten bij onCreate
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new updateTimer(), 0, 1000);
-    
-        }
-    
+		mTime.setText("Tijd: ");
+
+		System.out.println("Timer restart weer oncreate");
+
+		// De timer moet starten bij onCreate
+		timer = new Timer();
+		timer.scheduleAtFixedRate(new updateTimer(), 0, 1000);
+
+	}
+	
     /**
      * Het creeren van een actionbar op basis van menu.xml
      */

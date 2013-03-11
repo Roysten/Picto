@@ -15,15 +15,22 @@ public class LevelPicker extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.levelpicker);
         
-        level1 =(Button) findViewById(R.id.buttonlevel1);
-        level2 =(Button) findViewById(R.id.buttonlevel2);
-        level3 =(Button) findViewById(R.id.buttonlevel3);
-        
+        level1 = (Button) findViewById(R.id.buttonlevel1);
+        level2 = (Button) findViewById(R.id.buttonlevel2);
+        level3 = (Button) findViewById(R.id.buttonlevel3);
 	}
-	
-	public void onClickVolgend(View v) {
-		  Intent intent = new Intent(this, MyGameActivity.class);
-		  startActivity(intent);
-		}
 
+	public void onClickVolgend(View v) {
+		String puzzelName = null;
+		if (v == level1) {
+			puzzelName = "banana";
+		} else if (v == level2) {
+			puzzelName = "camel";
+		} else if (v == level3) {
+			puzzelName = "cactus";
+		}
+		Intent intent = new Intent(this, MyGameActivity.class);
+		intent.putExtra("puzzel", puzzelName);
+		startActivity(intent);
+	}
 }
