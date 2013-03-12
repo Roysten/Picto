@@ -17,46 +17,33 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MyGameActivity extends Activity implements PauseDialog.NoticeDialogListener {
+public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialogListener {
 	private GameView mGameView;
 	private final String TAG = "MyGameActivity";
 	private Button buttonFill, buttonCross, buttonBlank;
-	private int tijdGebruikt;
-	private boolean pauze = false;
-
-	TextView mTime;
+	private int timePassed;
+	private boolean pause = false;
+	private TextView mTime;
+	
 	Timer timer = new Timer();
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		String puzzelName = null;
-		Bundle extras = getIntent().getExtras();
-		if(extras != null){
-			puzzelName = extras.getString("puzzel");
-			Log.d(TAG, puzzelName);
-		}
-		
-		setContentView(R.layout.main);
+		setContentView(R.layout.puzzle);
 		
 		mGameView = (GameView) findViewById(R.id.game);
-        AssetManager assetManager = getAssets();
-		try {
-			mGameView.setPuzzel(new Puzzel(assetManager.open("puzzels/" + puzzelName + ".txt")));
-			mGameView.initNewGame();
-		} catch (IOException e) {
-			Log.e(TAG, "Er ging iets mis bij het openen van de puzzel.");
-		}
-
 		buttonFill = (Button) findViewById(R.id.buttonFill);
 		buttonCross = (Button) findViewById(R.id.buttonCross);
 		buttonBlank = (Button) findViewById(R.id.buttonBlank);
+		
+		Bundle extras = getIntent().getExtras();
+		if(extras != null){
+			setPuzzle(extras.getString("puzzle"));
+		}
 
 		mTime = (TextView) findViewById(R.id.textView1);
-
-		mTime.setText("Tijd: ");
 
 		System.out.println("Timer restart weer oncreate");
 
@@ -64,6 +51,17 @@ public class MyGameActivity extends Activity implements PauseDialog.NoticeDialog
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new updateTimer(), 0, 1000);
 
+	}
+	
+	public void setPuzzle(String puzzleName){
+        AssetManager assetManager = getAssets();
+		try {
+			Log.d(TAG, "Opening puzzle: " + "puzzles/" + puzzleName);
+			mGameView.setPuzzel(new Puzzle(assetManager.open("puzzles/" + puzzleName)));
+			mGameView.initNewGame();
+		} catch (IOException e) {
+			Log.e(TAG, "Something went wrong whilst opening puzzles.");
+		}
 	}
 	
     /**
@@ -79,7 +77,7 @@ public class MyGameActivity extends Activity implements PauseDialog.NoticeDialog
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
       if(item.getItemId()==(R.id.menu_pause)){
-    	  pauze = true;
+    	  pause = true;
     	  Log.d(TAG, "Timer gepauzeert via actionbarpauze knop");
     	  PauseDialog pauseDialog = new PauseDialog();
     	  FragmentManager fm = getFragmentManager();
@@ -101,20 +99,16 @@ public class MyGameActivity extends Activity implements PauseDialog.NoticeDialog
     	}
     }
     
-    public void setTextView(){
-    	mTime.setText("Tijd" + tijdGebruikt);
-    }
-    
 // Update timer zorgt ervoor dat deze elke seconde wordt bijgewerkt op het scherm, deze is niet nodig als we de tijd onzichtbaar laten tijdens spelen.    
   class updateTimer extends TimerTask{
 	  public void run(){
-		  MyGameActivity.this.runOnUiThread(new Runnable(){
+		  PuzzleActivity.this.runOnUiThread(new Runnable(){
 	  
 			  public void run(){
-				  if(!pauze){
-					  tijdGebruikt++;
-					  mTime.setText("Tijd: " + tijdGebruikt);
-					  System.out.println(tijdGebruikt);
+				  if(!pause){
+					  timePassed++;
+					  mTime.setText("Time passed: " + timePassed);
+					  System.out.println(timePassed);
 	  				}
 			  }
 		  	});
@@ -123,7 +117,7 @@ public class MyGameActivity extends Activity implements PauseDialog.NoticeDialog
   
   	protected void onPause(){
   		super.onPause();
-  		pauze = true;
+  		pause = true;
   		System.out.println("Timer gestopt via onPause");
 
   	}
@@ -131,11 +125,11 @@ public class MyGameActivity extends Activity implements PauseDialog.NoticeDialog
   	protected void onResume(){
   		super.onResume();
   		System.out.println("Timer restart weer");
-  		pauze = false;
+  		pause = false;
 	}
 
 	public void onDialogPositiveClick(DialogFragment dialog) {
-		pauze = false;
+		pause = false;
   	  	Log.d(TAG, "Timer weer gestart na weggaan uit pauze menu");
 		
 	}

@@ -5,21 +5,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-public class MainMenu extends Activity{
-	Button startGame;
+public class MenuActivity extends Activity{
+	Button startButton, exitButton;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hoofdmenu);
+        setContentView(R.layout.mainmenu);
         
-        startGame = (Button)findViewById(R.id.startbutton);	
+        startButton = (Button) findViewById(R.id.startbutton);
 	}
 	
-	public void onClickVolgend(View v) {
-		  Intent intent = new Intent(this, LevelPicker.class);
+	public void onButtonClicked(View v) {
+		if(v == startButton){
+		  Intent intent = new Intent(this, PuzzlePickActivity.class);
 		  startActivity(intent);
 		}
-
+	}
 }

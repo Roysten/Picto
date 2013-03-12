@@ -61,8 +61,8 @@ public class GameView extends TileView {
 		this.toAdd = toAdd;
 	}
 	
-	public void setPuzzel(Puzzel puzzel){
-		puzzelSolution = puzzel.getOplossing();
+	public void setPuzzel(Puzzle puzzel){
+		puzzelSolution = puzzel.getSolution();
 		puzzelTotal = puzzel.getTotal();
 		setDimension(puzzel.getSizeX());
 		setHints(puzzel.getVerticalHints(), puzzel.getHorizontalHints());

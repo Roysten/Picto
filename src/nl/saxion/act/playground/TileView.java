@@ -59,9 +59,9 @@ public abstract class TileView extends View {
 	 * De kleuren van de paints
 	 */
 	private final int lineColor = Color.BLACK;
-	private final int rectVakjeColor = Color.LTGRAY;
 	private final int crossColor = Color.RED;
 	private final int textColor = Color.BLACK;
+	private final int rectVakjeColor = Color.LTGRAY;
 	
 	/**
 	 * De dikte van de dikkere lijn in px die om een x aantal vakjes getekend wordt
@@ -115,7 +115,6 @@ public abstract class TileView extends View {
 		//textPaint.setTextAlign(Align.CENTER);
 		crossPaint.setAntiAlias(true);
 	}
-
 
 	/**
 	 * Resets all tiles to 0 (empty)

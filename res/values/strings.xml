@@ -8,5 +8,8 @@
     <string name="dialog_pause_msg">Dit is het pauze scherm</string>
     <string name="dialog_pause_positive">Ga verder</string>
     <string name="dialog_pause_negative">Stoppen</string>
+    <string name="buttonStartGameText">Start Game</string>
+    <string name="timePassedString">Time passed: </string>
+    <string name="PuzzlePickerText">Please choose the puzzle you wish to play.</string>
     
   </resources>
