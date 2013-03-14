@@ -136,6 +136,6 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 
 	public void onDialogNegativeClick(DialogFragment dialog) {
 		// TODO nog in te vullen actie, mogelijk terug naar hoofdmenu in sprint 2
-		
+		finish();
 	}
 }
