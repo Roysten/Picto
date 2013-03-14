@@ -14,7 +14,7 @@ public class TimerView extends LinearLayout{
 	private int timePassed = -1;
 	Handler handler = new Handler();
 	Runnable runnable = new Runnable(){
-		@Override
+		
 		public void run() {
 			if(!pause){
 				timePassed++;
