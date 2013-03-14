@@ -19,7 +19,7 @@ public class GameView extends TileView {
 	 * What tile to add to the game board
 	 */
 	private int toAdd = FILL;
-	
+	private TimerView timer;
 	/*
 	 * Textview to show in user interface which object to add
 	 */
@@ -42,11 +42,15 @@ public class GameView extends TileView {
 	 * @param attrs
 	 */
 	public GameView(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
+		super(context, attrs);
 	}
 
 	public GameView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+	}
+	
+	public void setTimer(TimerView timer){
+		this.timer = timer;
 	}
 	
 	public void initNewGame() {
@@ -102,6 +106,7 @@ public class GameView extends TileView {
 				else if (toAdd == FILL && puzzelSolution[y][x] != 1) {
 					Toast.makeText(this.getContext(), "Fout!",Toast.LENGTH_SHORT).show();
 					gameBoard[x][y] = HINT;
+					timer.timePenalty(120);
 				} 
 				else if (toAdd != FILL && gameBoard[x][y] == FILL) {
 					gameBoard[x][y] = toAdd;
