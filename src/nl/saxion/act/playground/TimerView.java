@@ -1,8 +1,5 @@
 package nl.saxion.act.playground;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;

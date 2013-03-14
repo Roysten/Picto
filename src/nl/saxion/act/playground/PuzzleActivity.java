@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialogListener {
 	private GameView mGameView;
