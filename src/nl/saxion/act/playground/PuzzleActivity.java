@@ -1,8 +1,6 @@
 package nl.saxion.act.playground;
 
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -21,12 +19,8 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 	private GameView mGameView;
 	private final String TAG = "MyGameActivity";
 	private Button buttonFill, buttonCross, buttonBlank;
-	private int timePassed;
-	private boolean pause = false;
-	private TextView mTime;
+	private TimerView timerView;
 	
-	Timer timer = new Timer();
-
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,20 +31,12 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 		buttonFill = (Button) findViewById(R.id.buttonFill);
 		buttonCross = (Button) findViewById(R.id.buttonCross);
 		buttonBlank = (Button) findViewById(R.id.buttonBlank);
+		timerView = (TimerView) findViewById(R.id.timerView1);
 		
 		Bundle extras = getIntent().getExtras();
 		if(extras != null){
 			setPuzzle(extras.getString("puzzle"));
 		}
-
-		mTime = (TextView) findViewById(R.id.textView1);
-
-		System.out.println("Timer restart weer oncreate");
-
-		// De timer moet starten bij onCreate
-		timer = new Timer();
-		timer.scheduleAtFixedRate(new updateTimer(), 0, 1000);
-
 	}
 	
 	public void setPuzzle(String puzzleName){
@@ -77,13 +63,12 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
       if(item.getItemId()==(R.id.menu_pause)){
-    	  pause = true;
+    	  timerView.pauseTimer();
     	  Log.d(TAG, "Timer gepauzeert via actionbarpauze knop");
     	  PauseDialog pauseDialog = new PauseDialog();
     	  FragmentManager fm = getFragmentManager();
     	  pauseDialog.show(fm, TAG);
       }
-
       return true;
     } 
     
@@ -99,43 +84,20 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
     	}
     }
     
-// Update timer zorgt ervoor dat deze elke seconde wordt bijgewerkt op het scherm, deze is niet nodig als we de tijd onzichtbaar laten tijdens spelen.    
-  class updateTimer extends TimerTask{
-	  public void run(){
-		  PuzzleActivity.this.runOnUiThread(new Runnable(){
-	  
-			  public void run(){
-				  if(!pause){
-					  timePassed++;
-					  mTime.setText("Time passed: " + timePassed);
-					  System.out.println(timePassed);
-	  				}
-			  }
-		  	});
-	  	}
-  }
-  
   	protected void onPause(){
   		super.onPause();
-  		pause = true;
-  		System.out.println("Timer gestopt via onPause");
-
+  		timerView.pauseTimer();
   	}
   
   	protected void onResume(){
   		super.onResume();
-  		System.out.println("Timer restart weer");
-  		pause = false;
+  		timerView.continueTimer();
 	}
 
 	public void onDialogPositiveClick(DialogFragment dialog) {
-		pause = false;
-  	  	Log.d(TAG, "Timer weer gestart na weggaan uit pauze menu");
-		
 	}
 
 	public void onDialogNegativeClick(DialogFragment dialog) {
-		// TODO nog in te vullen actie, mogelijk terug naar hoofdmenu in sprint 2
 		finish();
 	}
 }

@@ -46,12 +46,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/radioGroup1" >
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/timePassedString" />
+        <nl.saxion.act.playground.TimerView
+            android:id="@+id/timerView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </nl.saxion.act.playground.TimerView>
 
     </LinearLayout>
 
