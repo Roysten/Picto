@@ -123,6 +123,7 @@ public class GameView extends TileView {
 		if(heeftWinnaar()) {
 			Toast.makeText(this.getContext(), "Klaar!", Toast.LENGTH_SHORT).show();
 			Log.d(TAG, "De puzzel is klaar!");
+			timer.pauseTimer();
 		}
 	}
 	
