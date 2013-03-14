@@ -28,7 +28,7 @@ public abstract class TileView extends View {
 	/**
 	 * Dimensie van het spelbord
 	 */
-	protected int mDimension = 10;
+	protected int mDimension = 15;
 
 	/**
 	 * Grootte van een vakje wordt hierin opgeslagen. Wordt geïnitialiseerd op nul,
