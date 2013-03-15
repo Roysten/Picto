@@ -30,6 +30,9 @@ public class PuzzlePickActivity extends Activity{
         checkAssets();
 	}
 
+	/**
+	 * Laad de lijst met puzzels door in de map puzzles te kijken
+	 */
 	public void checkAssets(){
 		assetManager = getAssets();
 		try {
@@ -43,12 +46,19 @@ public class PuzzlePickActivity extends Activity{
 		}
 	}
 	
+	/**
+	 * Open de puzzel door een String waarde mee te geven aan de PuzzleActivity
+	 * @param puzzle De naam van de starten puzzel
+	 */
 	public void openPuzzleView(String puzzle){
 		Intent intent = new Intent(this, PuzzleActivity.class);
 		intent.putExtra("puzzle", puzzle);
 		startActivity(intent);
 	}
 	
+	/**
+	 * Detecteer welke puzzel is aangeklikt en handel deze af in OpenPuzzleView
+	 */
 	private OnItemClickListener puzzleClickedHandler = new OnItemClickListener() {
 	    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 	    	openPuzzleView(puzzles[position]);
