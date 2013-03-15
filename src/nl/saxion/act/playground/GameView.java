@@ -28,25 +28,19 @@ public class GameView extends TileView {
 	private int puzzelTotal, gameTotal;
 	
 
-	/**
-	 * Labels for the drawables that will be loaded into the TileView class
-	 */
 	public static final int FILL = 1;
 	public static final int HINT = 2;
 	public static final int BLANK = 0;
 	
 	private int [][] gameBoard;
 
-	/**
-	 * @param context
-	 * @param attrs
-	 */
 	public GameView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+		this(context, attrs, 0);
 	}
 
 	public GameView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		initNewGame();
 	}
 	
 	public void setTimer(TimerView timer){
@@ -65,6 +59,10 @@ public class GameView extends TileView {
 		this.toAdd = toAdd;
 	}
 	
+	/**
+	 * Puzzel setten, nodig omdat android geen eigen constructor toelaat binnen een View
+	 * @param puzzel
+	 */
 	public void setPuzzel(Puzzle puzzel){
 		puzzelSolution = puzzel.getSolution();
 		puzzelTotal = puzzel.getTotal();
@@ -123,7 +121,7 @@ public class GameView extends TileView {
 		if(heeftWinnaar()) {
 			Toast.makeText(this.getContext(), "Klaar!", Toast.LENGTH_SHORT).show();
 			Log.d(TAG, "De puzzel is klaar!");
-			timer.pauseTimer();
+			timer.killTimer();
 		}
 	}
 	

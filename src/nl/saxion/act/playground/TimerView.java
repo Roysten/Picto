@@ -16,7 +16,7 @@ public class TimerView extends LinearLayout{
 	Runnable runnable = new Runnable(){
 		
 		public void run() {
-			System.out.println("FiRE!");
+			System.out.println("TICK");
 			if(!pause){
 				timePassed++;
 				setText("" + timePassed);
@@ -49,6 +49,7 @@ public class TimerView extends LinearLayout{
 	
 	public void timePenalty(int penalty){
 		timePassed += penalty;
+		handler.post(runnable);
 	}
 	
 	public void setText(String text){
@@ -61,5 +62,9 @@ public class TimerView extends LinearLayout{
 	
 	public void continueTimer(){
 		pause = false;
+	}
+	
+	public void killTimer(){
+		handler.removeCallbacks(runnable);
 	}
 }

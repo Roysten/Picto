@@ -94,15 +94,34 @@ public abstract class TileView extends View {
 		thickLineWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, r.getDisplayMetrics());
 	}
 
+	/**
+	 * Roep bovenstaande constructor aan voor eenvoud (Toegestaan binnen android, ze gebruiken het zelf ook binnen
+	 * TextView: http://stackoverflow.com/questions/9195785/should-i-call-super-or-call-this-for-android-custom-view-constructors)
+	 * @param context
+	 * @param attrs
+	 */
 	public TileView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 	
+	public TileView(Context context){
+		this(context, null, 0);
+	}
+	
+	/**
+	 * Zet de hints afkomstig van de puzzel
+	 * @param verticalHints
+	 * @param horizontalHints
+	 */
 	public void setHints(String[][] verticalHints, String[][] horizontalHints){
 		this.verticalHints = verticalHints;
 		this.horizontalHints = horizontalHints;
 	}
 	
+	/**
+	 * Zet de dimensie afkomstig van de puzzel
+	 * @param dimension
+	 */
 	public void setDimension(int dimension){
 		mDimension = dimension;
 	}
