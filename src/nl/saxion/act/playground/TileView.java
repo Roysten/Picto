@@ -89,7 +89,7 @@ public abstract class TileView extends View {
 		Log.d(TAG, "initTileView( " + mTileSize + " )");
 		initPaint();
 		
-		//Bereken de dikte van de lijnen
+		//Bereken de dikte van de lijnen, "dikte van 2" omzetten naar dp
 		Resources r = getResources();
 		thickLineWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, r.getDisplayMetrics());
 	}
@@ -165,10 +165,12 @@ public abstract class TileView extends View {
 	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		int x = (int)((event.getX() - mTileSize * SPACING) / mTileSize);
-		int y = (int)((event.getY() - mTileSize * SPACING) / mTileSize);
+		Log.d(TAG, "X: " + event.getX() + " Y: " + event.getY());
+		Log.d(TAG, "mTileSize: " + mTileSize);
+		int x = (int)((event.getX() - (mTileSize * SPACING)) / mTileSize);
+		int y = (int)((event.getY() - (mTileSize * SPACING)) / mTileSize);
 		Log.d(TAG, "Touched (" + x + ", " + y + ")");
-		if (x >=0 && x < mDimension && y >= 0 && y < mDimension) { /* Game Board touched */
+		if (x >= 0 && x < mDimension && y >= 0 && y < mDimension) { /* Game Board touched */
 			touched(x, y);
 		}
 		return super.onTouchEvent(event);

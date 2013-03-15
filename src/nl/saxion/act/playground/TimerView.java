@@ -16,11 +16,11 @@ public class TimerView extends LinearLayout{
 	Runnable runnable = new Runnable(){
 		
 		public void run() {
-			System.out.println("TICK");
 			if(!pause){
 				timePassed++;
 				setText("" + timePassed);
 			}
+			handler.removeCallbacks(runnable);
 			handler.postDelayed(this, 1000);
 		}
 	};
