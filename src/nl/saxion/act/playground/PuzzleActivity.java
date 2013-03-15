@@ -83,16 +83,23 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
     		mGameView.setToAdd(GameView.HINT);
     	}
     }
-    
-  	protected void onPause(){
+    @Override
+  	public void onPause(){
   		super.onPause();
   		timerView.pauseTimer();
   	}
   
-  	protected void onResume(){
+  	@Override
+  	public void onResume(){
   		super.onResume();
   		timerView.continueTimer();
 	}
+  	
+  	@Override
+  	protected void onStart(){
+  		super.onStart();
+  		timerView.continueTimer();
+  	}
 
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		timerView.continueTimer();
