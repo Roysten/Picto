@@ -165,10 +165,8 @@ public abstract class TileView extends View {
 	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		Log.d(TAG, "X: " + event.getX() + " Y: " + event.getY());
-		Log.d(TAG, "mTileSize: " + mTileSize);
-		int x = (int)((event.getX() - (mTileSize * SPACING)) / mTileSize);
-		int y = (int)((event.getY() - (mTileSize * SPACING)) / mTileSize);
+		int x = (int) (event.getX() / mTileSize) - SPACING;
+		int y = (int) (event.getY() / mTileSize) - SPACING;
 		Log.d(TAG, "Touched (" + x + ", " + y + ")");
 		if (x >= 0 && x < mDimension && y >= 0 && y < mDimension) { /* Game Board touched */
 			touched(x, y);
