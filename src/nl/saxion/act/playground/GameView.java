@@ -24,23 +24,21 @@ public class GameView extends TileView {
 	 * Textview to show in user interface which object to add
 	 */
 	private static final String TAG = "GameView";
-	private int[][] puzzelSolution;
-	private int puzzelTotal, gameTotal;
+	private int[][] puzzleSolution;
+	private int[] rowTotals, columnTotals;
+	private int puzzleTotal, gameTotal;
 	
 
 	public static final int FILL = 1;
 	public static final int HINT = 2;
 	public static final int BLANK = 0;
 	
-	private int [][] gameBoard;
-
 	public GameView(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
+		super(context, attrs);
 	}
 
 	public GameView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		initNewGame();
 	}
 	
 	public void setTimer(TimerView timer){
@@ -50,7 +48,6 @@ public class GameView extends TileView {
 	public void initNewGame() {
 		Log.d(TAG,"Loading tiles");
 		gameBoard = new int [mDimension][mDimension];
-		
 		toAdd = FILL;
 		invalidate(); 
 	}
@@ -61,13 +58,18 @@ public class GameView extends TileView {
 	
 	/**
 	 * Puzzel setten, nodig omdat android geen eigen constructor toelaat binnen een View
-	 * @param puzzel
+	 * Eigenschappen puzzel zetten op de protected variabelen van TileView
+	 * @param puzzle
 	 */
-	public void setPuzzel(Puzzle puzzel){
-		puzzelSolution = puzzel.getSolution();
-		puzzelTotal = puzzel.getTotal();
-		setDimension(puzzel.getSizeX());
-		setHints(puzzel.getVerticalHints(), puzzel.getHorizontalHints());
+	public void setPuzzle(Puzzle puzzle){
+		puzzleSolution = puzzle.getSolution();
+		puzzleTotal = puzzle.getTotal();
+		mDimension = puzzle.getDimension();
+		rowHints = puzzle.getRowHints();
+		columnHints = puzzle.getColumnHints();
+		rowTotals = puzzle.getRowTotals();
+		columnTotals = puzzle.getColumnTotals();
+		initNewGame();
 	}
 	
 	/**
@@ -95,13 +97,15 @@ public class GameView extends TileView {
     }
 
 	public void touched(int x, int y){
-		if(!heeftWinnaar()){
+		if(!hasWinner()){
 			if (gameBoard[x][y] != toAdd) {
-				if (toAdd == FILL && puzzelSolution[y][x] == 1) {
+				if (toAdd == FILL && puzzleSolution[y][x] == 1) {
 					gameBoard[x][y] = toAdd;
 					gameTotal++;
+					rowDone[y] = checkRow(y);
+					columnDone[x] = checkColumn(x);
 				} 
-				else if (toAdd == FILL && puzzelSolution[y][x] != 1) {
+				else if (toAdd == FILL && puzzleSolution[y][x] != 1) {
 					Toast.makeText(this.getContext(), "Fout!",Toast.LENGTH_SHORT).show();
 					gameBoard[x][y] = HINT;
 					timer.timePenalty(120);
@@ -109,6 +113,8 @@ public class GameView extends TileView {
 				else if (toAdd != FILL && gameBoard[x][y] == FILL) {
 					gameBoard[x][y] = toAdd;
 					gameTotal--;
+					rowDone[y] = checkRow(y);
+					columnDone[x] = checkColumn(x);
 				} 
 				else{
 					gameBoard[x][y] = toAdd;
@@ -117,17 +123,32 @@ public class GameView extends TileView {
 				invalidate(); /* tell Android the view has to be redrawn */
 			}
 		}
-		Log.d(TAG, "Game: " + gameTotal + " Puzzel: " + puzzelTotal);
-		if(heeftWinnaar()) {
+		if(hasWinner()) {
 			Toast.makeText(this.getContext(), "Klaar!", Toast.LENGTH_SHORT).show();
 			Log.d(TAG, "De puzzel is klaar!");
 			timer.killTimer();
 		}
 	}
 	
-	public boolean heeftWinnaar(){
+	public boolean checkRow(int row){
+		int currentDone = 0;
+		for(int i = 0; i < mDimension; i++){
+			currentDone += gameBoard[i][row] == 1 ? 1 : 0;
+		}
+		return currentDone == rowTotals[row];
+	}
+	
+	public boolean checkColumn(int column){
+		int currentDone = 0;
+		for(int i = 0; i < mDimension; i++){
+			currentDone += gameBoard[column][i] == 1 ? 1 : 0;
+		}
+		return currentDone == columnTotals[column];
+	}
+	
+	public boolean hasWinner(){
 		boolean heeftWinnaar = false;
-		if(puzzelTotal == gameTotal){
+		if(puzzleTotal == gameTotal){
 			heeftWinnaar = true;
 		}
 		return heeftWinnaar;

@@ -20,33 +20,34 @@ import android.view.View;
  * 
  */
 public abstract class TileView extends View {
-	
+
 	private static final String TAG = "TileView";
-	private String[][] verticalHints;
-	private String[][] horizontalHints;
-	
+	protected int[][] rowHints, columnHints;
+	protected boolean[] rowDone = new boolean[15], columnDone = new boolean[15];
+
 	/**
 	 * Dimensie van het spelbord
 	 */
-	protected int mDimension = 15;
+	protected int mDimension;
 
 	/**
-	 * Grootte van een vakje wordt hierin opgeslagen. Wordt geïnitialiseerd op nul,
-	 * daarna gelijk aangepast door onSizeChanged()
+	 * Grootte van een vakje wordt hierin opgeslagen. Wordt geïnitialiseerd op
+	 * nul, daarna gelijk aangepast door onSizeChanged()
 	 */
 
-	protected float mTileSize = 0;
+	private float mTileSize = 0;
 
 	/**
 	 * De array waarin alle vakjes en hun invulling zijn opgeslagen.
 	 */
-	private int[][] mTileGrid;
-	
+	protected int[][] gameBoard;
+
 	/**
-	 * Aantal lijnen dat niet getekent moeten worden (zorgt voor Picross uiterlijk)
+	 * Aantal lijnen dat niet getekent moeten worden (zorgt voor Picross
+	 * uiterlijk)
 	 */
-	public static final int SPACING = 3;
-	
+	private static final int SPACING = 3;
+
 	/**
 	 * Initialiseren van de verschillende soorten paint
 	 */
@@ -54,28 +55,29 @@ public abstract class TileView extends View {
 	private final Paint rectPaint = new Paint();
 	private final Paint crossPaint = new Paint();
 	private final Paint textPaint = new Paint();
-	
+	private final Paint textDonePaint = new Paint();
+
 	/**
 	 * De kleuren van de paints
 	 */
 	private final int lineColor = Color.BLACK;
 	private final int crossColor = Color.RED;
 	private final int textColor = Color.BLACK;
+	private final int textDoneColor = Color.LTGRAY;
 	private final int rectVakjeColor = Color.LTGRAY;
-	
+
 	/**
-	 * De dikte van de dikkere lijn in px die om een x aantal vakjes getekend wordt
-	 * Wordt berekent uit een een dp waarde van 2 
+	 * De dikte van de dikkere lijn in px die om een x aantal vakjes getekend
+	 * wordt Wordt berekent uit een een dp waarde van 2
 	 */
-	private final float thickLineWidth;
-	
+	private float thickLineWidth;
+
 	/**
-	 * De hoogte van de tekst die wordt gebruikt als ijkpunt om de tekst te schalen
-	 * op verschillende resolutie's. 
+	 * De hoogte van de tekst die wordt gebruikt als ijkpunt om de tekst te
+	 * schalen op verschillende resolutie's.
 	 */
-	private float textHeight;
-	private float textWidth;
-	
+	private float textHeight, textWidth;
+
 	/**
 	 * Het vakje dat wordt gebruikt als "stempel" om alle vakjes te kleuren.
 	 */
@@ -83,55 +85,35 @@ public abstract class TileView extends View {
 
 	public TileView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-
-		mTileGrid = new int[mDimension][mDimension];
-		clearTiles();
-		Log.d(TAG, "initTileView( " + mTileSize + " )");
-		initPaint();
-		
-		//Bereken de dikte van de lijnen, "dikte van 2" omzetten naar dp
-		Resources r = getResources();
-		thickLineWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, r.getDisplayMetrics());
+		init();
 	}
 
-	/**
-	 * Roep bovenstaande constructor aan voor eenvoud (Toegestaan binnen android, ze gebruiken het zelf ook binnen
-	 * TextView: http://stackoverflow.com/questions/9195785/should-i-call-super-or-call-this-for-android-custom-view-constructors)
-	 * @param context
-	 * @param attrs
-	 */
 	public TileView(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
+		super(context, attrs);
+		init();
 	}
 	
 	public TileView(Context context){
-		this(context, null, 0);
+		super(context);
+		init();
 	}
 	
-	/**
-	 * Zet de hints afkomstig van de puzzel
-	 * @param verticalHints
-	 * @param horizontalHints
-	 */
-	public void setHints(String[][] verticalHints, String[][] horizontalHints){
-		this.verticalHints = verticalHints;
-		this.horizontalHints = horizontalHints;
+	public void init(){
+		initPaint();
+
+		// Bereken de dikte van de lijnen, "dikte van 2" omzetten naar dp
+		Resources r = getResources();
+		thickLineWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+				2, r.getDisplayMetrics());
 	}
-	
-	/**
-	 * Zet de dimensie afkomstig van de puzzel
-	 * @param dimension
-	 */
-	public void setDimension(int dimension){
-		mDimension = dimension;
-	}
-	
-	public void initPaint(){
+
+	public void initPaint() {
 		linePaint.setColor(lineColor);
 		rectPaint.setColor(rectVakjeColor);
 		crossPaint.setColor(crossColor);
 		textPaint.setColor(textColor);
-		//textPaint.setTextAlign(Align.CENTER);
+		textDonePaint.setColor(textDoneColor);
+		// textPaint.setTextAlign(Align.CENTER);
 		crossPaint.setAntiAlias(true);
 	}
 
@@ -157,7 +139,7 @@ public abstract class TileView extends View {
 	 * @param y
 	 */
 	public void setTile(int tileindex, int x, int y) {
-		mTileGrid[x][y] = tileindex;
+		gameBoard[x][y] = tileindex;
 	}
 
 	/**
@@ -168,7 +150,11 @@ public abstract class TileView extends View {
 		int x = (int) (event.getX() / mTileSize) - SPACING;
 		int y = (int) (event.getY() / mTileSize) - SPACING;
 		Log.d(TAG, "Touched (" + x + ", " + y + ")");
-		if (x >= 0 && x < mDimension && y >= 0 && y < mDimension) { /* Game Board touched */
+		if (x >= 0 && x < mDimension && y >= 0 && y < mDimension) { /*
+																	 * Game
+																	 * Board
+																	 * touched
+																	 */
 			touched(x, y);
 		}
 		return super.onTouchEvent(event);
@@ -190,91 +176,110 @@ public abstract class TileView extends View {
 	 */
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		mTileSize = Math.min((float)w / (mDimension + SPACING), (float)h / (mDimension + SPACING));
+		mTileSize = Math.min((float) w / (mDimension + SPACING), (float) h
+				/ (mDimension + SPACING));
 		Log.d(TAG, "onSizeChanged( " + mTileSize + " )");
-		
-		//Bereken gewenste tekstgrootte
+
+		// Bereken gewenste tekstgrootte
 		textPaint.setTextSize(100);
 		Rect bounds = new Rect();
-		
-		textPaint.getTextBounds("2", 0, 1, bounds);
-		
-		//Waarom hoogte? Die is voor bijna elke letter gelijk
-		textHeight = bounds.bottom - bounds.top;
-		
-		float target = mTileSize / 3f;
-		
-		float textSize = (target / textHeight) * 100f;
-		System.out.println(textSize);
-		textPaint.setTextSize(textSize);
 
-		//Voor precieze plaatsing tekst hoogte bepalen noodzakelijk
+		textPaint.getTextBounds("2", 0, 1, bounds);
+
+		// Waarom hoogte? Die is voor bijna elke letter gelijk
+		textHeight = bounds.bottom - bounds.top;
+
+		float target = mTileSize / 3f;
+
+		float textSize = (target / textHeight) * 100f;
+		textPaint.setTextSize(textSize);
+		textDonePaint.setTextSize(textSize);
+
+		// Voor precieze plaatsing tekst hoogte bepalen noodzakelijk
 		textPaint.getTextBounds("2", 0, 1, bounds);
 		textHeight = bounds.bottom - bounds.top;
 		textWidth = bounds.right - bounds.left;
-		
-		//Zet de vakjes naar de correcte grootte
+
+		// Zet de vakjes naar de correcte grootte
 		rectVakje.set(0, 0, mTileSize, mTileSize);
 	}
 
 	/**
 	 * Tekent de vakjes op de goede plaats
+	 * 
 	 * @param canvas
 	 */
-	public void drawRects(Canvas canvas){
-		for(int i = 0; i < mDimension; i++){
-			for(int j = 0; j < mDimension; j++){
-				if(mTileGrid[i][j]  == 1){
-					rectVakje.offsetTo((i + SPACING) * mTileSize, (j + SPACING) * mTileSize);
-					canvas.drawRect(rectVakje, rectPaint);
-				}
-				if(mTileGrid[i][j] == 2){
-					canvas.drawLine((i + SPACING) * mTileSize, (j + SPACING) * mTileSize, (i + SPACING + 1) * mTileSize, (j + SPACING + 1) * mTileSize, crossPaint);
-					canvas.drawLine((i + SPACING + 1) * mTileSize, (j + SPACING) * mTileSize, (i + SPACING) * mTileSize, (j + SPACING + 1) * mTileSize, crossPaint);
+	public void drawRects(Canvas canvas) {
+		if(mDimension != 0 && gameBoard.length != 0){
+		for (int i = 0; i < mDimension; i++) {
+			for (int j = 0; j < mDimension; j++) {
+					if (gameBoard[i][j] == 1) {
+						rectVakje.offsetTo((i + SPACING) * mTileSize,
+								(j + SPACING) * mTileSize);
+						canvas.drawRect(rectVakje, rectPaint);
+					}
+					if (gameBoard[i][j] == 2) {
+						canvas.drawLine((i + SPACING) * mTileSize,
+								(j + SPACING) * mTileSize, (i + SPACING + 1)
+										* mTileSize, (j + SPACING + 1)
+										* mTileSize, crossPaint);
+						canvas.drawLine((i + SPACING + 1) * mTileSize,
+								(j + SPACING) * mTileSize, (i + SPACING)
+										* mTileSize, (j + SPACING + 1)
+										* mTileSize, crossPaint);
+					}
 				}
 			}
 		}
 	}
-	
+
 	/**
 	 * Teken het grid. Om de 5 vakjes komt een dikkere lijn
+	 * 
 	 * @param canvas
 	 */
-	public void drawGrid(Canvas canvas){
+	public void drawGrid(Canvas canvas) {
 		for (int i = SPACING; i < mDimension + SPACING; i++) {
-			if((i - SPACING) % 5 == 0){
+			if ((i - SPACING) % 5 == 0) {
 				linePaint.setStrokeWidth(thickLineWidth);
-				canvas.drawLine(i * mTileSize, 0, i * mTileSize, canvas.getHeight(), linePaint);
-				canvas.drawLine(0, i * mTileSize, canvas.getWidth(), i * mTileSize, linePaint);
+				canvas.drawLine(i * mTileSize, 0, i * mTileSize,
+						canvas.getHeight(), linePaint);
+				canvas.drawLine(0, i * mTileSize, canvas.getWidth(), i
+						* mTileSize, linePaint);
 				linePaint.setStrokeWidth(0f);
-			}
-			else{
-				canvas.drawLine(i * mTileSize, 0, i * mTileSize, canvas.getHeight(), linePaint);
-				canvas.drawLine(0, i * mTileSize, canvas.getWidth(), i * mTileSize, linePaint);
+			} else {
+				canvas.drawLine(i * mTileSize, 0, i * mTileSize,
+						canvas.getHeight(), linePaint);
+				canvas.drawLine(0, i * mTileSize, canvas.getWidth(), i
+						* mTileSize, linePaint);
 			}
 		}
 	}
-	
+
 	/**
 	 * Tekent de tekst in de goede vakjes adhv 2 arrays met de waardes.
-	 * @param canvas Canvas om op te tekenen
-	 * @param verticalHints Verticale tekst
-	 * @param horizontalHints horizontale tekst
+	 * 
+	 * @param canvas
+	 *            Canvas om op te tekenen
 	 */
-	public void drawText(Canvas canvas, String[][] verticalHints, String[][] horizontalHints) {
+	public void drawText(Canvas canvas) {
 		/*
-		 * Tekst wordt als volgt getekend:
-		 * x = de helft van een vakje (zodat het niet te dicht op de rand staat)
-		 * y = i + spacing(om eerste rijen over te slaan) + halve teksthoogte (voor netjes uitlijnen) 
+		 * Tekst wordt als volgt getekend: x = de helft van een vakje (zodat het
+		 * niet te dicht op de rand staat) y = i + spacing(om eerste rijen over
+		 * te slaan) + halve teksthoogte (voor netjes uitlijnen)
 		 */
-		if (!isInEditMode()) {
+		if (!isInEditMode()) { // als we in de editor zijn, nummers niet
+								// tekenen, want die zijn dan null
+			Paint paintToUse;
 			for (int i = 0; i < mDimension; i++) {
 				String rowText = "";
-				for (int j = 0; j < horizontalHints[i].length; j++) {
-					rowText += horizontalHints[i][j] + "  ";
+				for (int j = 0; j < rowHints[i].length; j++) {
+					if (rowHints[i][j] != 0) {
+						rowText += rowHints[i][j] + "  ";
+					}
 				}
-				canvas.drawText(rowText, .5f * mTileSize, (i + SPACING + 0.5f)
-						* mTileSize + textHeight / 2, textPaint);
+				paintToUse = rowDone[i] ? textDonePaint : textPaint;
+				canvas.drawText(rowText, .5f * mTileSize, (i + SPACING + 0.5f) * mTileSize + textHeight / 2, paintToUse);
 			}
 
 			/*
@@ -285,10 +290,11 @@ public abstract class TileView extends View {
 			 * ruimte ertussen te houden)
 			 */
 			for (int i = 0; i < mDimension; i++) {
-				for (int j = 0; j < verticalHints[i].length; j++) {
-					canvas.drawText(verticalHints[i][j], (i + SPACING + 0.5f)
-							* mTileSize - (textWidth / 2), (j + 1)
-							* (textHeight * 1.5f), textPaint);
+				for (int j = 0; j < rowHints[i].length; j++) {
+					if (columnHints[i][j] != 0) {
+						paintToUse = columnDone[i] ? textDonePaint : textPaint;
+						canvas.drawText(columnHints[i][j] + "", (i + SPACING + 0.5f) * mTileSize - (textWidth / 2), (j + 1) * (textHeight * 1.5f), paintToUse);
+					}
 				}
 			}
 		}
@@ -298,10 +304,9 @@ public abstract class TileView extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 		long start = System.currentTimeMillis();
-		super.onDraw(canvas);
 		drawRects(canvas);
 		drawGrid(canvas);
-		drawText(canvas, verticalHints, horizontalHints);
+		drawText(canvas);
 		long end = System.currentTimeMillis();
 		Log.d(TAG, "drawing took: " + (end - start));
 	}

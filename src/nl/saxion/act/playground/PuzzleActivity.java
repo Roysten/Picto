@@ -24,14 +24,15 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.puzzle);
 		
-		mGameView = (GameView) findViewById(R.id.game);
 		buttonFill = (Button) findViewById(R.id.buttonFill);
 		buttonCross = (Button) findViewById(R.id.buttonCross);
 		buttonBlank = (Button) findViewById(R.id.buttonBlank);
 		timerView = (TimerView) findViewById(R.id.timerView1);
 		
+		mGameView = (GameView) findViewById(R.id.game);
 		Bundle extras = getIntent().getExtras();
 		if(extras != null){
 			setPuzzle(extras.getString("puzzle"));
@@ -42,7 +43,7 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
         AssetManager assetManager = getAssets();
 		try {
 			Log.d(TAG, "Opening puzzle: " + "puzzles/" + puzzleName);
-			mGameView.setPuzzel(new Puzzle(assetManager.open("puzzles/" + puzzleName)));
+			mGameView.setPuzzle(new Puzzle(assetManager.open("puzzles/" + puzzleName)));
 			mGameView.setTimer(timerView);
 		} catch (IOException e) {
 			Log.e(TAG, "Something went wrong whilst opening puzzles.");
