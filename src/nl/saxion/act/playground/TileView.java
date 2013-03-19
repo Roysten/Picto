@@ -23,7 +23,7 @@ public abstract class TileView extends View {
 
 	private static final String TAG = "TileView";
 	protected int[][] rowHints, columnHints;
-	protected boolean[] rowDone = new boolean[15], columnDone = new boolean[15];
+	protected boolean[] rowDone, columnDone;
 
 	/**
 	 * Dimensie van het spelbord

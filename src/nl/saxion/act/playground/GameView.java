@@ -69,6 +69,8 @@ public class GameView extends TileView {
 		columnHints = puzzle.getColumnHints();
 		rowTotals = puzzle.getRowTotals();
 		columnTotals = puzzle.getColumnTotals();
+		rowDone = new boolean[mDimension];
+		columnDone = new boolean[mDimension];
 		initNewGame();
 	}
 	
