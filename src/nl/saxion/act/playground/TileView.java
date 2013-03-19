@@ -64,7 +64,7 @@ public abstract class TileView extends View {
 	private final int crossColor = Color.RED;
 	private final int textColor = Color.BLACK;
 	private final int textDoneColor = Color.LTGRAY;
-	private final int rectVakjeColor = Color.LTGRAY;
+	private final int rectVakjeColor = Color.DKGRAY;
 
 	/**
 	 * De dikte van de dikkere lijn in px die om een x aantal vakjes getekend
