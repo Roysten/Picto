@@ -273,13 +273,20 @@ public abstract class TileView extends View {
 			Paint paintToUse;
 			for (int i = 0; i < mDimension; i++) {
 				String rowText = "";
-				for (int j = 0; j < rowHints[i].length; j++) {
-					if (rowHints[i][j] != 0) {
-						rowText += rowHints[i][j] + "  ";
+				if (rowHints[i][0] == 0) {
+					rowText = "0";
+					paintToUse = textDonePaint;
+				} else {
+					for (int j = 0; j < rowHints[i].length; j++) {
+						if (rowHints[i][j] != 0) {
+							rowText += rowHints[i][j] + "  ";
+						}
 					}
+					paintToUse = rowDone[i] ? textDonePaint : textPaint;
 				}
-				paintToUse = rowDone[i] ? textDonePaint : textPaint;
-				canvas.drawText(rowText, .5f * mTileSize, (i + SPACING + 0.5f) * mTileSize + textHeight / 2, paintToUse);
+
+				canvas.drawText(rowText, .5f * mTileSize, (i + SPACING + 0.5f)
+						* mTileSize + textHeight / 2, paintToUse);
 			}
 
 			/*
@@ -290,10 +297,15 @@ public abstract class TileView extends View {
 			 * ruimte ertussen te houden)
 			 */
 			for (int i = 0; i < mDimension; i++) {
-				for (int j = 0; j < rowHints[i].length; j++) {
-					if (columnHints[i][j] != 0) {
-						paintToUse = columnDone[i] ? textDonePaint : textPaint;
-						canvas.drawText(columnHints[i][j] + "", (i + SPACING + 0.5f) * mTileSize - (textWidth / 2), (j + 1) * (textHeight * 1.5f), paintToUse);
+				if (columnHints[i][0] == 0) {
+					paintToUse = textDonePaint;
+					canvas.drawText(columnHints[i][0] + "", (i + SPACING + 0.5f) * mTileSize - (textWidth / 2), (0 + 1) * (textHeight * 1.5f), paintToUse);
+				} else {
+					for (int j = 0; j < rowHints[i].length; j++) {
+						if (columnHints[i][j] != 0) {
+							paintToUse = columnDone[i] ? textDonePaint : textPaint;
+							canvas.drawText(columnHints[i][j] + "", (i + SPACING + 0.5f) * mTileSize - (textWidth / 2), (j + 1)	* (textHeight * 1.5f), paintToUse);
+						}
 					}
 				}
 			}
