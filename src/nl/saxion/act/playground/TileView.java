@@ -82,6 +82,10 @@ public abstract class TileView extends View {
 	 * Het vakje dat wordt gebruikt als "stempel" om alle vakjes te kleuren.
 	 */
 	private RectF rectVakje = new RectF();
+	
+	public static final int FILL = 1;
+	public static final int HINT = 2;
+	public static final int BLANK = 0;
 
 	public TileView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -181,24 +185,22 @@ public abstract class TileView extends View {
 	 * @param canvas
 	 */
 	public void drawRects(Canvas canvas) {
-		if(mDimension != 0 && gameBoard.length != 0){
 		for (int i = 0; i < mDimension; i++) {
 			for (int j = 0; j < mDimension; j++) {
-					if (gameBoard[i][j] == 1) {
-						rectVakje.offsetTo((i + SPACING) * mTileSize,
-								(j + SPACING) * mTileSize);
-						canvas.drawRect(rectVakje, rectPaint);
-					}
-					if (gameBoard[i][j] == 2) {
-						canvas.drawLine((i + SPACING) * mTileSize,
-								(j + SPACING) * mTileSize, (i + SPACING + 1)
-										* mTileSize, (j + SPACING + 1)
-										* mTileSize, crossPaint);
-						canvas.drawLine((i + SPACING + 1) * mTileSize,
-								(j + SPACING) * mTileSize, (i + SPACING)
-										* mTileSize, (j + SPACING + 1)
-										* mTileSize, crossPaint);
-					}
+				if (gameBoard[i][j] == FILL) {
+					rectVakje.offsetTo((i + SPACING) * mTileSize, (j + SPACING)
+							* mTileSize);
+					canvas.drawRect(rectVakje, rectPaint);
+				}
+				if (gameBoard[i][j] == HINT) {
+					canvas.drawLine((i + SPACING) * mTileSize, (j + SPACING)
+							* mTileSize, (i + SPACING + 1) * mTileSize, (j
+							+ SPACING + 1)
+							* mTileSize, crossPaint);
+					canvas.drawLine((i + SPACING + 1) * mTileSize,
+							(j + SPACING) * mTileSize, (i + SPACING)
+									* mTileSize, (j + SPACING + 1) * mTileSize,
+							crossPaint);
 				}
 			}
 		}

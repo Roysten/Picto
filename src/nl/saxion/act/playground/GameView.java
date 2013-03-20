@@ -28,11 +28,6 @@ public class GameView extends TileView {
 	private int[] rowTotals, columnTotals;
 	private int puzzleTotal, gameTotal;
 	
-
-	public static final int FILL = 1;
-	public static final int HINT = 2;
-	public static final int BLANK = 0;
-	
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
