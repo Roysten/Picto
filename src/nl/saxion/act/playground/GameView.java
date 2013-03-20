@@ -74,14 +74,6 @@ public class GameView extends TileView {
 		initNewGame();
 	}
 	
-	/**
-	 * Handles the basic update: the visualization is updated according to objects on the game board
-	 * From the game objects the visualization is copied to the tile array
-	 */
-	public void update(int x, int y) {
-		setTile(gameBoard[x][y],x,y);
-	}
-	
     /*
      * (non-Javadoc)
      * @see nl.saxion.act.playground.TileView#onSizeChanged(int, int, int, int)
@@ -121,7 +113,6 @@ public class GameView extends TileView {
 				else{
 					gameBoard[x][y] = toAdd;
 				}
-				update(x, y); /* update the view */
 				invalidate(); /* tell Android the view has to be redrawn */
 			}
 		}

@@ -99,15 +99,11 @@ public abstract class TileView extends View {
 	}
 	
 	public void init(){
-		initPaint();
-
 		// Bereken de dikte van de lijnen, "dikte van 2" omzetten naar dp
 		Resources r = getResources();
 		thickLineWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
 				2, r.getDisplayMetrics());
-	}
-
-	public void initPaint() {
+		
 		linePaint.setColor(lineColor);
 		rectPaint.setColor(rectVakjeColor);
 		crossPaint.setColor(crossColor);
@@ -115,31 +111,6 @@ public abstract class TileView extends View {
 		textDonePaint.setColor(textDoneColor);
 		// textPaint.setTextAlign(Align.CENTER);
 		crossPaint.setAntiAlias(true);
-	}
-
-	/**
-	 * Resets all tiles to 0 (empty)
-	 * 
-	 */
-	public void clearTiles() {
-		for (int x = 0; x < mDimension; x++) {
-			for (int y = 0; y < mDimension; y++) {
-				setTile(0, x, y);
-			}
-		}
-	}
-
-	/**
-	 * Used to indicate that a particular tile (set with loadTile and referenced
-	 * by an integer) should be drawn at the given x/y coordinates during the
-	 * next invalidate/draw cycle.
-	 * 
-	 * @param tileindex
-	 * @param x
-	 * @param y
-	 */
-	public void setTile(int tileindex, int x, int y) {
-		gameBoard[x][y] = tileindex;
 	}
 
 	/**
