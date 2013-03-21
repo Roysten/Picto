@@ -67,4 +67,8 @@ public class TimerView extends LinearLayout{
 	public void killTimer(){
 		handler.removeCallbacks(runnable);
 	}
+	
+	public int getTime(){
+		return timePassed;
+	}
 }

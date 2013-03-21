@@ -23,7 +23,7 @@
 	<string name="Instruction5_Text">If the numbers in a row (like this example) are[3 1], it means that (in this case a grid of 5x5) that on 1 row, there are 4 filled boxes where there is 1x 3 contiguous blocks and 1x a single block in a row. If done so with al the numbers from the puzzle there wil be an image.</string>
 	<string name="scoreDefault">score unknown</string>
     <string name="nameDefault">your name</string>
-    <string name="HighScoreDialog_positive">Quit</string>
-    <string name="HighScoreDialog_negative">Ga verder</string>
+    <string name="HighScoreDialog_positive">Submit</string>
+    <string name="HighScoreDialog_negative">Quit</string>
     <string name="HighScoreDialog_msg">End of Game</string>
 </resources>

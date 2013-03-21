@@ -14,11 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialogListener {
+public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialogListener, HighScoreDialog.NoticeDialogListener {
 	private GameView mGameView;
 	private final String TAG = "MyGameActivity";
 	private Button buttonFill, buttonCross, buttonBlank;
 	private TimerView timerView;
+	private AssetManager assetManager;
+	private String puzzleName;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -33,6 +35,7 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 		timerView = (TimerView) findViewById(R.id.timerView1);
 		
 		mGameView = (GameView) findViewById(R.id.game);
+		mGameView.setActivity(this);
 		Bundle extras = getIntent().getExtras();
 		if(extras != null){
 			setPuzzle(extras.getString("puzzle"));
@@ -40,6 +43,7 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 	}
 	
 	public void setPuzzle(String puzzleName){
+		this.puzzleName = puzzleName;
         AssetManager assetManager = getAssets();
 		try {
 			Log.d(TAG, "Opening puzzle: " + "puzzles/" + puzzleName);
@@ -102,10 +106,20 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
   	}
 
 	public void onDialogPositiveClick(DialogFragment dialog) {
-		timerView.continueTimer();
+		if(dialog instanceof PauseDialog){
+			timerView.continueTimer();
+		}
+		if(dialog instanceof HighScoreDialog){
+			ScoreModel sm = new ScoreModel(this);
+			sm.add(((HighScoreDialog) dialog).nameField.getText().toString(),timerView.getTime() , puzzleName);
+		}
+		
+		
+		
 	}
 
 	public void onDialogNegativeClick(DialogFragment dialog) {
 		finish();
+		
 	}
 }

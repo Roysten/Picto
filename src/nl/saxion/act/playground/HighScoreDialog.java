@@ -8,8 +8,14 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+
+
 
 public class HighScoreDialog extends DialogFragment {
+
+	EditText nameField;
 	
 	public interface NoticeDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog);
@@ -28,8 +34,12 @@ public class HighScoreDialog extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.highscoredialog, null));
-
+        View view = inflater.inflate(R.layout.highscoredialog, null);
+        builder.setView(view);
+        
+        
+        nameField = (EditText)view.findViewById(R.id.nameField); 
+        
         builder.setMessage(R.string.HighScoreDialog_msg)
                .setPositiveButton(R.string.HighScoreDialog_positive, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
