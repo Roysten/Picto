@@ -100,10 +100,10 @@ public class GameView extends TileView {
 					timer.timePenalty(120);
 				} 
 				else if (toAdd != FILL && gameBoard[x][y] == FILL) {
-					gameBoard[x][y] = toAdd;
-					gameTotal--;
-					rowDone[y] = checkRow(y);
-					columnDone[x] = checkColumn(x);
+//					gameBoard[x][y] = toAdd;
+//					gameTotal--;
+//					rowDone[y] = checkRow(y);
+//					columnDone[x] = checkColumn(x);
 				} 
 				else{
 					gameBoard[x][y] = toAdd;

@@ -44,6 +44,7 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 		try {
 			Log.d(TAG, "Opening puzzle: " + "puzzles/" + puzzleName);
 			mGameView.setPuzzle(new Puzzle(assetManager.open("puzzles/" + puzzleName)));
+			this.setTitle(puzzleName);
 			mGameView.setTimer(timerView);
 		} catch (IOException e) {
 			Log.e(TAG, "Something went wrong whilst opening puzzles.");
