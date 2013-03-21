@@ -191,8 +191,9 @@ public abstract class TileView extends View {
 					rectVakje.offsetTo((i + SPACING) * mTileSize, (j + SPACING)
 							* mTileSize);
 					canvas.drawRect(rectVakje, rectPaint);
+					
 				}
-				if (gameBoard[i][j] == HINT) {
+				if (gameBoard[i][j] == HINT){
 					canvas.drawLine((i + SPACING) * mTileSize, (j + SPACING)
 							* mTileSize, (i + SPACING + 1) * mTileSize, (j
 							+ SPACING + 1)
