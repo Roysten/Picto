@@ -18,12 +18,14 @@
     <string name="Instruction_Button_Text">Instructions</string>
     <string name="Instruction1_Text">Game Instructions</string>
     <string name="Instruction2_Text">Picross is a small puzzle game, where if you finish the puzzle by placing filled fields, you get an image. </string>
-	<string name="Instruction3_Text">A puzzle consists of a grid of empty boxes consisting of rows and columns. on the top and left side of the grid, are numbers that indicate how the puzzle wil like.</string>
+    <string name="Instruction3_Text">A puzzle consists of a grid of empty boxes consisting of rows and columns. on the top and left side of the grid, are numbers that indicate how the puzzle wil like.</string>
     <string name="Instruction4_Text">With the selection buttons you can choose what should be entered on the grid, you can choose : fill, cross, blanc. You use the full block to confirm that there shoud be an filled block on a position. With the cross block you indicate positions where no full blocks are supposed to stand. The empty block for clearing cross blocks.</string>
-	<string name="Instruction5_Text">If the numbers in a row (like this example) are[3 1], it means that (in this case a grid of 5x5) that on 1 row, there are 4 filled boxes where there is 1x 3 contiguous blocks and 1x a single block in a row. If done so with al the numbers from the puzzle there wil be an image.</string>
-	<string name="scoreDefault">score unknown</string>
+    <string name="Instruction5_Text">If the numbers in a row (like this example) are[3 1], it means that (in this case a grid of 5x5) that on 1 row, there are 4 filled boxes where there is 1x 3 contiguous blocks and 1x a single block in a row. If done so with al the numbers from the puzzle there wil be an image.</string>
+    <string name="scoreDefault">score unknown</string>
     <string name="nameDefault">your name</string>
     <string name="HighScoreDialog_positive">Submit</string>
     <string name="HighScoreDialog_negative">Quit</string>
     <string name="HighScoreDialog_msg">End of Game</string>
+    <string name="title_activity_high_score">HiActivity</string>
+
 </resources>

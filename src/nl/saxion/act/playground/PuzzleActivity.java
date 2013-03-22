@@ -5,6 +5,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -113,6 +114,9 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 		if(dialog instanceof HighScoreDialog){
 			ScoreModel sm = new ScoreModel(this);
 			sm.add(((HighScoreDialog) dialog).nameField.getText().toString(),timerView.getTime() , puzzleName);
+			Intent intent = new Intent(this, HighScoreActivity.class);
+			startActivity(intent);
+			
 		}
 		
 		
