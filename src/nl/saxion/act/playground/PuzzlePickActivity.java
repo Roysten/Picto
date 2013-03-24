@@ -83,7 +83,7 @@ public class PuzzlePickActivity extends Activity{
 	 */
 	private OnItemClickListener puzzleClickedHandler = new OnItemClickListener() {
 	    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-	    	openPuzzleView(puzzles[position], "puzzles" + File.separator + categories[position] + File.separator + puzzles[position]);
+	    	openPuzzleView(puzzles[position], "puzzles" + File.separator + categories[getActionBar().getSelectedNavigationIndex()] + File.separator + puzzles[position]);
 	    }
 	};
 

@@ -51,7 +51,8 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 			this.setTitle(puzzleName);
 			mGameView.setTimer(timerView);
 		} catch (IOException e) {
-			Log.e(TAG, "Something went wrong whilst opening puzzles.");
+			Log.e(TAG, "Something went wrong whilst opening puzzle. Does the puzzle file exist?");
+			e.printStackTrace();
 		}
 	}
 	
