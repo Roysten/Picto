@@ -6,7 +6,6 @@
     <string name="buttonFillText">Fill</string>
     <string name="buttonCrossText">Cross</string>
     <string name="buttonBlankText">Blank</string>
-    <string name="dialog_pause_msg">Dit is het pauze scherm</string>
     <string name="dialog_pause_positive">Ga verder</string>
     <string name="dialog_pause_negative">Stoppen</string>
     <string name="buttonStartGameText">Start Game</string>

@@ -3,18 +3,21 @@ package nl.saxion.act.playground;
 import java.io.File;
 import java.io.IOException;
 
-import android.app.ActionBar;
-import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 public class PuzzlePickActivity extends Activity{
 	
@@ -23,6 +26,8 @@ public class PuzzlePickActivity extends Activity{
 	private ListView listView;
 	private AssetManager assetManager;
 	private String[] puzzles, categories = {"5x5", "10x10", "15x15", "20x20"};
+	private MenuItem categorySpinnerMenuItem;
+	private Spinner categorySpinner;
 	private ArrayAdapter<String> puzzleAdapter;
 		
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,19 +41,37 @@ public class PuzzlePickActivity extends Activity{
         
 		assetManager = getAssets();
         
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
-        categoryAdapter.addAll(categories);
-        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        getActionBar().setListNavigationCallbacks(categoryAdapter, new categoryMenu());
+//        
+//        c
+//        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+//        getActionBar().setListNavigationCallbacks(categoryAdapter, new categoryMenu());
 	}
 	
-	public class categoryMenu implements OnNavigationListener{
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    getMenuInflater().inflate(R.menu.puzzlepickermenu, menu);
+	    categorySpinnerMenuItem = (MenuItem) menu.findItem(R.id.spinnerCategories);
+	    ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
+	    categoryAdapter.addAll(categories);
+	    categorySpinner = (Spinner) categorySpinnerMenuItem.getActionView();
+	    categorySpinner.setAdapter(categoryAdapter);
+	    categorySpinner.setOnItemSelectedListener(new categorySpinnerItemSelectedListener());
+//	    categorySpinner.setOnItemClickListener(new categorySpinnerItemClickListener());
+	    return true;
+	}
+	
+	public class categorySpinnerItemSelectedListener implements OnItemSelectedListener{
 
 		@Override
-		public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-			checkAssets("puzzles" + File.separator + categories[itemPosition]);
-			return false;
+		public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
+			
+			checkAssets("puzzles" + File.separator + categories[position]);
 		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			
+		}
+
 		
 	}
 	
@@ -83,7 +106,7 @@ public class PuzzlePickActivity extends Activity{
 	 */
 	private OnItemClickListener puzzleClickedHandler = new OnItemClickListener() {
 	    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-	    	openPuzzleView(puzzles[position], "puzzles" + File.separator + categories[getActionBar().getSelectedNavigationIndex()] + File.separator + puzzles[position]);
+	    	openPuzzleView(puzzles[position], "puzzles" + File.separator + categories[categorySpinner.getSelectedItemPosition()] + File.separator + puzzles[position]);
 	    }
 	};
 

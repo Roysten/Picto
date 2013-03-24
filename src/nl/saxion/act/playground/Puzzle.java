@@ -1,6 +1,5 @@
 package nl.saxion.act.playground;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
