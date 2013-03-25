@@ -61,13 +61,11 @@ public class PuzzlePickActivity extends Activity{
 	
 	public class categorySpinnerItemSelectedListener implements OnItemSelectedListener{
 
-		@Override
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
 			
 			checkAssets("puzzles" + File.separator + categories[position]);
 		}
 
-		@Override
 		public void onNothingSelected(AdapterView<?> arg0) {
 			
 		}
