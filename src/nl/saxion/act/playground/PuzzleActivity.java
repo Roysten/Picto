@@ -14,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialogListener, HighScoreDialog.NoticeDialogListener {
 	private GameView mGameView;
@@ -112,16 +114,22 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 			timerView.continueTimer();
 		}
 		if(dialog instanceof HighScoreDialog){
-			ScoreModel sm = new ScoreModel(this);
-			sm.add(((HighScoreDialog) dialog).nameField.getText().toString(),timerView.getTime() , puzzleName);
-			Intent intent = new Intent(this, HighScoreActivity.class);
-			startActivity(intent);
-			
+			EditText nameEditText = ((HighScoreDialog) dialog).nameField; 
+			if(nameEditText.getText().length() == 0){
+				Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+				dialog.
+			}
+			else{
+				ScoreModel sm = new ScoreModel(this);
+				sm.add(((HighScoreDialog) dialog).nameField.getText().toString(), timerView.getTime(), puzzleName);
+				Intent intent = new Intent(this, HighScoreActivity.class);
+				intent.putExtra("puzzleName", puzzleName);
+				startActivity(intent);
+			}
 		}
 	}
 
 	public void onDialogNegativeClick(DialogFragment dialog) {
 		finish();
-		
 	}
 }

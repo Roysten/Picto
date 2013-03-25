@@ -4,114 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/HighscoreScreenLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HighScores" />
-
-    <LinearLayout
+    <ListView
+        android:id="@+id/scoreListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="7" >
-
-            <TextView
-                android:id="@+id/HSposition1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="1." />
-
-            <TextView
-                android:id="@+id/HSName1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="" />
-
-            <TextView
-                android:id="@+id/HSTime1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="test" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="7" >
-
-            <TextView
-                android:id="@+id/HSposition2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="2." />
-
-            <TextView
-                android:id="@+id/HSName2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="test" />
-
-            <TextView
-                android:id="@+id/HSTime2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="test" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="7" >
-
-            <TextView
-                android:id="@+id/HSposition3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="3." />
-
-            <TextView
-                android:id="@+id/HSName3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="test" />
-
-            <TextView
-                android:id="@+id/HSTime3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="test" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/highScoreLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Jammer geen highscore, volgende keer beter!"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <Button
-        android:id="@+id/finishButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Continu" />
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>
 
