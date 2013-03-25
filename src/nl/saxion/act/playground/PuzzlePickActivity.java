@@ -3,13 +3,14 @@ package nl.saxion.act.playground;
 import java.io.File;
 import java.io.IOException;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -25,7 +26,6 @@ public class PuzzlePickActivity extends Activity{
 	private ListView listView;
 	private AssetManager assetManager;
 	private String[] puzzles, categories = {"5x5", "10x10", "15x15", "20x20"};
-	private MenuItem categorySpinnerMenuItem;
 	private Spinner categorySpinner;
 	private ArrayAdapter<String> puzzleAdapter;
 		
@@ -43,13 +43,19 @@ public class PuzzlePickActivity extends Activity{
 	
 	public boolean onCreateOptionsMenu(Menu menu) {
 		//actionbar dropdownbox
-	    getMenuInflater().inflate(R.menu.puzzlepickermenu, menu);
-	    categorySpinnerMenuItem = (MenuItem) menu.findItem(R.id.spinnerCategories);
+		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+		View customMenuView = inflater.inflate(R.layout.menu_layout_spinner, null);
 	    ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
 	    categoryAdapter.addAll(categories);
-	    categorySpinner = (Spinner) categorySpinnerMenuItem.getActionView();
+	    categorySpinner = (Spinner) customMenuView.findViewById(R.id.categorySpinner);
 	    categorySpinner.setAdapter(categoryAdapter);
 	    categorySpinner.setOnItemSelectedListener(new categorySpinnerItemSelectedListener());
+	    
+	    ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,
+                ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME |
+                ActionBar.DISPLAY_SHOW_TITLE);
+	    actionBar.setCustomView(customMenuView);
 	    return true;
 	}
 	
