@@ -30,7 +30,7 @@ public class PauseDialog extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(inflater.inflate(R.layout.dialog_pause, null));
 
-        builder.setMessage(R.string.dialog_pause_msg)
+        builder
                .setPositiveButton(R.string.dialog_pause_positive, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                 	   mListener.onDialogPositiveClick(PauseDialog.this);

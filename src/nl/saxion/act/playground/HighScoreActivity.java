@@ -1,3 +1,4 @@
+
 package nl.saxion.act.playground;
 
 import java.util.ArrayList;
@@ -56,3 +57,4 @@ public class HighScoreActivity extends Activity {
 	}
 
 }
+

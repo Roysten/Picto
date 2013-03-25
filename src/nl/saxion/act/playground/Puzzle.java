@@ -9,11 +9,12 @@ import android.util.Log;
 
 public class Puzzle {
 
-	private int dimension, difficulty;
+	private int dimension;
 	private int [][] puzzleSolution;
 	private int total = 0;
 	private Pattern splitPattern = Pattern.compile(",");
 	private int[][] columnHints, rowHints;
+	private int[] columnTotal, rowTotal;
 	
 	public Puzzle(InputStream puzzle){
 		parsePuzzel(puzzle);
@@ -25,11 +26,11 @@ public class Puzzle {
 		if(lineScanner.hasNextLine()){
 			this.dimension = lineScanner.nextInt();
 		}
-		if(lineScanner.hasNextLine()){
-			this.difficulty = lineScanner.nextInt();
-		}
 		lineScanner.nextLine();
 		lineScanner.nextLine();
+		
+		//puzzel opslaan in een 2-dimensionale array
+		//Van string array naar int array, zodat we ermee kunnen rekenen
 		if(lineScanner.hasNextLine()){
 			puzzleSolution = new int[dimension][dimension];
 			
@@ -43,36 +44,33 @@ public class Puzzle {
 				}
 			}
 		}
-		long end = System.currentTimeMillis();
-		Log.d("Puzzle", "Parsing took: " + (end - start));
-	}
-	
-	public int[][] getRowHints(){
+		
+		//aantallen voor de rijen berekenen
 		rowHints = new int[dimension][1];
+		rowTotal = new int[dimension];
 		for(int i = 0; i < dimension; i++){
 			int[] row = puzzleSolution[i];
 			int tempSum = 0;
 			int numberOfGroups = 0;
-			int[] rowCountArray = new int[(dimension / 2) + 1];
+			int[] rowCountArray = new int[(dimension / 2) + 1]; //veilige lengte, zo klein mogelijk
 			for(int j = 0; j < dimension; j++){
 				int rowNumber = row[j];
 				if(j == dimension - 1 || rowNumber == 0 && tempSum != 0){
-					tempSum += rowNumber;
-					rowCountArray[numberOfGroups] = tempSum;
+					rowCountArray[numberOfGroups] = tempSum + rowNumber;
 					numberOfGroups++;
 					tempSum = 0;
 				}
 				else if(rowNumber == 1){
 					tempSum += rowNumber;
 				}
+				rowTotal[j] += rowNumber;
 			}
 			rowHints[i] = rowCountArray;
 		}
-		return rowHints;
-	}
-	
-	public int[][] getColumnHints(){
+		
+		//aantallen voor de kolommen berekenen
 		columnHints = new int[dimension][1];
+		columnTotal = new int[dimension];//totale aantallen kolom ook meteen bijhouden
 		for(int i = 0; i < dimension; i++){
 			int[] column = new int[dimension];
 			for(int j = 0; j < dimension; j++){
@@ -80,48 +78,41 @@ public class Puzzle {
 			}
 			int tempSum = 0;
 			int numberOfGroups = 0;
-			int[] columnCountArray = new int[(dimension / 2) + 1];
+			int[] columnCountArray = new int[(dimension / 2) + 1];//veilige lengte, zo klein mogelijk
 			for(int j = 0; j < dimension; j++){
 				int columnNumber = column[j];
 				if(j == dimension - 1 || columnNumber == 0 && tempSum != 0){
-					tempSum += columnNumber;
-					columnCountArray[numberOfGroups] = tempSum;
+					columnCountArray[numberOfGroups] = tempSum + columnNumber;
 					numberOfGroups++;
 					tempSum = 0;
 				}
 				else if(columnNumber == 1){
 					tempSum += columnNumber;
 				}
+				columnTotal[j] += columnNumber;
 			}
 			columnHints[i] = columnCountArray;
 		}
+		Log.d("puzzle", Arrays.toString(columnTotal));
+		
+		long end = System.currentTimeMillis();
+		Log.d("Puzzle", "Parsing took: " + (end - start));
+	}
+	
+	public int[][] getRowHints(){
+		return rowHints;
+	}
+	
+	public int[][] getColumnHints(){
 		return columnHints;
 	}
 	
 	public int[] getColumnTotals(){
-		int[] columnTotals = new int[dimension];
-		for(int i = 0; i < dimension; i++){
-			int sum = 0;
-			int[] column = columnHints[i];
-			for(int j : column){
-				sum += j;
-			}
-			columnTotals[i] = sum;
-		}
-		return columnTotals;
+		return columnTotal;
 	}
 	
 	public int[] getRowTotals(){
-		int[] rowTotals = new int[dimension];
-		for(int i = 0; i < dimension; i++){
-			int sum = 0;
-			int[] row = rowHints[i];
-			for(int j : row){
-				sum += j;
-			}
-			rowTotals[i] = sum;
-		}
-		return rowTotals;
+		return rowTotal;
 	}
 	
 	/**
@@ -131,13 +122,6 @@ public class Puzzle {
 		return dimension;
 	}
 
-	/**
-	 * @return the difficulty
-	 */
-	public int getDifficulty() {
-		return difficulty;
-	}
-	
 	/**
 	 * @return het totaal van zwarte vakjes
 	 */

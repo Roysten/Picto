@@ -20,7 +20,6 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 	private final String TAG = "MyGameActivity";
 	private Button buttonFill, buttonCross, buttonBlank;
 	private TimerView timerView;
-	private AssetManager assetManager;
 	private String puzzleName;
 	
 	/** Called when the activity is first created. */
@@ -39,20 +38,21 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 		mGameView.setActivity(this);
 		Bundle extras = getIntent().getExtras();
 		if(extras != null){
-			setPuzzle(extras.getString("puzzle"));
+			setPuzzle(extras.getString("puzzleName"), extras.getString("puzzlePath"));
 		}
 	}
 	
-	public void setPuzzle(String puzzleName){
+	public void setPuzzle(String puzzleName, String puzzlePath){
 		this.puzzleName = puzzleName;
         AssetManager assetManager = getAssets();
 		try {
-			Log.d(TAG, "Opening puzzle: " + "puzzles/" + puzzleName);
-			mGameView.setPuzzle(new Puzzle(assetManager.open("puzzles/" + puzzleName)));
+			Log.d(TAG, "Opening puzzle " + puzzleName + " at path " + puzzlePath);
+			mGameView.setPuzzle(new Puzzle(assetManager.open(puzzlePath)));
 			this.setTitle(puzzleName);
 			mGameView.setTimer(timerView);
 		} catch (IOException e) {
-			Log.e(TAG, "Something went wrong whilst opening puzzles.");
+			Log.e(TAG, "Something went wrong whilst opening puzzle. Does the puzzle file exist?");
+			e.printStackTrace();
 		}
 	}
 	
