@@ -1,4 +1,5 @@
 package nl.saxion.act.playground;
+import java.util.ArrayList;
 import java.util.Date;
 import android.content.ContentValues;
 import android.content.Context;
@@ -21,6 +22,25 @@ public static final String KEY_PUZZLE = "puzzle";
   return database.query(TABLE_NAME, null, null, null, null, null, KEY_TIME + " ASC LIMIT 0,3");
  }
  
+ public ArrayList<Score> getHighScores(String puzzle){
+	Log.d("getHighScores","start getHighScores");
+	Cursor qr=database.query(TABLE_NAME, null, KEY_PUZZLE+" = "+"\""+puzzle+"\"", null, null, null, KEY_TIME + " ASC LIMIT 0,3");
+	Log.d("query","querry uitgevoerd");
+	ArrayList<Score> result = new ArrayList<Score>();
+	for (int i = 0; i < qr.getCount(); i++) {
+		   if(!qr.moveToPosition(i)){
+		    break;
+		   }
+		   Log.d("query teller", ""+i);
+		   String value = qr.getString(qr.getColumnIndex(ScoreModel.KEY_NAME));
+		   int time = Integer.parseInt(qr.getString(qr.getColumnIndex(ScoreModel.KEY_TIME)));
+		   result.add(new Score(value,time));
+		 
+		  }
+	Log.d("getHighScores", result.toString());
+	 return result;
+	 
+ }
  public String getAllFormated(){
  
   String result = "";
