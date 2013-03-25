@@ -117,7 +117,6 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 			EditText nameEditText = ((HighScoreDialog) dialog).nameField; 
 			if(nameEditText.getText().length() == 0){
 				Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
-				dialog.
 			}
 			else{
 				ScoreModel sm = new ScoreModel(this);
