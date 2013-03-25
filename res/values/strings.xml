@@ -26,5 +26,6 @@
     <string name="HighScoreDialog_negative">Quit</string>
     <string name="HighScoreDialog_msg">End of Game</string>
     <string name="title_activity_high_score">HiActivity</string>
+    <string name="spinner_title">puzzlepicker</string>
 
 </resources>

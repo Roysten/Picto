@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -34,20 +33,16 @@ public class PuzzlePickActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.puzzlepicker);
         
+        //puzzellijst
         listView = (ListView) findViewById(R.id.levelPickerList);
         listView.setOnItemClickListener(puzzleClickedHandler);
-        
         puzzleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         
 		assetManager = getAssets();
-        
-//        
-//        c
-//        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-//        getActionBar().setListNavigationCallbacks(categoryAdapter, new categoryMenu());
 	}
 	
 	public boolean onCreateOptionsMenu(Menu menu) {
+		//actionbar dropdownbox
 	    getMenuInflater().inflate(R.menu.puzzlepickermenu, menu);
 	    categorySpinnerMenuItem = (MenuItem) menu.findItem(R.id.spinnerCategories);
 	    ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
@@ -55,7 +50,6 @@ public class PuzzlePickActivity extends Activity{
 	    categorySpinner = (Spinner) categorySpinnerMenuItem.getActionView();
 	    categorySpinner.setAdapter(categoryAdapter);
 	    categorySpinner.setOnItemSelectedListener(new categorySpinnerItemSelectedListener());
-//	    categorySpinner.setOnItemClickListener(new categorySpinnerItemClickListener());
 	    return true;
 	}
 	
@@ -63,7 +57,6 @@ public class PuzzlePickActivity extends Activity{
 
 		@Override
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-			
 			checkAssets("puzzles" + File.separator + categories[position]);
 		}
 
@@ -71,8 +64,6 @@ public class PuzzlePickActivity extends Activity{
 		public void onNothingSelected(AdapterView<?> arg0) {
 			
 		}
-
-		
 	}
 	
 	/**
