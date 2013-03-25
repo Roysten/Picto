@@ -118,9 +118,6 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 			startActivity(intent);
 			
 		}
-		
-		
-		
 	}
 
 	public void onDialogNegativeClick(DialogFragment dialog) {

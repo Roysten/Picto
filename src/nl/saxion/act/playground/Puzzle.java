@@ -63,10 +63,11 @@ public class Puzzle {
 				else if(rowNumber == 1){
 					tempSum += rowNumber;
 				}
-				rowTotal[j] += rowNumber;
+				rowTotal[i] += rowNumber;
 			}
 			rowHints[i] = rowCountArray;
 		}
+		Log.d("puzzle", Arrays.toString(rowTotal));
 		
 		//aantallen voor de kolommen berekenen
 		columnHints = new int[dimension][1];
@@ -89,7 +90,7 @@ public class Puzzle {
 				else if(columnNumber == 1){
 					tempSum += columnNumber;
 				}
-				columnTotal[j] += columnNumber;
+				columnTotal[i] += columnNumber;
 			}
 			columnHints[i] = columnCountArray;
 		}
