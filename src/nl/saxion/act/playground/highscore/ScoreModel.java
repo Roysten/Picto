@@ -19,8 +19,8 @@ public class ScoreModel extends BaseModel {
 	}
 
 	public ArrayList<Score> getHighScores(String puzzle) {
+//		Cursor qr = database.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE ? = ? ORDER BY " + KEY_TIME + " ASC", new String[] {KEY_PUZZLE, puzzle});
 		Cursor qr = database.query(TABLE_NAME, null, KEY_PUZZLE + " = \"" + puzzle + "\"", null, null, null, KEY_TIME + " ASC");
-		System.out.println("\"" + puzzle + "\"");
 		ArrayList<Score> result = new ArrayList<Score>();
 
 		for (int i = 0; i < qr.getCount(); i++) {
@@ -29,7 +29,7 @@ public class ScoreModel extends BaseModel {
 			}
 			String value = qr.getString(qr.getColumnIndex(ScoreModel.KEY_NAME));
 			int time = Integer.parseInt(qr.getString(qr.getColumnIndex(ScoreModel.KEY_TIME)));
-			result.add(new Score(i + 1, value, time));
+			result.add(new Score(value, time));
 
 		}
 		return result;

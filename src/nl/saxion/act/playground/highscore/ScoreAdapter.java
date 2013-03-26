@@ -27,7 +27,7 @@ public class ScoreAdapter extends ArrayAdapter<Score> {
 			TextView scoreTextView = (TextView) convertView.findViewById(R.id.scoreTextView);
 			nameTextView.setText(s.getName());
 			scoreTextView.setText(s.getTime() + "");
-			placeTextView.setText(s.getPlace() + ".");
+			placeTextView.setText(position + 1 + ".");
 		}
 		return convertView;
 	}

@@ -3,12 +3,11 @@ package nl.saxion.act.playground.highscore;
 public class Score {
 
 	private String name;
-	private int time, place;
+	private int time;
 
-	public Score(int place, String value, int time) {
+	public Score(String value, int time) {
 		this.name = value;
 		this.time = time;
-		this.place = place;
 	}
 
 	/**
@@ -40,13 +39,4 @@ public class Score {
 	public void setTime(int time) {
 		this.time = time;
 	}
-	
-	public void setPlace(int place){
-		this.place = place;
-	}
-	
-	public int getPlace(){
-		return place;
-	}
-
 }

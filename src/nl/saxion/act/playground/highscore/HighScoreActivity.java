@@ -42,7 +42,6 @@ public class HighScoreActivity extends Activity {
 	private void initiateScores() {
 		ArrayList<Score> scores = scoreModel.getHighScores(puzzleName);
 		adapter.addAll(scores);
-		System.out.println(scores.toString());
 	}
 
 	@Override
