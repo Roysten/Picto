@@ -12,6 +12,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:maxLength="20"
         android:hint="@string/dialog_highscore_name_hint" />
 
     <View
