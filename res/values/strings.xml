@@ -26,6 +26,9 @@
     <string name="dialog_highscore_name_hint">Please enter your name</string>
     <string name="dialog_highscore_button_dontsave">Don\'t save</string>
     <string name="dialog_highscore_button_save">Save</string>
+    <string name="dialog_highscore_text_place">Place</string>
+    <string name="dialog_highscore_text_name">Name</string>
+    <string name="dialog_highscore_text_score">Score</string>
 
 
 </resources>
