@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/dialog_highscore_name_hint" />
+
+    <View
+    android:layout_width="fill_parent"
+    android:layout_height="1dip"
+    android:background="?android:attr/dividerVertical" />
+    
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:measureWithLargestChild="true"
+        android:orientation="horizontal"
+        android:paddingLeft="2dip"
+        android:paddingRight="2dip"
+        android:paddingTop="0dip" >
+
+        <Button
+            android:id="@+id/buttonNegative"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="buttonClicked"
+            android:text="@string/dialog_highscore_button_dontsave" />
+
+        <Button
+            android:id="@+id/buttonPositive"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="buttonClicked"
+            android:text="@string/dialog_highscore_button_save" />
+    </LinearLayout>
+
+</LinearLayout>
