@@ -4,10 +4,6 @@ package nl.saxion.act.playground.highscore;
 import java.util.ArrayList;
 
 import nl.saxion.act.playground.R;
-import nl.saxion.act.playground.R.id;
-import nl.saxion.act.playground.R.layout;
-import nl.saxion.act.playground.R.menu;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,6 +25,8 @@ public class HighScoreActivity extends Activity {
 		if(extras != null){
 			puzzleName = extras.getString("puzzleName");
 		}
+		
+		this.setTitle("Highscores for puzzle: " + puzzleName);
 		
 		adapter = new ScoreAdapter(this, android.R.layout.simple_list_item_1);
 		

@@ -99,7 +99,7 @@ public class GameView extends TileView {
 					columnDone[x] = checkColumn(x);
 				} 
 				else if (toAdd == FILL && puzzleSolution[y][x] != 1) {
-					Toast.makeText(this.getContext(), "Fout!",Toast.LENGTH_SHORT).show();
+					Toast.makeText(this.getContext(), "Wrong!",Toast.LENGTH_SHORT).show();
 					gameBoard[x][y] = HINT;
 					timer.timePenalty(120);
 				} 
@@ -116,8 +116,6 @@ public class GameView extends TileView {
 			}
 		}
 		if(hasWinner()) {
-			Toast.makeText(this.getContext(), "Klaar!", Toast.LENGTH_SHORT).show();
-			Log.d(TAG, "De puzzel is klaar!");
 			timer.killTimer();
 			Dialog highScoreDialog = new HighScoreDialog((Activity) this.getContext());
 	    	highScoreDialog.show();
