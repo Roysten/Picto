@@ -1,11 +1,11 @@
 
-package nl.saxion.act.playground;
+package nl.saxion.act.playground.highscore;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
-import nl.saxion.act.playground.ScoreDatabase;
+import nl.saxion.act.playground.highscore.ScoreDatabase;
 
 public class BaseModel implements BaseColumns {
     protected final String TABLE_NAME;

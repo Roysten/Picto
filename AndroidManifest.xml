@@ -35,7 +35,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="nl.saxion.act.playground.HighScoreActivity"
+            android:name="nl.saxion.act.playground.highscore.HighScoreActivity"
             android:label="@string/title_activity_high_score" 
             android:screenOrientation="portrait" >
         </activity>

@@ -1,7 +1,12 @@
 
-package nl.saxion.act.playground;
+package nl.saxion.act.playground.highscore;
 
 import java.util.ArrayList;
+
+import nl.saxion.act.playground.R;
+import nl.saxion.act.playground.R.id;
+import nl.saxion.act.playground.R.layout;
+import nl.saxion.act.playground.R.menu;
 
 import android.app.Activity;
 import android.os.Bundle;

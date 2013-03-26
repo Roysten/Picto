@@ -1,4 +1,4 @@
-package nl.saxion.act.playground;
+package nl.saxion.act.playground.highscore;
 
 import java.util.ArrayList;
 

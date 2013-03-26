@@ -1,5 +1,8 @@
-package nl.saxion.act.playground;
+package nl.saxion.act.playground.highscore;
 
+import nl.saxion.act.playground.R;
+import nl.saxion.act.playground.R.id;
+import nl.saxion.act.playground.R.layout;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,7 +1,8 @@
 package nl.saxion.act.playground;
 
+import nl.saxion.act.playground.highscore.HighScoreDialog;
 import android.app.Activity;
-import android.app.FragmentManager;
+import android.app.Dialog;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -22,13 +23,6 @@ public class GameView extends TileView {
 	 */
 	private int toAdd = FILL;
 	private TimerView timer;
-	private Activity activity;
-	/**
-	 * @param activity the activity to set
-	 */
-	public void setActivity(Activity activity) {
-		this.activity = activity;
-	}
 
 	/*
 	 * Textview to show in user interface which object to add
@@ -125,9 +119,8 @@ public class GameView extends TileView {
 			Toast.makeText(this.getContext(), "Klaar!", Toast.LENGTH_SHORT).show();
 			Log.d(TAG, "De puzzel is klaar!");
 			timer.killTimer();
-			HighScoreDialog highScoreDialog = new HighScoreDialog();
-	    	FragmentManager fm = activity.getFragmentManager();
-	    	highScoreDialog.show(fm, TAG);
+			Dialog highScoreDialog = new HighScoreDialog((Activity) this.getContext());
+	    	highScoreDialog.show();
 		}
 	}
 	

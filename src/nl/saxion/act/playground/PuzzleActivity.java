@@ -5,7 +5,6 @@ import java.io.IOException;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,10 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
-public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialogListener, HighScoreDialog.NoticeDialogListener {
+public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialogListener{
 	private GameView mGameView;
 	private final String TAG = "MyGameActivity";
 	private Button buttonFill, buttonCross, buttonBlank;
@@ -37,7 +34,6 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 		timerView = (TimerView) findViewById(R.id.timerView1);
 		
 		mGameView = (GameView) findViewById(R.id.game);
-		mGameView.setActivity(this);
 		Bundle extras = getIntent().getExtras();
 		if(extras != null){
 			setPuzzle(extras.getString("puzzleName"), extras.getString("puzzlePath"));
@@ -80,6 +76,10 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
       return true;
     } 
     
+    public String getPuzzleName(){
+    	return puzzleName;
+    }
+    
     public void onButtonClicked(View v){
     	if(v == buttonFill){
     		mGameView.setToAdd(GameView.FILL);
@@ -112,19 +112,6 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		if(dialog instanceof PauseDialog){
 			timerView.continueTimer();
-		}
-		if(dialog instanceof HighScoreDialog){
-			EditText nameEditText = ((HighScoreDialog) dialog).nameField; 
-			if(nameEditText.getText().length() == 0){
-				Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
-			}
-			else{
-				ScoreModel sm = new ScoreModel(this);
-				sm.add(((HighScoreDialog) dialog).nameField.getText().toString(), timerView.getTime(), puzzleName);
-				Intent intent = new Intent(this, HighScoreActivity.class);
-				intent.putExtra("puzzleName", puzzleName);
-				startActivity(intent);
-			}
 		}
 	}
 

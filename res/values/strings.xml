@@ -21,13 +21,11 @@
     <string name="Instruction4_Text">With the selection buttons you can choose what should be entered on the grid, you can choose : fill, cross, blanc. You use the full block to confirm that there shoud be an filled block on a position. With the cross block you indicate positions where no full blocks are supposed to stand. The empty block for clearing cross blocks.</string>
     <string name="Instruction5_Text">If the numbers in a row (like this example) are[3 1], it means that (in this case a grid of 5x5) that on 1 row, there are 4 filled boxes where there is 1x 3 contiguous blocks and 1x a single block in a row. If done so with al the numbers from the puzzle there wil be an image.</string>
     <string name="Instruction6_Text">in the puzzle selection screen you can chose the puzzle grid size by clikcing on the dropdown menu, by selecting an other grid size you can chance the puzzle list. al lists contains different puzzles</string>
-    <string name="scoreDefault">score unknown</string>
-    <string name="nameDefault">your name</string>
-    <string name="HighScoreDialog_positive">Submit</string>
-    <string name="HighScoreDialog_negative">Quit</string>
-    <string name="HighScoreDialog_msg">End of Game</string>
     <string name="title_activity_high_score">HiActivity</string>
     <string name="spinner_title">puzzlepicker</string>
+    <string name="dialog_highscore_name_hint">Please enter your name</string>
+    <string name="dialog_highscore_button_dontsave">Don\'t save</string>
+    <string name="dialog_highscore_button_save">Save</string>
 
 
 </resources>
