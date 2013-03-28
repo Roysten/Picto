@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class HighScoreDialog extends Dialog{
@@ -17,6 +18,8 @@ public class HighScoreDialog extends Dialog{
 	private EditText nameEditText;
 	private Button buttonNegative, buttonPositive;
 	private Activity activity;
+	private TextView timeTextView;
+	private TimerView timerView;
 	
 	public HighScoreDialog(Context context, boolean cancelable,
 			OnCancelListener cancelListener) {
@@ -41,6 +44,7 @@ public class HighScoreDialog extends Dialog{
 		activity = (Activity) context;
 		
 		nameEditText = (EditText) this.findViewById(R.id.nameEditText);
+		timeTextView = (TextView) this.findViewById(R.id.timeTextView);
 		
 		buttonNegative = (Button) this.findViewById(R.id.buttonNegative);
 		buttonPositive = (Button) this.findViewById(R.id.buttonPositive);
@@ -49,6 +53,9 @@ public class HighScoreDialog extends Dialog{
 		
 		buttonNegative.setOnClickListener(buttonClicked);
 		buttonPositive.setOnClickListener(buttonClicked);
+		
+		timerView = (TimerView) activity.findViewById(R.id.timerView1);
+		timeTextView.setText(timerView.getTime() + "");
 	}
 	
 	public class onButtonClickedListener implements android.view.View.OnClickListener{
@@ -62,8 +69,7 @@ public class HighScoreDialog extends Dialog{
 				if(nameEditText.getText().length() != 0){
 					String puzzleName = ((PuzzleActivity) activity).getPuzzleName();
 					ScoreModel sm = new ScoreModel(activity);
-					TimerView tv = (TimerView) activity.findViewById(R.id.timerView1);
-					sm.add(nameEditText.getText().toString(), tv.getTime(), puzzleName);
+					sm.add(nameEditText.getText().toString(), timerView.getTime(), puzzleName);
 					Intent intent = new Intent(activity, HighScoreActivity.class);
 					intent.putExtra("puzzleName", puzzleName);
 					dismiss();

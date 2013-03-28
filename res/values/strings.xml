@@ -32,7 +32,9 @@
     <string name="levelPickPlay">Start</string>
     <string name="levelPickHS">HighScores</string>
     <string name="levelSelected">Selected Level:  \t  </string>
-    
+    <string name="dialog_highscore_text_time">Time</string>
+    <string name="dialog_highscore_text_your_time_was">"Your time was: "</string>
+
 
 
 </resources>
