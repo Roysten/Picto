@@ -7,11 +7,11 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:background="#0099CC"
+        android:background="#FFFFFF"
         android:contentDescription="@string/app_name"
         android:fadingEdge="horizontal|vertical"
         android:fadingEdgeLength="@dimen/activity_horizontal_margin"
         android:scaleType="center"
-        android:src="@drawable/pause" />
+        android:src="@drawable/logo" />
 
 </LinearLayout>
