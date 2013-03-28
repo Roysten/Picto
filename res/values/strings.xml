@@ -29,6 +29,10 @@
     <string name="dialog_highscore_text_place">Place</string>
     <string name="dialog_highscore_text_name">Name</string>
     <string name="dialog_highscore_text_score">Score</string>
+    <string name="levelPickPlay">Start</string>
+    <string name="levelPickHS">HighScores</string>
+    <string name="levelSelected">Selected Level:  \t  </string>
+    
 
 
 </resources>

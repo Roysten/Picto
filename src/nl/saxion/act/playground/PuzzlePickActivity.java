@@ -3,6 +3,8 @@ package nl.saxion.act.playground;
 import java.io.File;
 import java.io.IOException;
 
+import nl.saxion.act.playground.highscore.HighScoreActivity;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -16,8 +18,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class PuzzlePickActivity extends Activity{
 	
@@ -28,6 +32,10 @@ public class PuzzlePickActivity extends Activity{
 	private String[] puzzles, categories = {"5x5", "10x10", "15x15", "20x20"};
 	private Spinner categorySpinner;
 	private ArrayAdapter<String> puzzleAdapter;
+	private Button play;
+	private Button highscores;
+	private TextView levelName;
+	private String puzzleNameText;
 		
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +45,9 @@ public class PuzzlePickActivity extends Activity{
         listView = (ListView) findViewById(R.id.levelPickerList);
         listView.setOnItemClickListener(puzzleClickedHandler);
         puzzleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        levelName = (TextView)findViewById(R.id.levelname);
+        highscores = (Button) findViewById(R.id.buttonHS);
+        play = (Button)findViewById(R.id.buttonPlay);
         
 		assetManager = getAssets();
 	}
@@ -96,12 +107,26 @@ public class PuzzlePickActivity extends Activity{
 		startActivity(intent);
 	}
 	
+	public void onButtonClicked(View v) {
+		if(puzzleNameText != null){ 
+		if(v == play){
+			System.out.println("Button is Clicked");
+			openPuzzleView(puzzleNameText, "puzzles" + File.separator + categories[categorySpinner.getSelectedItemPosition()] + File.separator + puzzleNameText);
+		}else{
+			Intent intent = new Intent(this, HighScoreActivity.class);
+			intent.putExtra("puzzleName", puzzleNameText);
+			startActivity(intent);
+			}
+		}
+	}
+	
 	/**
 	 * Detecteer welke puzzel is aangeklikt en handel deze af in OpenPuzzleView
 	 */
 	private OnItemClickListener puzzleClickedHandler = new OnItemClickListener() {
 	    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-	    	openPuzzleView(puzzles[position], "puzzles" + File.separator + categories[categorySpinner.getSelectedItemPosition()] + File.separator + puzzles[position]);
+	    	puzzleNameText = (String)puzzles[position];
+	    	levelName.setText(puzzleNameText);
 	    }
 	};
 
