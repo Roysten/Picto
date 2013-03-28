@@ -28,7 +28,8 @@
     <string name="dialog_highscore_button_save">Save</string>
     <string name="dialog_highscore_text_place">Place</string>
     <string name="dialog_highscore_text_name">Name</string>
-    <string name="dialog_highscore_text_score">Score</string>
+    <string name="dialog_highscore_text_time">Time</string>
+    <string name="dialog_highscore_text_your_time_was">"Your time was: "</string>
 
 
 </resources>
