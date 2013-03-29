@@ -1,5 +1,6 @@
 package nl.saxion.act.playground;
 
+import nl.saxion.act.playground.puzzlepicker.PuzzlePickActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

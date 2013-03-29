@@ -1,8 +1,12 @@
-package nl.saxion.act.playground;
+package nl.saxion.act.playground.puzzlepicker;
 
 import java.io.File;
 import java.io.IOException;
 
+import nl.saxion.act.playground.R;
+import nl.saxion.act.playground.R.drawable;
+import nl.saxion.act.playground.R.id;
+import nl.saxion.act.playground.R.layout;
 import nl.saxion.act.playground.highscore.HighScoreActivity;
 
 import android.app.ActionBar;
@@ -44,8 +48,9 @@ public class PuzzlePickActivity extends Activity{
         //puzzellijst
         listView = (ListView) findViewById(R.id.levelPickerList);
         listView.setOnItemClickListener(puzzleClickedHandler);
-        puzzleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        levelName = (TextView)findViewById(R.id.levelname);
+        listView.setSelector(R.drawable.selector);
+        puzzleAdapter = new PuzzleAdapter(this, android.R.layout.simple_list_item_1);
+        //levelName = (TextView)findViewById(R.id.levelname);
         highscores = (Button) findViewById(R.id.buttonHS);
         play = (Button)findViewById(R.id.buttonPlay);
         
@@ -64,8 +69,7 @@ public class PuzzlePickActivity extends Activity{
 	    
 	    ActionBar actionBar = getActionBar();
 	    actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,
-                ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME |
-                ActionBar.DISPLAY_SHOW_TITLE);
+                ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_USE_LOGO);
 	    actionBar.setCustomView(customMenuView);
 	    return true;
 	}
@@ -125,8 +129,8 @@ public class PuzzlePickActivity extends Activity{
 	 */
 	private OnItemClickListener puzzleClickedHandler = new OnItemClickListener() {
 	    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-	    	puzzleNameText = (String)puzzles[position];
-	    	levelName.setText(puzzleNameText);
+	    	puzzleNameText = puzzles[position];
+	    	//levelName.setText(puzzleNameText);
 	    }
 	};
 

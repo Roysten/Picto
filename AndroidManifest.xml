@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="nl.saxion.act.playground.PuzzleActivity"
+            android:name="nl.saxion.act.playground.puzzlepicker.PuzzleActivity"
             android:label="Spelscherm"
             android:screenOrientation="portrait" />
         <activity
-            android:name="nl.saxion.act.playground.PuzzlePickActivity"
+            android:name="nl.saxion.act.playground.puzzlepicker.PuzzlePickActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="nl.saxion.act.playground.InstructionActivity"
