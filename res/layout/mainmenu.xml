@@ -24,5 +24,10 @@
         android:layout_marginTop="44dp"
         android:onClick="onButtonClicked"
         android:text="@string/Instruction_Button_Text" />
-
+	<ImageView 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:scaleType="fitCenter"
+	    android:src="@drawable/logo"
+	    android:layout_below="@+id/instructionButton"/>
 </RelativeLayout>
