@@ -7,11 +7,6 @@ import nl.saxion.act.playground.PauseDialog;
 import nl.saxion.act.playground.Puzzle;
 import nl.saxion.act.playground.R;
 import nl.saxion.act.playground.TimerView;
-import nl.saxion.act.playground.PauseDialog.NoticeDialogListener;
-import nl.saxion.act.playground.R.id;
-import nl.saxion.act.playground.R.layout;
-import nl.saxion.act.playground.R.menu;
-
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
@@ -24,6 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * Activity voor het spelen van de puzzle
+ */
 public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialogListener{
 	private GameView mGameView;
 	private final String TAG = "MyGameActivity";
@@ -50,6 +48,11 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
 		}
 	}
 	
+	/**
+	 * Wordt gebruikt om de puzzel aan de puzzleactivity door te geven.
+	 * @param puzzleName naam vd puzzel
+	 * @param puzzlePath lokatie van de puzzel
+	 */
 	public void setPuzzle(String puzzleName, String puzzlePath){
 		this.puzzleName = puzzleName;
         AssetManager assetManager = getAssets();
@@ -74,6 +77,9 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
       return true;
     } 
     
+    /**
+     * Methode voor pauzeknopje
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
       if(item.getItemId()==(R.id.menu_pause)){
@@ -86,10 +92,18 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
       return true;
     } 
     
+    /**
+     * Geeft de naam vd puzzel terug
+     * @return
+     */
     public String getPuzzleName(){
     	return puzzleName;
     }
     
+    /**
+     * Methode voor de radiobuttons
+     * @param v View van de radiobutton
+     */
     public void onButtonClicked(View v){
     	if(v == buttonFill){
     		mGameView.setToAdd(GameView.FILL);
@@ -101,30 +115,46 @@ public class PuzzleActivity extends Activity implements PauseDialog.NoticeDialog
     		mGameView.setToAdd(GameView.HINT);
     	}
     }
+    
+    /**
+     * Als er op pauze wordt gedrukt, wordt de timer gepauzeerd.
+     */
     @Override
   	public void onPause(){
   		super.onPause();
   		timerView.pauseTimer();
   	}
   
+    /**
+     * Als het spel ontwaakt uit pauze, gaat de timer weer verder.
+     */
   	@Override
   	public void onResume(){
   		super.onResume();
   		timerView.continueTimer();
 	}
   	
+  	/**
+  	 * Als het spel ontwaakt uit pauze, gaat de timer weer verder.
+  	 */
   	@Override
   	protected void onStart(){
   		super.onStart();
   		timerView.continueTimer();
   	}
 
+  	/**
+  	 * Methode voor het klikken op continue in het pauze dialoog.
+  	 */
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		if(dialog instanceof PauseDialog){
 			timerView.continueTimer();
 		}
 	}
 
+	/**
+	 * Methode voor het klikken op stoppen in het pauze dialoog.
+	 */
 	public void onDialogNegativeClick(DialogFragment dialog) {
 		finish();
 	}

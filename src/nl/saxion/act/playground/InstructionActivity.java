@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
+/**
+ * Activity voor de instructies
+ */
 public class InstructionActivity extends Activity {
 
 	@Override

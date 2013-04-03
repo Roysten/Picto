@@ -40,10 +40,17 @@ public class GameView extends TileView {
 		super(context, attrs, defStyle);
 	}
 	
+	/**
+	 * Timer aan de gameview koppelen.
+	 * @param timer
+	 */
 	public void setTimer(TimerView timer){
 		this.timer = timer;
 	}
 	
+	/**
+	 * Spel initialiseren
+	 */
 	public void initNewGame() {
 		Log.d(TAG,"Loading tiles");
 		gameBoard = new int [mDimension][mDimension];
@@ -51,6 +58,10 @@ public class GameView extends TileView {
 		invalidate(); 
 	}
 
+	/**
+	 * Geselecteerde vuloptie (fill, cross, blank) setten
+	 * @param toAdd
+	 */
 	public void setToAdd(int toAdd){
 		this.toAdd = toAdd;
 	}
@@ -89,6 +100,9 @@ public class GameView extends TileView {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
     }
 
+    /**
+     * Gedrag bepalen wanneer een vakje wordt aangeraakt.
+     */
 	public void touched(int x, int y){
 		if(!hasWinner()){
 			if (gameBoard[x][y] != toAdd) {
@@ -122,6 +136,11 @@ public class GameView extends TileView {
 		}
 	}
 	
+	/**
+	 * Rij controleren of deze compleet is ingevuld
+	 * @param row
+	 * @return rij is af (true/false)
+	 */
 	public boolean checkRow(int row){
 		int currentDone = 0;
 		for(int i = 0; i < mDimension; i++){
@@ -130,6 +149,11 @@ public class GameView extends TileView {
 		return currentDone == rowTotals[row];
 	}
 	
+	/**
+	 * Kolom controleren of deze compleet is ingevuld
+	 * @param column
+	 * @return kolom is af (true/false)
+	 */
 	public boolean checkColumn(int column){
 		int currentDone = 0;
 		for(int i = 0; i < mDimension; i++){
@@ -138,6 +162,10 @@ public class GameView extends TileView {
 		return currentDone == columnTotals[column];
 	}
 	
+	/**
+	 * Controleren of het spel af is
+	 * @return spel is af (true/false)
+	 */
 	public boolean hasWinner(){
 		boolean heeftWinnaar = false;
 		if(puzzleTotal == gameTotal){

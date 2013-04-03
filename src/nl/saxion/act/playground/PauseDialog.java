@@ -9,6 +9,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
+/**
+ * 	Dialoog venster voor de pauzefunctie
+ */
 public class PauseDialog extends DialogFragment {
 	
 	public interface NoticeDialogListener {
@@ -19,6 +22,9 @@ public class PauseDialog extends DialogFragment {
 	// Use this instance of the interface to deliver action events
     NoticeDialogListener mListener;
     
+    /**
+     * Layout van dialoog venster inflaten
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
@@ -45,6 +51,9 @@ public class PauseDialog extends DialogFragment {
         return builder.create();
     }
     
+    /**
+     * Dialoog venster toevoegen aan activity.
+     */
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
     @Override
     public void onAttach(Activity activity) {

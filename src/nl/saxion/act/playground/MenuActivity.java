@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ *	Activity voor het mainmenu 
+ */
 public class MenuActivity extends Activity{
 	Button startButton, instructionButton;
 	
@@ -18,6 +21,10 @@ public class MenuActivity extends Activity{
         instructionButton = (Button) findViewById(R.id.instructionButton);
 	}
 	
+	/**
+	 * Wordt aangeroepen wanneer er op een knop wordt gedrukt
+	 * @param v de knop waarop wordt gedrukt
+	 */
 	public void onButtonClicked(View v) {
 		if(v == startButton){
 		  Intent intent = new Intent(this, PuzzlePickActivity.class);
