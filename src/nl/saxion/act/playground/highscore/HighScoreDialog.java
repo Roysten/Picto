@@ -13,6 +13,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Geeft een dialoog weer aan het einde van de puzzel waarin de score/tijd wordt weergegeven
+ * en waarin een speler zijn naam kan invulen.
+ *
+ */
+
 public class HighScoreDialog extends Dialog{
 
 	private EditText nameEditText;
@@ -37,6 +43,10 @@ public class HighScoreDialog extends Dialog{
 		init(context);
 	}
 	
+	/**
+	 * het initialiseren van de interface
+	 * @param context
+	 */
 	public void init(Context context){
 		this.setContentView(R.layout.dialog_highscore);
 		this.setTitle("Level complete!");
@@ -58,6 +68,12 @@ public class HighScoreDialog extends Dialog{
 		timeTextView.setText(timerView.getTime() + "");
 	}
 	
+	/**
+	 * in deze methode worden de activiteiten van de knoppen afgevangen.
+	 * En vervolgens verwerkt.
+	 * @author Tim
+	 *
+	 */
 	public class onButtonClickedListener implements android.view.View.OnClickListener{
 		@Override
 		public void onClick(View v) {

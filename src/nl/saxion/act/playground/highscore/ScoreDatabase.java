@@ -7,6 +7,11 @@ import android.provider.BaseColumns;
 import android.util.Log;
 import nl.saxion.act.playground.highscore.ScoreModel;
  
+/**
+ * Klasse die verantwoordelijk is voor het indien nodig creeren van de database en de tabellen.
+ * @author Tim
+ *
+ */
 public class ScoreDatabase extends SQLiteOpenHelper{
  
  public ScoreDatabase(Context context) {
@@ -14,6 +19,10 @@ public class ScoreDatabase extends SQLiteOpenHelper{
 }
  
  @Override
+ /**
+  * creert indien nodig fe database, bij de eerste installatie van de app
+  * vervolgens creert de app ook de eerste keer de tabel.
+  */
  public void onCreate(SQLiteDatabase db) {
   // TODO Create your tables here
   Log.i("ScoreExample", "Create database: " + ScoreModel.TABLE_NAME);
