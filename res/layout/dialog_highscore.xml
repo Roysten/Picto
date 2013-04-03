@@ -33,8 +33,9 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:maxLength="15"
-        android:hint="@string/dialog_highscore_name_hint" />
+        android:hint="@string/dialog_highscore_name_hint"
+        android:inputType="text"
+        android:maxLength="15" />
 
     <View
     android:layout_width="fill_parent"
