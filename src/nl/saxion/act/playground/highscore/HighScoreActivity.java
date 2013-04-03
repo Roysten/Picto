@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ListView;
 
+/**
+ * Klasse die een sherm toont waarin de highscores voor een puzzel worden weergegeven.
+ */
 public class HighScoreActivity extends Activity {
 	
 	private ListView scoreListView;
@@ -16,6 +19,9 @@ public class HighScoreActivity extends Activity {
 	private ScoreModel scoreModel;
 	private String puzzleName;
 	
+	/**
+	 * het initialiseren van de layout
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,7 +44,9 @@ public class HighScoreActivity extends Activity {
 		initiateScores();
 		
 	}
-
+	/**
+	 * het vullen van de ArrayList met score objecten
+	 */
 	private void initiateScores() {
 		ArrayList<Score> scores = scoreModel.getHighScores(puzzleName);
 		adapter.addAll(scores);

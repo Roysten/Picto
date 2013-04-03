@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * Een custom adapter voor het weergeven van Score-objecten in de HighScoreActivity
+ */
 public class ScoreAdapter extends ArrayAdapter<Score> {
 
 	public ScoreAdapter(Context context, int textViewResourceId) {

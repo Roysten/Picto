@@ -1,5 +1,10 @@
 package nl.saxion.act.playground.highscore;
 
+/**
+ * Klasse die de data van een highscore representeerd.
+ * @author Tim
+ *
+ */
 public class Score {
 
 	private String name;
