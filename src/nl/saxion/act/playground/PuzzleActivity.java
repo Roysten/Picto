@@ -1,12 +1,8 @@
-package nl.saxion.act.playground.puzzlepicker;
+package nl.saxion.act.playground;
 
 import java.io.IOException;
 
-import nl.saxion.act.playground.GameView;
-import nl.saxion.act.playground.PauseDialog;
-import nl.saxion.act.playground.Puzzle;
 import nl.saxion.act.playground.R;
-import nl.saxion.act.playground.TimerView;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;

@@ -3,6 +3,7 @@ package nl.saxion.act.playground.puzzlepicker;
 import java.io.File;
 import java.io.IOException;
 
+import nl.saxion.act.playground.PuzzleActivity;
 import nl.saxion.act.playground.R;
 import nl.saxion.act.playground.highscore.HighScoreActivity;
 import android.app.ActionBar;

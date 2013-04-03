@@ -1,8 +1,8 @@
 package nl.saxion.act.playground.highscore;
 
+import nl.saxion.act.playground.PuzzleActivity;
 import nl.saxion.act.playground.R;
 import nl.saxion.act.playground.TimerView;
-import nl.saxion.act.playground.puzzlepicker.PuzzleActivity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
