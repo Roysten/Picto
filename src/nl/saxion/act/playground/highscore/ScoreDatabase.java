@@ -9,7 +9,6 @@ import nl.saxion.act.playground.highscore.ScoreModel;
  
 /**
  * Klasse die verantwoordelijk is voor het indien nodig creeren van de database en de tabellen.
- * @author Tim
  *
  */
 public class ScoreDatabase extends SQLiteOpenHelper{

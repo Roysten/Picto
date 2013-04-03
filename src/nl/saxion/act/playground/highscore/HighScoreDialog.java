@@ -71,8 +71,6 @@ public class HighScoreDialog extends Dialog{
 	/**
 	 * in deze methode worden de activiteiten van de knoppen afgevangen.
 	 * En vervolgens verwerkt.
-	 * @author Tim
-	 *
 	 */
 	public class onButtonClickedListener implements android.view.View.OnClickListener{
 		@Override
