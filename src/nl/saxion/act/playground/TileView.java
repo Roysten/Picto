@@ -102,6 +102,9 @@ public abstract class TileView extends View {
 		init();
 	}
 	
+	/**
+	 * Instellen van alle tekenobjecten
+	 */
 	public void init(){
 		// Bereken de dikte van de lijnen, "dikte van 2" omzetten naar dp
 		Resources r = getResources();
@@ -287,6 +290,9 @@ public abstract class TileView extends View {
 
 	}
 
+	/**
+	 * Aanroepen van de juiste methodes elke keer als het scherm ververst moet worden
+	 */
 	@Override
 	public void onDraw(Canvas canvas) {
 		long start = System.currentTimeMillis();

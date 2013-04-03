@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * Class waarin de timer wordt afgehandeld
+ */
 public class TimerView extends LinearLayout{
 
 	private TextView timePassedValueTextView;
@@ -40,6 +43,9 @@ public class TimerView extends LinearLayout{
 		init();
 	}
 
+	/**
+	 * Layout inflaten en timer starten
+	 */
 	public void init(){
 		LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.timerview, this);
@@ -47,27 +53,49 @@ public class TimerView extends LinearLayout{
 		runnable.run();	
 	}
 	
+	/**
+	 * Tijd onmiddelijk ophogen met opgegeven tijdstraf
+	 * @param penalty = tijdstraf
+	 */
 	public void timePenalty(int penalty){
 		timePassed += penalty;
 		handler.post(runnable);
 	}
 	
+	/**
+	 * Zet de waarde van de timer in de bijbehorende textview
+	 * @param text
+	 */
 	public void setText(String text){
 		this.timePassedValueTextView.setText(text);
 	}
 	
+	/**
+	 * Pauzeert de timer
+	 */
 	public void pauseTimer(){
 		pause = true;
 	}
 	
+	/**
+	 * Laat de timer verderlopen. Als de timer nog loopt, gebeurt er niets
+	 */
 	public void continueTimer(){
 		pause = false;
 	}
 	
+	/**
+	 * Stop de timer permanent. (wordt gebruikt wanneer hij echt niet meer nodig is, zodat hij niet in de
+	 * achtergrond door blijft lopen.
+	 */
 	public void killTimer(){
 		handler.removeCallbacks(runnable);
 	}
 	
+	/**
+	 * 
+	 * @return de huidige waarde van de timer
+	 */
 	public int getTime(){
 		return timePassed;
 	}

@@ -4,11 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import nl.saxion.act.playground.R;
-import nl.saxion.act.playground.R.drawable;
-import nl.saxion.act.playground.R.id;
-import nl.saxion.act.playground.R.layout;
 import nl.saxion.act.playground.highscore.HighScoreActivity;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -25,8 +21,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
+/**
+ * Class voor het selecteren van de puzzels. 
+ */
 public class PuzzlePickActivity extends Activity{
 	
 	private static final String TAG = "LevelPicker";
@@ -37,10 +35,11 @@ public class PuzzlePickActivity extends Activity{
 	private Spinner categorySpinner;
 	private ArrayAdapter<String> puzzleAdapter;
 	private Button play;
-	private Button highscores;
-	private TextView levelName;
 	private String puzzleNameText;
 		
+	/**
+	 * Initialiseren van de variabelen in de oncreate en de adapter setten
+	 */
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.puzzlepicker);
@@ -50,13 +49,14 @@ public class PuzzlePickActivity extends Activity{
         listView.setOnItemClickListener(puzzleClickedHandler);
         listView.setSelector(R.drawable.selector);
         puzzleAdapter = new PuzzleAdapter(this, android.R.layout.simple_list_item_1);
-        //levelName = (TextView)findViewById(R.id.levelname);
-        highscores = (Button) findViewById(R.id.buttonHS);
         play = (Button)findViewById(R.id.buttonPlay);
         
 		assetManager = getAssets();
 	}
 	
+	/**
+	 * Optionsmenu (=actionbar) waar de spinner wordt toegevoegd.
+	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		//actionbar dropdownbox
 		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -74,6 +74,9 @@ public class PuzzlePickActivity extends Activity{
 	    return true;
 	}
 	
+	/**
+	 *	Als er een item geselecteerd wordt, dan wordt de betreffende map met puzzels gescand. 
+	 */
 	public class categorySpinnerItemSelectedListener implements OnItemSelectedListener{
 
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
@@ -111,6 +114,10 @@ public class PuzzlePickActivity extends Activity{
 		startActivity(intent);
 	}
 	
+	/**
+	 * Puzzel starten na button click
+	 * @param v de button waarop is geklikt
+	 */
 	public void onButtonClicked(View v) {
 		if(puzzleNameText != null){ 
 		if(v == play){
@@ -130,7 +137,6 @@ public class PuzzlePickActivity extends Activity{
 	private OnItemClickListener puzzleClickedHandler = new OnItemClickListener() {
 	    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 	    	puzzleNameText = puzzles[position];
-	    	//levelName.setText(puzzleNameText);
 	    }
 	};
 

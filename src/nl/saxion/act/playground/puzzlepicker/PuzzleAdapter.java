@@ -20,6 +20,9 @@ public class PuzzleAdapter extends ArrayAdapter<String> {
 		super(context, textViewResourceId);
 	}
 
+	/**
+	 * Items wisselen uit de lijst
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
@@ -33,5 +36,4 @@ public class PuzzleAdapter extends ArrayAdapter<String> {
 		}
 		return convertView;
 	}
-
 }

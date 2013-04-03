@@ -1,12 +1,12 @@
 package nl.saxion.act.playground;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import android.util.Log;
-
-
+/**
+ * 	Class waarin puzzelfiles worden geparsed naar PuzzleObjecten
+ *
+ */
 public class Puzzle {
 
 	private int dimension;
@@ -16,12 +16,19 @@ public class Puzzle {
 	private int[][] columnHints, rowHints;
 	private int[] columnTotal, rowTotal;
 	
+	/**
+	 * Puzzel parsen meteen aanroepen bij aanmaken puzzel object
+	 * @param puzzle
+	 */
 	public Puzzle(InputStream puzzle){
 		parsePuzzel(puzzle);
 	}
 	
+	/**
+	 * Puzzel parsen uit de tekstfile mbv scanner en split
+	 * @param puzzel de puzzelfile om te parsen
+	 */
 	private void parsePuzzel(InputStream puzzel) {
-		long start = System.currentTimeMillis();
 		Scanner lineScanner = new Scanner(puzzel);
 		if(lineScanner.hasNextLine()){
 			this.dimension = lineScanner.nextInt();
@@ -67,7 +74,6 @@ public class Puzzle {
 			}
 			rowHints[i] = rowCountArray;
 		}
-		Log.d("puzzle", Arrays.toString(rowTotal));
 		
 		//aantallen voor de kolommen berekenen
 		columnHints = new int[dimension][1];
@@ -94,44 +100,52 @@ public class Puzzle {
 			}
 			columnHints[i] = columnCountArray;
 		}
-		Log.d("puzzle", Arrays.toString(columnTotal));
-		
-		long end = System.currentTimeMillis();
-		Log.d("Puzzle", "Parsing took: " + (end - start));
 	}
 	
+	/**
+	 * @return de hints van de rijen (dubbele int array)
+	 */
 	public int[][] getRowHints(){
 		return rowHints;
 	}
 	
+	/**
+	 * @return de hints van de kolommen (dubbele int array)
+	 */
 	public int[][] getColumnHints(){
 		return columnHints;
 	}
 	
+	/**
+	 * @return het totaal aantal ingevulde vakjes voor elke kolom
+	 */
 	public int[] getColumnTotals(){
 		return columnTotal;
 	}
 	
+	/**
+	 * @return het totaal aantal ingevulde vakjes voor elke rij
+	 */
 	public int[] getRowTotals(){
 		return rowTotal;
 	}
 	
 	/**
-	 * @return the sizeX
+	 * @return De grootte van het spelbord
 	 */
 	public int getDimension() {
 		return dimension;
 	}
 
 	/**
-	 * @return het totaal van zwarte vakjes
+	 * @return het totaal van gevulde vakjes (mbv fill, niet cross)
 	 */
 	public int getTotal(){
 		return total;
 	}
 
 	/**
-	 * @return the oplossing
+	 * @return de oplossing
 	 */
 	public int[][] getSolution() {
 		return puzzleSolution;
